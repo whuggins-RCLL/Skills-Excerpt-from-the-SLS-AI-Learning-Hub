@@ -1,17 +1,21 @@
-# The AI Learning Hub
+# AI Skills and agents — an excerpt of the SLS AI Learning Hub
 
-The Robert Crown Law Library's AI Learning Hub for Stanford Law School, plus the
-student-facing AI Skills it distributes.
+**This repository is an excerpt.** It holds the AI Skills section of the Robert
+Crown Law Library's [AI Learning Hub](https://ailearninghub.law.stanford.edu) and
+the agent material that accompanies it, pulled out so it can be presented and
+shared on its own. The rest of the hub — tutorials, AI tools, events, the reading
+lists, The AI Upload, and faculty support — is not here and is not reachable from
+here; every page says so in a banner under the navigation, and links out to the
+full hub for the parts that are missing.
 
-The hub is **open to the whole SLS community** — students, staff, and faculty — and
-requires no sign-in. That is the difference between this site and
-[`sls-faculty-ai-skills`](https://github.com/whuggins-RCLL/sls-faculty-ai-skills),
-which is written for faculty and sits behind Stanford authentication. The two sites
-share one design system so they read as one family.
+The full hub lives in
+[`whuggins-RCLL/AI-Learning-Hub`](https://github.com/whuggins-RCLL/AI-Learning-Hub).
+Edit content there, not here: this copy is a snapshot for presentation, so a change
+made here does not reach the site readers use.
 
-Like the faculty site, this one is embedded in Google Sites — one full-page
-frame per hub page. See [Inside Google Sites](#inside-google-sites) for how the
-two stay in step.
+Everything the skills need is included — all twenty-one skill ZIPs, the three set
+downloads, and the five practice drafts — so the downloads on `skills.html` work
+exactly as they do on the hub.
 
 ## The site
 
@@ -24,69 +28,66 @@ python3 -m http.server 8000
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The hub landing page |
-| `pause-rule.html` | The PAUSE Rule — the AI use workflow |
-| `tutorials.html` | The tutorial library: eight topics, ~34 guides and DIY modules |
-| `ai-resources.html` | AI tools available to the SLS community, and the policy that governs them |
-| `ai-in-the-library.html` | The library's AI display: 7 parts, 24 panels, 32 books |
-| `reading-list.html` | The 32-book shelf on its own page (same data as the display) |
-| `assets/books.js` | Shared reading-list data and card renderer |
-| `assets/ai-reading-list.pdf` | The same shelf as a printable PDF, with clickable SearchWorks links |
-| `scripts/generate-reading-list-pdf.py` | Builds that PDF from `assets/books.js` |
-| `events.html` | Curiosity Corners, trainings, the Tech Club charter, and the calendar |
-| `past-events.html` | Archive of past sessions and Tech Club meetings |
+| `index.html` | The excerpt's landing page |
 | `skills.html` | The twenty-one downloadable AI skills, the three one-click sets, and the practice drafts |
+| `skills/` | The skill ZIPs themselves |
 | `skills/bundles.json` | Which skills each set holds, and in what order |
 | `scripts/build-skill-bundles.py` | Builds `assets/bundles/*.zip` from that manifest |
 | `assets/skill-bundles.js` | The download-them-separately button on the set cards |
 | `assets/writing-samples/` | Five fictional student drafts to practise the writing skills on |
 | `install.html` | What a skill file is, and how to install one in ChatGPT or Claude |
-| `case-study-anthropic-legal-skills.html` | Case study: reverse-engineering Anthropic's AI governance legal skills |
+| `assets/install-a-skill-guide.pdf` | Printable skill-installation guide with clickable links to both videos |
+| `scripts/generate-install-pdf.py` | Builds that PDF |
 | `writing-partner-agent.html` | Loading the ten writing skills into one ChatGPT agent |
-| `teach-this-writing-partner.html` | Workshop packet: set-up, activities, discussion, notes, glossary |
 | `assets/writing-partner-agent-instructions.md` | The text a student pastes into that agent (source of truth) |
 | `scripts/inject-agent-instructions.py` | Copies that file into the page's copy box |
+| `assets/video/` | The 15-second screen recording on that page |
+| `teach-this-writing-partner.html` | Workshop packet: set-up, activities, discussion, notes, glossary |
+| `case-study-anthropic-legal-skills.html` | Case study: reverse-engineering Anthropic's AI governance legal skills |
 | `assets/copy-code.js` | The copy button on the case study's skill template |
-| `assets/install-a-skill-guide.pdf` | Printable skill-installation guide with clickable links to both videos |
-| `faculty.html` | Full-page embed of the faculty AI site |
-| `faculty-publications.html` | SLS faculty publications on AI, embedded within the hub navigation |
-| `ai-upload.html` | Full-page embed of The AI Upload, the weekly AI news digest |
-| `assets/styles.css` | The design system |
-| `your-ai-stack.html` | Your AI Stack — the searchable directory of 113 AI tools |
-| `assets/ai-stack-data.js` | The tool catalogue and the retired-product list (generated) |
-| `assets/ai-stack.js` | Browsing, filtering, comparing, and saving for Your AI Stack |
-| `assets/hub.js` | The theme toggle and the collapsing navigation |
-| `search.html` | Site search, answered in the browser |
+| `search.html` | Search across this excerpt, answered in the browser |
 | `assets/search.js` | The matching and drawing behind it |
 | `assets/search-index.js` | The index it searches (generated) |
 | `scripts/build-search-index.mjs` | Builds that index from the rendered pages |
-| `assets/embed-map.js` | Generated: which Google Sites page holds each hub page |
-| `assets/embed.js` | Sends hub links to those Google Sites pages when the hub is framed |
-| `scripts/build-embed-map.py` | Builds that map and wires the pages to it |
-| `embed-codes.html` | Maintenance page: the frame to paste into each Google Sites page |
-| `vercel.json` | Who is allowed to frame the site |
+| `assets/styles.css` | The design system |
+| `assets/hub.js` | The theme toggle and the collapsing navigation |
+| `scripts/nav.py` | Writes the header, the excerpt banner, and the footer into every page |
+| `vercel.json`, `customHttp.yml` | Who is allowed to frame the site |
 
-All of it is ported from the previous AI Learning Hub, which was a set of
-standalone Tailwind and React pages, into the one design system below.
+### What was removed, and why
+
+Paring the hub down to this section meant deleting fifteen pages and the assets
+that only they used — the tutorial library, the tool directory, the reading lists,
+events, the PAUSE Rule, the two full-page embeds, and the maintenance pages. Two
+things went with them that are worth naming:
+
+- **The Google Sites embed layer** (`assets/embed.js`, `assets/embed-map.js`,
+  `embed-codes.html`, `scripts/build-embed-map.py`). On the hub it rewrites every
+  in-site link to the matching `ailearninghub.law.stanford.edu` page whenever the
+  hub is read inside a Google Sites frame. This excerpt is a standalone site, so
+  that rewriting would send a reader off to the full hub instead of to the next
+  page here. All of it is gone; links are ordinary relative links.
+- **Links to pages that are no longer here.** The four places that pointed at the
+  PAUSE Rule now point at it on the full hub, marked as external, rather than at a
+  page this site does not have. `scripts/check-links.py` fails if any relative
+  reference or in-page anchor stops resolving.
 
 ### Navigation
 
-The header's primary row holds six destinations and no more. A utility row above
-it places a Home button and a site-scoped search at the top right. The six primary
-destinations are The AI Upload, Tutorials, Resources, Events, Skills, and Faulty
-Support.
+The header's primary row holds the five destinations of the excerpt: Skills,
+Install a skill, Writing Partner agent, Workshop packet, and Case study. A utility
+row above it places a Home button and a site-scoped search at the top right.
 
-The footer is reserved for outbound Stanford links and does not repeat the site
-navigation. Secondary pages are linked from relevant landing-page content.
+Under the bar, on every page, sits the excerpt banner — one line saying this is a
+section of the AI Learning Hub rather than the hub, with a link to the full site.
+The footer repeats that link and otherwise keeps only outbound Stanford links.
 
-The PAUSE Rule is not in the bar. It is a short link on the home hero rather than
-a primary call to action or a destination card that restates the nav.
-
-The bar and footer are the same markup on every page that has them, which no one
-should be retyping eleven times. They are written by `scripts/nav.py`: it replaces
-the `.siteHeader` and `.footer` block in each file in place and is idempotent. The
-committed pages stay plain HTML with no build step, so an ordinary edit is still an
-ordinary edit; re-run the script after changing a nav entry.
+The bar, the banner, and the footer are the same markup on every page, which no one
+should be retyping seven times. They are written by `scripts/nav.py`: it replaces
+the `.siteHeader`, `.excerptBanner`, and `.footer` blocks in each file in place and
+is idempotent. The committed pages stay plain HTML with no build step, so an
+ordinary edit is still an ordinary edit; re-run the script after changing a nav
+entry or the banner text.
 
 ```
 python3 scripts/nav.py
@@ -94,19 +95,15 @@ python3 scripts/nav.py
 
 ### Search
 
-The header search used to hand the query to Google with a `site:` filter. That only
-ever worked if Google had crawled the deployment, and it had not — so the box
-returned "did not match any documents" for words plainly on the page, which is
-worse than no search at all. It now goes to `search.html`, which answers from an
-index of this site and nothing else.
+`search.html` answers from an index of **this excerpt and nothing else**. It does
+not reach the rest of the hub: a reader searching here for "tutorials" gets
+nothing, which is honest about what this site holds.
 
-The index is generated from the **rendered** pages rather than from the HTML,
-because three of them build their content from arrays at the bottom of the file
-(`tutorials.html`, `ai-in-the-library.html`, `your-ai-stack.html`); reading the DOM
-after render indexes what a reader actually sees, and keeps working if a page
-changes how it is built. Entries are per card where a page is built from cards and
-per id'd section otherwise, so a result links to the place it was found rather than
-the top of a long page.
+The index is generated from the **rendered** pages rather than from the HTML, so it
+holds what a reader actually sees and keeps working if a page changes how it is
+built. Entries are per card where a page is built from cards and per id'd section
+otherwise, so a result links to the place it was found rather than the top of a long
+page.
 
 ```
 node scripts/build-search-index.mjs            # write assets/search-index.js
@@ -116,7 +113,7 @@ node scripts/build-search-index.mjs --check    # non-zero if it is out of date
 Re-run it after editing page content and commit the result. It is the one script
 here that needs Playwright, so it is a maintainer step rather than a build step —
 `PLAYWRIGHT_PATH=/path/to/playwright/index.js` points it at a global install if you
-do not want a local dependency. The index is currently 441 entries and about 224 kB,
+do not want a local dependency. The index is currently 119 entries and about 100 kB,
 loaded on `search.html` alone and nowhere else.
 
 Matching is prefix-per-word ("cita" finds "citation", "ation" does not), all terms
@@ -124,219 +121,32 @@ must appear, and a heading hit outweighs a passing mention. Snippets are built a
 text nodes and `<mark>` elements rather than markup, so a query can never become
 HTML.
 
-### Content that is data, not markup
+### Checks
 
-Two pages keep their content in one array at the bottom of the file and render the
-cards from it, because both are lists that grow and an entry beats a block of copied
-HTML: `tutorials.html` (~34 tutorials) and `ai-in-the-library.html` (7 categories, 24
-panels). The previous hub's tutorials page worked the same way. Everything else is
-written out as HTML.
-
-The thirty-two books are different: they live once in `assets/books.js` and are
-rendered by both `reading-list.html` and the Selected Reading section of
-`ai-in-the-library.html`. Edit the array in that file to update both pages.
-
-### Your AI Stack
-
-`your-ai-stack.html` was its own repository — `whuggins-RCLL/Your-AI-Stack`, a Vite +
-React + Tailwind app. The hub link used to point at a Google Sites page wrapping it.
-The directory now runs natively here: 113 tools, 29 retired products, the same
-categories, and the guide sections, in the hub's design system with no build step.
-
-The catalogue is generated rather than retyped. `scripts/port-ai-stack.mjs` reads
-`src/data.ts` and `src/data/discontinuedAi.ts` out of the Your-AI-Stack checkout and
-writes `assets/ai-stack-data.js`. Edit the entries there and re-run it; do not
-hand-edit the generated file, or the two copies will drift.
+Three scripts verify the site rather than build it. Run all three before pushing:
 
 ```
-node scripts/port-ai-stack.mjs
+python3 scripts/check-links.py                  # every relative link and anchor resolves
+python3 scripts/build-skill-bundles.py --check  # the set ZIPs match the manifest
+python3 scripts/inject-agent-instructions.py --check
+node scripts/build-search-index.mjs --check     # needs Playwright
 ```
-
-Everything else lives in `assets/ai-stack.js`, which is plain ES5-flavoured
-JavaScript like `hub.js`. Two things differ from the app it replaces, and both are
-navigation fixes rather than ports:
-
-- **Every view is in the URL.** A search, a category, the saved list, an open tool,
-  and a comparison are all encoded in `location.hash` — `#tool=notebooklm`,
-  `#cat=Legal+Research+%26+Analysis`, `#cmp=claude,gemini&open=compare`. Any of them
-  can be linked to or bookmarked, and Back closes an overlay rather than leaving the
-  site. In the app all of this was component state.
-- **Saves persist.** The saved list is in `localStorage`, so following a link out to a
-  vendor and coming back does not empty it. The app kept saves in memory only.
-
-Three of the app's features did **not** come across:
-
-- **The blocking disclaimer modal.** The same text is now a note at the top of the
-  page. A modal that has to be dismissed on every visit before anything can be read
-  is a toll, not a disclosure, and it was the first thing every reader saw.
-- **The html2pdf export**, which pulled in a 985 kB dependency. The saved list prints
-  through a print stylesheet — every browser's print dialog saves to PDF — and there
-  is a dependency-free Markdown download beside it.
-- **Tool logos**, which were `picsum.photos` placeholder images keyed by tool name,
-  so they were decorative noise fetched from a third party on every card.
-
-### AI in the Library
-
-`ai-in-the-library.html` was its own repository —
-`whuggins-RCLL/AI-at-the-Robert-Crown-Law-Library`, a Vite + React app deployed at
-`ai-at-rcll.vercel.app`. All of its content is here now: 7 categories, 24 exhibit
-panels, 32 books, the About notes, and the acknowledgments. Nothing in the hub links
-to the old deployment any more, so that repository can be retired.
-
-Two of the app's features did **not** come across, and both were deliberate:
-
-- **The Gemini "AI Curator" chat.** It needed a Google GenAI key. Vite inlines
-  `VITE_API_KEY` into the client bundle, so on a public static site that key is a
-  published key. The hub has no build step and no secret handling, and adding both to
-  carry one chat widget was not the trade we wanted.
-- **The reading-list PDF export**, which needed jsPDF in the browser. The PDF is
-  offered again on both pages, but it is built once at author time instead:
-  `scripts/generate-reading-list-pdf.py` reads `assets/books.js` and writes
-  `assets/ai-reading-list.pdf`, so no reader downloads a PDF library to get one, and
-  the file cannot drift from the shelf. It uses no third-party packages — the same
-  hand-written PDF writer as the installation guide — and its output is
-  deterministic, so rebuilding without a change to the books produces no git diff.
-
-  ```
-  python3 scripts/generate-reading-list-pdf.py          # rewrite assets/ai-reading-list.pdf
-  python3 scripts/generate-reading-list-pdf.py --check  # non-zero if a rebuild would change it
-  ```
-
-  Each of the thirty-two entries carries its title, author, publisher, date, ISBN, the
-  annotation from the shelf, and a clickable link to its SearchWorks record; an entry is
-  never split across a page break. Re-run the script after editing `assets/books.js`.
-
-The app also fetched book covers at runtime from the Open Library and Google Books
-APIs. Covers here come from Open Library by ISBN as a plain image URL
-(`covers.openlibrary.org/b/isbn/<isbn>-M.jpg?default=false`) rather than an API call.
-`default=false` makes a missing cover a 404 instead of a blank placeholder, and an
-`onerror` handler then removes the element so the card reflows to text. Books whose
-covers the display had scanned itself keep those.
 
 ### Styling
 
 `assets/styles.css` is the faculty site's `website/app/globals.css`, copied
-verbatim, followed by one clearly marked section of hub-only additions (the PAUSE
-Rule's gates and verdicts, the skill cards, the embed pages). Keeping the shared
+verbatim, followed by one clearly marked section of additions — the skill cards,
+the document look the case study uses, and the excerpt banner. Keeping the shared
 part an unmodified copy is deliberate: a change to the design system is a re-copy
 plus a look at the additions, not a merge.
 
-The hub has no account link because there is nothing to sign in to.
+Rules for pages that are not in this excerpt are left in place rather than pruned,
+so the file stays a clean copy of the design system plus additions.
 
-### The embedded sites
-
-`faculty.html` and `ai-upload.html` are full-page frames for the faculty AI site
-and The AI Upload. Each is the frame and nothing else: no header, no footer, no
-explanatory strip, and no theme toggle. These framed sites carry their own
-navigation and branding, so a bar of ours above one would put two sets of
-destinations on the same screen. `scripts/nav.py` skips these pages and fails
-loudly if either ever grows a `.siteHeader` block.
-
-`faculty-publications.html` embeds the Stanford Law School faculty AI publications
-list within a standard hub page, preserving the hub header, footer, and navigation
-around the external content.
-
-For the two full-page frames, there is no chrome to measure around, so each frame is simply the viewport —
-`position: fixed; inset: 0`. Note that the design system copied from the faculty
-site contains a `.digestEmbed` rule that assumes 68px of chrome above the frame;
-nothing here uses it, and 68px is not what that bar actually measures.
-
-The faculty site is behind Stanford sign-in. A reader who is not signed in sees
-that site's own sign-in page inside the frame, which is its answer to give rather
-than this site's. Worth knowing: a sign-in inside a frame — nested again inside a
-Google Site — is the case browsers restrict, so signing in may have to happen in
-the faculty site's own tab.
-
-### Inside Google Sites
-
-The hub is served from Vercel but read inside Google Sites: every hub page is a
-full-page frame on a matching Google Sites page under
-`https://ailearninghub.law.stanford.edu`. Nothing about the domain changes — the
-Google Site stays the address, and Vercel stays where the site is built.
-
-The problem that creates is navigation. A click on "Tutorials" inside a frame
-swaps the document in the frame and leaves the address bar showing whichever
-Google Sites page the reader started on. The address is then wrong, the back
-button steps out of the site rather than back a page, and any URL a reader copies
-sends someone else to the wrong place.
-
-So `assets/embed.js` rewrites, when — and only when — the page is being read
-inside a frame, every link to another hub page into the Google Sites page that
-holds it, and points it at the top window. The whole tab moves, Google Sites
-loads its own page, and that page's frame loads the page the reader asked for.
-The address bar keeps up, the back button works, and every URL is shareable.
-
-Read directly on Vercel the file does nothing: links stay ordinary relative
-links, so the site is still testable on its own and still works if the Google
-Sites side is ever taken down.
-
-The map both halves read is generated, not kept by hand:
-
-```
-python3 scripts/build-embed-map.py            # write the map, wire the pages
-python3 scripts/build-embed-map.py --check    # non-zero if either is stale
-```
-
-It derives `assets/embed-map.js` from the pages that exist — the Google Sites
-path is the file name without `.html`, with any exception listed in `SLUGS` —
-and makes sure every page loads the runtime. Adding a page to the hub is still
-just adding an HTML file; re-run this afterwards.
-
-`index.html` is one of those exceptions: it sits at `/home` rather than `/`,
-because the Google Sites root is that site's own hand-built landing page and the
-hub's landing page is a full page embed alongside it.
-
-To see the rewriting without Google Sites, open any page with `?embed=1` on the
-end. That is the same switch the frame check sets, so the links change in an
-ordinary tab and can be hovered and read. Without it, on Vercel, links stay
-Vercel links — that is the file doing its job, not failing to.
-
-`embed-codes.html` is the maintenance page that turns the map into work. It
-prints, for every published page, the Google Sites path that page must have and
-the Vercel URL to give it, built from the same map the site uses, so the two
-cannot drift. It renders whichever origin it is being served from, so a preview
-deployment prints correct URLs too. It is not linked from the site and is kept
-out of the search index.
-
-The Google Sites pages are built as **full page embeds** — the Pages panel, *+*,
-*New full page embed* — which take a URL and size themselves to the page. The
-custom path under *Advanced* has to match the path the map records, or the hub's
-own navigation will point at a page that does not exist. Each block also carries
-the iframe for the other route, *Insert > Embed > Embed code*, for a Google Sites
-page that has to hold something besides the hub; that one is a block on the page
-and has to be dragged to full width and height by hand.
-
-Three things are worth knowing before building the Google Sites pages.
-
-**Top-level navigation has to be allowed.** Google wraps pasted embed code in a
-sandbox, and a sandbox that withholds top-level navigation swallows these clicks:
-the frame changes and the address bar does not. Test one page before building all
-of them. If it happens, change `LINK_TARGET` in `scripts/build-embed-map.py` from
-`"_top"` to `"_blank"` and re-run — links then open the right Google Sites page
-in a new tab instead, which is worse but not broken.
-
-**Search stays inside the frame.** Google Sites cannot pass a query string on its
-own URL through to the frame it hosts, so a Google Sites `/search` page would
-always come up empty. `search.html` is marked `inframe` in the map: it runs inside
-whichever frame the reader is already in, and its results link out to the right
-Google Sites page like any other hub link. A cross-page `#fragment` is dropped for
-the same reason — a kept fragment would promise a section Google Sites cannot
-scroll the frame to, so the reader lands at the top of the right page instead and
-the shared URL stays honest. `KEEP_HASH` turns that off if the Google Sites pages
-ever grow matching anchors.
-
-**The two full-page frames are framed directly.** `faculty.html` and
-`ai-upload.html` are themselves nothing but a frame around another site, so
-framing the wrapper from Google Sites would nest three deep to show the same
-thing. The build script reads the `src` out of each page and records it, and
-`embed-codes.html` prints that URL instead. It is read from the page rather than
-listed anywhere, so it cannot drift from what the page shows.
-
-`vercel.json` carries one header: a `frame-ancestors` policy that permits Google
-Sites and the hub domain to frame the site and no one else. It is the one change
-here that can fail loudly — if Google ever serves embed code from an origin the
-list does not cover, the frame goes blank. Deleting `vercel.json` restores the
-previous behaviour, which was to let anyone frame the site.
+`vercel.json` and `customHttp.yml` each carry one header: a `frame-ancestors`
+policy permitting the hub domain and Google Sites to frame the site. They are kept
+as they are on the hub so this excerpt can be framed the same way if it is ever
+presented from inside a Google Site.
 
 ## The skills
 
