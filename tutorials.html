@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>AI Tutorials | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="Self-paced AI tutorials from the Robert Crown Law Library at Stanford Law School: foundational skills, writing and editing, curriculum design, creative design, building custom AI, building and prototyping, data and research, and legal practice." />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="siteHeader">
+  <a class="headerLogo" href="index.html" aria-label="AI Learning Hub home">
+    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  </a>
+  <div class="headerNavigation">
+    <div class="headerTools">
+      <a class="homeButton" href="index.html">Home</a>
+      <form class="siteSearch" action="search.html" method="get" role="search">
+        <label class="srOnly" for="site-search">Search the AI Learning Hub</label>
+        <input id="site-search" name="q" type="search" placeholder="Search" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
+      <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
+    <a href="ai-upload.html">The AI Upload</a>
+    <a href="tutorials.html" aria-current="page">Tutorials</a>
+    <a href="ai-resources.html">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="skills.html">Skills</a>
+    <a href="faculty.html">Faulty Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <p class="crumb"><a href="index.html">AI Learning Hub</a> &rsaquo; AI Tutorials</p>
+
+  <p class="eyebrow">Learn at your own pace</p>
+  <h1>AI Tutorials</h1>
+  <p class="lede">
+    Guides, hands-on lessons, and do-it-yourself workshop modules, grouped by what you are trying to do.
+    Some are a single page to read; others come with an AI assistant, written instructions, and a Drive
+    folder of materials.
+  </p>
+
+  <!-- The training that everything else assumes you have done. It is a card rather
+       than a line of text because it is the one item on this page with an order:
+       first. -->
+  <section class="card crossPromo">
+    <div class="crossPromoText">
+      <p class="eyebrow">Start here</p>
+      <h2>AI Essentials Training</h2>
+      <p class="muted">
+        Foundational concepts, capabilities, and best practices &mdash; a 10&ndash;15 minute introduction to
+        effective and responsible AI use, data privacy, and knowing when to use AI at all.
+      </p>
+    </div>
+    <div class="crossPromoActions">
+      <div class="actions" style="margin-top: 0;">
+        <a class="primary" href="https://bit.ly/rcll-aiessentials" target="_blank" rel="noopener noreferrer">
+          Begin training<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="sections">
+    <noscript>
+      <p class="caution">
+        This page builds its tutorial list with JavaScript, which is turned off. The full list is available
+        on the <a href="https://sites.google.com/law.stanford.edu/ailearninghub/ai-tutorials" target="_blank" rel="noopener noreferrer">AI Learning Hub tutorials page</a>,
+        or email <a href="mailto:library@law.stanford.edu">library@law.stanford.edu</a> and we will send it to you.
+      </p>
+    </noscript>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footerNav" aria-label="Site footer">
+      <div class="footerGroup">
+        <h2 class="footerHeading" id="footer-elsewhere">Elsewhere at Stanford</h2>
+        <ul aria-labelledby="footer-elsewhere">
+          <li><a href="https://law.stanford.edu/ai-initiative/" target="_blank" rel="noopener noreferrer">SLS AI Initiative<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/robert-crown-law-library/" target="_blank" rel="noopener noreferrer">Robert Crown Law Library<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer">Responsible AI at Stanford<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/" target="_blank" rel="noopener noreferrer">Use of Generative AI at SLS<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/hub.js"></script>
+<script>
+// The tutorial library. Kept as data rather than markup because it is a list that
+// grows: adding a tutorial is one entry here, not a block of copied HTML.
+//
+// A tutorial has either `url` — one destination, so the whole card is the link —
+// or `links`, the do-it-yourself modules that hand you an assistant, a set of
+// instructions, and a folder of materials. Those cannot be one card-wide link, so
+// they render as a row of chips instead.
+const SECTIONS = [
+  {
+    title: "Foundational skills and general use",
+    items: [
+      { t: "Introduction to AI for Beginners", c: "Hands-on lesson", cta: "Start course",
+        d: "Start your AI journey here. This 10-part course covers everything from the basics of generative AI to practical skills like prompting and responsible use.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-1" },
+      { t: "AI Explained Using Analogies", c: "Conceptual guide", cta: "Read the guide",
+        d: "Understand complex AI concepts through simple, everyday analogies and metaphors.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/ai-explained" },
+      { t: "Join the #techchat on Slack", c: "Community channel", cta: "Open Slack",
+        d: "Have a question or want to chat about AI? This is the place for open discussions with the community.",
+        url: "https://stanford.enterprise.slack.com/" },
+      { t: "Stanford AI Playground", c: "University tool", cta: "Learn more",
+        d: "A guide to the secure, multi-tool environment for exploring generative AI with your SUNet ID.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/stanford-ai-playground" },
+      { t: "AI at Stanford", c: "University resource", cta: "View resources",
+        d: "A curated list of AI initiatives, centers, and resources across Stanford University.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/ai-at-stanford" },
+      { t: "AI Reality Check", c: "Reading material", cta: "Read the guide",
+        d: "A practical guide separating AI fantasy from reality with 20 real-world scenarios in higher education.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/ai-fantasy-vs-reality" },
+      { t: "The PAUSE Rule", c: "Workflow guide", cta: "Learn the rule",
+        d: "A clear, quick workflow to guide ethical and effective AI integration. Read it here on the hub.",
+        url: "pause-rule.html", internal: true },
+      { t: "AI Trust, Safety and Data Privacy", c: "Resource guide", cta: "Read the guide",
+        d: "A deep dive into evaluating AI tools for data privacy, security, and compliance. Learn to read terms of service like a pro.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/tos-and-data-privacy" }
+    ]
+  },
+  {
+    title: "AI for writing and editing",
+    items: [
+      { t: "Editing with AI", c: "DIY learning module", cta: "View resource",
+        d: "A do-it-yourself version of our workshop on professional writing workflows, showing how to use AI as an editing partner.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/editing-with-ai" },
+      { t: "Creating a Writing Partner", c: "DIY learning module",
+        d: "Build, test, and refine a custom GPT that diagnoses writing habits and models high-impact styles.",
+        links: [
+          { l: "AI assistant", u: "https://chatgpt.com/g/g-687716e8545881919c3831974e8d115b-sls-workshop-instructor-room-1" },
+          { l: "Instructions", u: "https://docs.google.com/document/d/1Oxx91dKh5zlO4JoZKo7lc0biWVPJphTfy5MYdJZYStA/edit?usp=sharing" },
+          { l: "Drive folder", u: "https://drive.google.com/drive/folders/1WqnUOv6558ipm1G3BW2g2skHg335afGY?usp=sharing" }
+        ] }
+    ]
+  },
+  {
+    title: "AI for curriculum design",
+    items: [
+      { t: "Curriculum Design with AI", c: "DIY learning module",
+        d: "Build custom GPTs for syllabi, rubrics, and assessments while applying ethical guardrails to content.",
+        links: [
+          { l: "AI assistant", u: "https://chatgpt.com/g/g-68914eb486188191abf8c10bd41d40e5-sls-workshop-instructor-room-2" },
+          { l: "Instructions", u: "https://docs.google.com/document/d/1ucn3Q0DQ056-1Nomtwmwh3gQ2M6F_Y6LT_BI6m4j1Zo/edit?usp=sharing" },
+          { l: "Drive folder", u: "https://drive.google.com/drive/folders/1O__igL1GEuJ8oAq090owwzYNucr8diCe?usp=sharing" }
+        ] }
+    ]
+  },
+  {
+    title: "AI for creative design",
+    items: [
+      { t: "Google Vids Training", c: "DIY learning module",
+        d: "Create AI-assisted videos for explainers, clinic briefings, and flipped-classroom content.",
+        links: [
+          { l: "Page 1: intro", u: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/google-vids" },
+          { l: "Page 2: guide", u: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/google-vids/google-vids-explained" }
+        ] },
+      { t: "Image and Video Generation", c: "Resource guide", cta: "View guide",
+        d: "Explore tools and techniques for generating and editing visual media using AI.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/image-generation-and-editing" },
+      { t: "Google Mixboard", c: "Resource guide", cta: "View guide",
+        d: "An experimental AI tool from Google Labs to accelerate creative concepting and visual brainstorming.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/google-mixboard" }
+    ]
+  },
+  {
+    title: "Building custom AI",
+    items: [
+      { t: "Designing Custom Gems", c: "Resource guide", cta: "Read the guide",
+        d: "Learn the principles behind creating your own custom AI assistants tailored to specific tasks.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/custom-gems" },
+      { t: "Building Custom GPTs", c: "Resource guide", cta: "Read the guide",
+        d: "An end-to-end guide for designing, building, and safely sharing powerful custom AI assistants.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/custom-gpts" },
+      { t: "Projects in ChatGPT Explained", c: "Resource guide", cta: "Read the guide",
+        d: "The difference between custom chats and projects in ChatGPT, and how to leverage projects to get work done.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/chatgpt-projects" },
+      { t: "Using Apps in ChatGPT", c: "Resource guide", cta: "Read the guide",
+        d: "How to find, use, and manage third-party applications within the ChatGPT interface.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/open-ai-apps" }
+    ]
+  },
+  {
+    title: "Building and prototyping",
+    desc: 'Two long-form guides, both written for people who do not code. They pair: build something with an API, then publish it where people can find it.',
+    items: [
+      { t: "Understanding APIs", c: "Seven-module course", cta: "Start the course",
+        d: "How software asks other software for things and gets an answer back &mdash; seven recorded modules from the first request through authentication, architecture, and testing, with the lab snippets and a status-code reference on the page.",
+        url: "api-course.html", internal: true },
+      { t: "Your First GitHub Portfolio", c: "Eighteen-part guide", cta: "Open the guide",
+        d: "Put your AI work somewhere people expect to look. Eighteen short parts, entirely through a browser: an account, a profile README, three projects that need no code, and a thirty-day launch plan.",
+        url: "github-portfolio.html", internal: true }
+    ]
+  },
+  {
+    title: "AI for data and research",
+    items: [
+      { t: "AI in Google Sheets", c: "Hands-on lesson", cta: "Start lesson",
+        d: "Leverage Gemini's AI in your spreadsheets for analysis, summarization, and more.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/ai-in-google-sheets" },
+      { t: "NotebookLM 101", c: "DIY learning module",
+        d: "Set up and populate NotebookLM, then explore its collaboration, multimedia, and chat features for your work.",
+        links: [
+          { l: "AI assistant", u: "https://chatgpt.com/g/g-68815de326c4819190a461484853e978-sls-workshop-instructor-room-3" },
+          { l: "Instructions", u: "https://docs.google.com/document/d/15j4D9jlqntCRJZn2QMAvyokH7C0zK6rLNXLDXJGs-W4/edit?tab=t.0" },
+          { l: "Drive folder", u: "https://drive.google.com/drive/folders/1C3zozLSRo_nCo-tkLOV1wk7JxjS5gSt_?usp=drive_link" }
+        ] },
+      { t: "AI and Datasets", c: "DIY learning module",
+        d: "Use Google Colab to clean data, generate visualizations, test models, and troubleshoot AI-generated code.",
+        links: [
+          { l: "AI assistant", u: "https://chatgpt.com/g/g-6883da3099e08191bfc5a50bfab825f0-sls-workshop-instructor-room-4" },
+          { l: "Instructions", u: "https://docs.google.com/document/d/11L5aNZtn2oT3J8Hcp0UHxg89WRWJk9q9ZK9sURedRc0/edit?usp=drive_link" },
+          { l: "Drive folder", u: "https://drive.google.com/drive/folders/1sQjIlVmGC50j9xXYSDuWJycHZmhiTo4-?usp=sharing" }
+        ] },
+      { t: "AI and Legal Research", c: "DIY learning module",
+        d: "Use the AI features in Westlaw, Lexis, and Bloomberg, and run multi-jurisdictional surveys using retrieval-augmented generation.",
+        links: [
+          { l: "AI assistant", u: "https://chatgpt.com/g/g-6890e5e1e110819191013123213638cf-sls-workshop-instructor-room-6" },
+          { l: "Instructions", u: "https://docs.google.com/document/d/1sNgCe7Szyyh6zK7KLOPN5nnAQLKOMjpiS4JRCCWO2gs/edit?usp=sharing" },
+          { l: "Drive folder", u: "https://drive.google.com/drive/folders/1EuDGPk26gxL0NW3GLLC1WvsCILGwgtJ1?usp=sharing" }
+        ] },
+      { t: "Deep Research and Presentations", c: "DIY learning module",
+        d: "Configure multiple AI research tools to extract legal insights and auto-generate a presentation deck.",
+        links: [
+          { l: "AI assistant", u: "https://chatgpt.com/g/g-6887db09321081919de651a29c3660a6-sls-workshop-instructor-room-5" },
+          { l: "Instructions", u: "https://docs.google.com/document/d/1q0duNm0m3B0B7qdJoOeX5Fo3g4mwM4kkt2xrWwY25cA/edit?usp=drive_link" },
+          { l: "Drive folder", u: "https://drive.google.com/drive/folders/1rG3ySDWckKUgN6MUDagobjpTaCNhPtOF?usp=sharing" }
+        ] },
+      { t: "Web Browser Console Commands", c: "Hands-on lesson", cta: "Start lesson",
+        d: "How to prompt in the browser console to pull data from websites.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/web-browser-console-commands" }
+    ]
+  },
+  {
+    title: "AI for legal practice",
+    items: [
+      { t: "Harvey AI", c: "Legal practice platform", cta: "View hub",
+        d: "A comprehensive hub for using Harvey, the AI platform for legal professionals. Includes guides for navigation, models, Vault, and Workflows.",
+        url: "https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/harvey-ai" }
+    ]
+  }
+];
+
+const NUMBER_WORDS = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
+const EXT_ICON = '<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span>';
+
+function attrs(url, internal) {
+  return internal ? `href="${url}"` : `href="${url}" target="_blank" rel="noopener noreferrer"`;
+}
+
+function card(item) {
+  const head = `<p class="eyebrow">${item.c}</p><h3>${item.t}</h3><p class="muted">${item.d}</p>`;
+  if (item.url) {
+    const icon = item.internal ? "" : EXT_ICON;
+    return `<a class="card interactive" ${attrs(item.url, item.internal)}>${head}` +
+      `<span class="explore">${item.cta || "Open"} &rarr;${icon}</span></a>`;
+  }
+  const chips = item.links
+    .map((l) => `<a class="pill" href="${l.u}" target="_blank" rel="noopener noreferrer">${l.l}${EXT_ICON}</a>`)
+    .join("");
+  return `<div class="card">${head}<div class="chipRow">${chips}</div></div>`;
+}
+
+document.getElementById("sections").innerHTML = SECTIONS.map((s, i) => {
+  const part = NUMBER_WORDS[i + 1] || String(i + 1);
+  const id = `part-${i + 1}`;
+  const desc = s.desc ? `<p class="muted" style="max-width: 70ch;">${s.desc}</p>` : "";
+  return `<section aria-labelledby="${id}">
+    <p class="eyebrow">Part ${part}</p>
+    <h2 id="${id}">${s.title}</h2>
+    ${desc}
+    <div class="grid" style="margin-top: 1.2rem;">${s.items.map(card).join("")}</div>
+  </section>`;
+}).join("");
+</script>
+
+<!-- embed-map: generated by scripts/build-embed-map.py -->
+<script src="assets/embed-map.js"></script>
+<script src="assets/embed.js"></script>
+</body>
+</html>

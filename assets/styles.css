@@ -1,0 +1,3538 @@
+/* ============================================================================
+   SLS Faculty AI Skills — design system
+   Aesthetic: warm editorial gravitas (Stanford Law) + Apple-style "liquid glass".
+   The default palette is dark. Light mode remains user-selectable via the floating ThemeToggle, which sets
+   an explicit data-theme value on <html> (persisted to localStorage, applied before paint). To
+   make the site follow the OS automatically instead, change the selectors below
+   from :root[data-theme="dark"] back to @media (prefers-color-scheme: dark).
+   Respects reduced-motion. Shared classes (.card, .hero, .grid, buttons, pills)
+   drive every page.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+  /* Brand + ink */
+  --cardinal: #8c1515;
+  --cardinal-bright: #b23a3a;
+  --gold: #a9791f;
+  --ink: #f3ede4;
+  --muted: #b3a99c;
+
+  /* Cardinal is a fill colour: it carries white text at 9.4:1, but as text on
+     our dark surfaces it lands at 1.97:1, far under the 4.5:1 AA floor. So
+     foreground red gets its own tokens, lightened per theme. Dark: 5.7:1 and
+     7.9:1 on hover. Light: the brand cardinal, 8.2:1 on paper. */
+  --link: #e06a6a;
+  --link-hover: #ef8f8f;
+
+  /* Surfaces */
+  --paper: #17130f;
+  --paper-2: #1f1913;
+
+  /* Glass tokens */
+  --glass-bg: rgba(40, 33, 28, 0.55);
+  --glass-bg-strong: rgba(46, 38, 31, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-hairline: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 20px 48px -18px rgba(48, 20, 12, 0.28);
+  --glass-shadow-lg: 0 40px 80px -28px rgba(48, 20, 12, 0.36);
+  --glass-blur: saturate(180%) blur(22px);
+
+  --focus: #1a56db;
+  --radius: 22px;
+  --radius-lg: 30px;
+  --maxw: 1160px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --cardinal: #8c1515; --cardinal-bright: #b23a3a; --gold: #a9791f;
+  --link: #8c1515; --link-hover: #b23a3a;
+  --ink: #1c1a17; --muted: #5f574f; --paper: #f4efe8; --paper-2: #efe7db;
+  --glass-bg: rgba(255,255,255,.55); --glass-bg-strong: rgba(255,255,255,.72);
+  --glass-border: rgba(255,255,255,.65); --glass-hairline: rgba(28,26,23,.08);
+  --glass-shadow: 0 20px 48px -18px rgba(0, 0, 0, 0.6);
+  --glass-shadow-lg: 0 40px 80px -28px rgba(0, 0, 0, 0.7);
+  --focus: #7aa2ff;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  font-size: 1.02rem;
+  letter-spacing: -0.003em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Aurora backdrop: soft colour fields the glass refracts, fixed behind content. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20vmax;
+  z-index: -1;
+  background:
+    radial-gradient(42vmax 42vmax at 12% -8%, rgba(140, 21, 21, 0.22), transparent 60%),
+    radial-gradient(38vmax 38vmax at 96% 4%, rgba(169, 121, 31, 0.20), transparent 62%),
+    radial-gradient(46vmax 46vmax at 78% 96%, rgba(140, 21, 21, 0.14), transparent 60%),
+    radial-gradient(40vmax 40vmax at 4% 92%, rgba(90, 110, 160, 0.16), transparent 60%);
+  filter: blur(6px);
+}
+:root[data-theme="dark"] body::before {
+  background:
+    radial-gradient(42vmax 42vmax at 12% -8%, rgba(224, 106, 106, 0.20), transparent 60%),
+    radial-gradient(38vmax 38vmax at 96% 4%, rgba(217, 173, 85, 0.16), transparent 62%),
+    radial-gradient(46vmax 46vmax at 78% 96%, rgba(140, 21, 21, 0.30), transparent 60%),
+    radial-gradient(40vmax 40vmax at 4% 92%, rgba(80, 100, 150, 0.20), transparent 60%);
+}
+
+/* ---- Links + focus --------------------------------------------------------- */
+a { color: var(--link); font-weight: 600; text-underline-offset: 3px; }
+a:hover { color: var(--link-hover); }
+:where(a, button, summary, input):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip {
+  position: absolute; left: -999px; top: 1rem;
+  background: var(--glass-bg-strong); color: var(--ink);
+  padding: 0.7rem 1rem; border-radius: 999px; z-index: 20; font-weight: 600;
+}
+.skip:focus { left: 1rem; }
+
+/* ---- Typography ------------------------------------------------------------ */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.74rem;
+  margin: 0 0 0.4rem;
+}
+h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.3rem, 5.5vw, 4.2rem);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  margin: 0.2rem 0 1rem;
+}
+h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.6rem;
+}
+h3 { font-size: 1.16rem; font-weight: 650; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+p { margin: 0 0 0.9rem; }
+.lede {
+  font-size: clamp(1.12rem, 1.7vw, 1.34rem);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 62ch;
+  font-weight: 400;
+}
+.muted { color: var(--muted); }
+
+/* ---- Header (glass, sticky) ------------------------------------------------ */
+.siteHeader {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem clamp(1rem, 4vw, 3rem);
+  background: rgba(12, 10, 8, 0.34);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-hairline);
+}
+.headerLogo {
+  display: block;
+  flex: 0 1 20rem;
+  min-width: 13rem;
+  line-height: 0;
+}
+.headerLogo img { width: 100%; height: auto; }
+[data-theme="dark"] .headerLogo img { filter: grayscale(1) brightness(0) invert(1); }
+.headerNavigation { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
+.headerTools { display: flex; align-items: center; justify-content: flex-end; gap: .45rem; }
+.homeButton {
+  padding: .52rem .9rem; border: 1px solid rgba(255,255,255,.35); border-radius: 999px;
+  color: #fff; text-decoration: none; font-size: .9rem; font-weight: 650;
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+}
+.homeButton:hover { background: var(--cardinal); color: #fff; }
+.siteHeader nav a { color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.55); }
+.siteSearch { display: flex; align-items: center; }
+.siteSearch input { width: 9rem; padding: .52rem .75rem; border: 1px solid rgba(255,255,255,.35); border-radius: 999px 0 0 999px; background: rgba(10,8,7,.48); color: #fff; }
+.siteSearch input::placeholder { color: rgba(255,255,255,.78); }
+.siteSearch button { padding: .52rem .75rem; border: 1px solid rgba(255,255,255,.35); border-left: 0; border-radius: 0 999px 999px 0; background: var(--cardinal); color: #fff; cursor: pointer; }
+/* The sign-in page's bar: the logo alone, so the front door does not present a menu
+   of destinations that all lead back to it. */
+.siteHeaderMinimal { justify-content: flex-start; }
+.siteHeaderMinimal .headerLogo { display: block; flex: 0 1 20rem; min-width: 13rem; line-height: 0; }
+
+/* The account link sits in the bar but reads as an account action rather than a
+   seventh destination: outlined, not filled, so it does not compete with search. */
+/* The bar already wraps to a second row below about 1440px, and this pushes that
+   point up a little. `margin-left: auto` keeps the link at the right edge of
+   whichever row it lands on — under the search box rather than orphaned beneath
+   Home, which is what a plain margin gave. */
+.siteHeader nav a.headerAccount {
+  margin-left: auto; padding: .5rem .9rem; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.5); font-weight: 650;
+}
+.siteHeader nav a.headerAccount:hover { background: var(--cardinal); color: #fff; }
+:root[data-theme="light"] .siteHeader nav a.headerAccount { border-color: rgba(28, 26, 23, 0.34); }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.siteHeader nav { display: flex; gap: 0.15rem; flex-wrap: wrap; align-items: center; }
+.siteHeader nav a {
+  padding: 0.5rem 0.8rem; border-radius: 999px;
+  text-decoration: none; color: var(--ink); font-weight: 550;
+  font-size: 0.93rem; white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.siteHeader nav a:hover { background: rgba(140, 21, 21, 0.09); color: var(--link); }
+.siteHeader nav a[aria-current="page"] {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.siteHeader nav a.externalNavLink {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+.externalLinkIcon { font-size: 0.78em; line-height: 1; opacity: 0.85; }
+.siteHeader nav a.navCta {
+  background: var(--cardinal); color: #fff;
+  box-shadow: 0 8px 18px -8px rgba(140, 21, 21, 0.8);
+}
+.siteHeader nav a.navCta:hover { background: var(--cardinal-bright); }
+
+/* Keep the navigation legible when it sits over photography in light mode. */
+:root[data-theme="light"] .siteHeader {
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom-color: rgba(28, 26, 23, 0.12);
+  box-shadow: 0 8px 24px -18px rgba(28, 26, 23, 0.45);
+}
+:root[data-theme="light"] .siteHeader nav a {
+  color: var(--ink);
+  text-shadow: none;
+}
+:root[data-theme="light"] .siteHeader nav a:hover { color: var(--cardinal); }
+:root[data-theme="light"] .siteHeader nav a[aria-current="page"] {
+  background: rgba(140, 21, 21, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(140, 21, 21, 0.2);
+}
+:root[data-theme="light"] .siteHeader nav a.externalNavLink {
+  box-shadow: inset 0 0 0 1px rgba(28, 26, 23, 0.22);
+}
+:root[data-theme="light"] .homeButton { color: var(--ink); border-color: rgba(28, 26, 23, 0.28); text-shadow: none; }
+:root[data-theme="light"] .homeButton:hover { color: #fff; }
+:root[data-theme="light"] .siteSearch input {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(28, 26, 23, 0.28);
+  color: var(--ink);
+}
+:root[data-theme="light"] .siteSearch input::placeholder { color: var(--muted); }
+:root[data-theme="light"] .siteSearch button { border-color: rgba(28, 26, 23, 0.28); }
+
+/* Mobile menu toggle button (hidden on desktop) */
+.navToggleBtn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 3rem; height: 3rem; padding: 0; border-radius: 50%;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  color: var(--ink); cursor: pointer;
+}
+.hamburgerIcon {
+  display: flex; flex-direction: column; justify-content: space-between;
+  width: 1.35rem; height: 1rem;
+}
+.hamburgerIcon span {
+  display: block; width: 100%; height: 2px; border-radius: 999px;
+  background: currentColor; transform-origin: center;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.navToggleBtn[aria-expanded="true"] .hamburgerIcon span:first-child {
+  transform: translateY(7px) rotate(45deg);
+}
+.navToggleBtn[aria-expanded="true"] .hamburgerIcon span:nth-child(2) { opacity: 0; }
+.navToggleBtn[aria-expanded="true"] .hamburgerIcon span:last-child {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Layout ---------------------------------------------------------------- */
+main {
+  max-width: var(--maxw);
+  margin: auto;
+  padding: clamp(6rem, 10vw, 7.5rem) clamp(1.1rem, 4vw, 3rem) 4rem;
+}
+section { margin: clamp(1.6rem, 4vw, 3rem) 0; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(1.5rem, 5vw, 3.5rem) 0 clamp(1rem, 3vw, 2rem);
+}
+.hero-eyebrow-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+
+/* ---- Glass surfaces -------------------------------------------------------- */
+.panel, .card, .videoDemo {
+  position: relative;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: clamp(1.2rem, 2.6vw, 1.9rem);
+  box-shadow: var(--glass-shadow);
+}
+/* Specular top highlight — the tell-tale liquid-glass sheen */
+.panel::before, .card::before, .videoDemo::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 45%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+:root[data-theme="dark"] .panel::before,
+:root[data-theme="dark"] .card::before,
+:root[data-theme="dark"] .videoDemo::before {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 45%);
+}
+.card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+a.card, .card.interactive { text-decoration: none; color: inherit; display: block; }
+a.card:hover, .card.interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow-lg);
+  background: var(--glass-bg-strong);
+}
+.card.compact { padding: clamp(1rem, 2vw, 1.35rem); }
+/* "Open →" affordance inside a plain card, where no context-specific rule
+   already styles it. */
+.card .explore { display: block; margin-top: 0.9rem; color: var(--link); font-weight: 700; font-size: 0.92rem; }
+.card h2, .card h3 { margin-top: 0; }
+.card > :last-child { margin-bottom: 0; }
+
+.hero-card { background: var(--glass-bg-strong); }
+
+/* ---- Grids ----------------------------------------------------------------- */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.9rem, 2vw, 1.3rem); }
+.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ---- Buttons --------------------------------------------------------------- */
+.actions { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: center; margin-top: 1.3rem; }
+/* Lower-emphasis third action: a plain link beside the filled and outlined
+   buttons, so three calls to action do not compete as three buttons. */
+.textLink { font-weight: 600; text-decoration: underline; padding: 0.2rem 0; }
+.downloadButton, .secondary, .primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 50px; padding: 0.75rem 1.35rem;
+  /* A long label wraps inside the pill instead of pushing the page wider than
+     the viewport, which it did at 320px. */
+  max-width: 100%; text-align: center;
+  border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 0.98rem;
+  cursor: pointer; border: 1px solid transparent;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+.downloadButton, .primary {
+  color: #fff;
+  background: linear-gradient(145deg, var(--cardinal-bright), var(--cardinal) 60%, #6f1111);
+  box-shadow: 0 14px 30px -12px rgba(140, 21, 21, 0.75);
+}
+.downloadButton:hover, .primary:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -12px rgba(140, 21, 21, 0.85); color: #fff; }
+.secondary {
+  color: var(--ink);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+}
+.secondary:hover { transform: translateY(-2px); background: var(--glass-bg-strong); color: var(--ink); }
+.downloadButton.disabled {
+  background: rgba(120, 112, 104, 0.35); color: var(--muted);
+  box-shadow: none; cursor: not-allowed; border-color: var(--glass-hairline);
+}
+
+/* ---- Pills / badges -------------------------------------------------------- */
+.pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.28rem 0.7rem; border-radius: 999px;
+  background: var(--glass-bg); border: 1px solid var(--glass-hairline);
+  font-size: 0.76rem; font-weight: 650; letter-spacing: 0.02em; color: var(--muted);
+}
+.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.pill.pilot .dot { background: #2e9e5b; }
+.pill.available .dot { background: #2e9e5b; }
+.pill.planned .dot { background: #9a9088; }
+
+/* ---- Steps / notes / tables ------------------------------------------------ */
+/* The single column is declared rather than left implicit: an auto-sized track
+   takes its width from the widest item's max-content, so one step holding a code
+   block pushed a whole page sideways on a phone. */
+.steps { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+.step {
+  position: relative;
+  padding: 1.1rem 1.2rem 1.1rem 1.35rem;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-left: 4px solid var(--cardinal);
+  border-radius: 8px 18px 18px 8px;
+}
+.step h2, .step h3 { margin-top: 0; font-size: 1.15rem; }
+.note {
+  background: linear-gradient(135deg, rgba(169, 121, 31, 0.16), rgba(169, 121, 31, 0.06));
+  border: 1px solid rgba(169, 121, 31, 0.3);
+  border-left: 4px solid var(--gold);
+  padding: 1rem 1.15rem; border-radius: 8px 16px 16px 8px;
+}
+table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; }
+th, td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--glass-hairline); vertical-align: top; }
+th { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+
+/* ---- Homepage: seamless hero + glass collections showcase ----------------
+   The hero carries extra top breathing room to sit cleanly beneath the
+   transparent navigation, and the collections live inside one liquid-glass
+   card. */
+.homeHero {
+  position: relative; display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 4vw, 3rem);
+  align-items: center;
+  width: 100vw; min-height: clamp(620px, 82vh, 840px);
+  margin: clamp(-7.5rem, -10vw, -6rem) calc(50% - 50vw) 4rem;
+  padding: clamp(9rem, 16vw, 13rem) max(clamp(1.1rem, 4vw, 3rem), calc((100vw - var(--maxw))/2 + 3rem)) 5rem;
+  overflow: hidden;
+}
+.homeHeroText { position: relative; z-index: 2; max-width: 55ch; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.7); }
+.homeHeroText .lede { color: rgba(255,255,255,.9); }
+.homeHeroText .pill { color: #fff; background: rgba(20,16,13,.48); border-color: rgba(255,255,255,.25); }
+.homeHeroText h1 { max-width: 15ch; }
+.homeHeroText .lede { max-width: 52ch; }
+
+/* Autoplaying hero video, framed as liquid glass (16:9 to match the source). */
+.heroVideo {
+  position: absolute; inset: 0;
+  border-radius: 0;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow-lg);
+}
+.heroVideo::after {
+  /* specular sheen so it reads as part of the glass system */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(10,8,7,.78) 0%, rgba(10,8,7,.5) 48%, rgba(10,8,7,.28) 100%), rgba(80,18,18,.16);
+}
+.heroVideoEl { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Light mode keeps the photograph visible while presenting the hero as a
+   bright surface with dark, high-contrast copy. */
+:root[data-theme="light"] .homeHeroText {
+  color: var(--ink);
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.8);
+}
+:root[data-theme="light"] .homeHeroText .lede { color: #38332e; }
+:root[data-theme="light"] .heroVideo::after {
+  background:
+    linear-gradient(90deg, rgba(255, 252, 247, 0.92) 0%, rgba(255, 252, 247, 0.76) 48%, rgba(255, 252, 247, 0.38) 100%),
+    rgba(255, 248, 238, 0.12);
+}
+:root[data-theme="light"] .homeHeroText .secondary {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(28, 26, 23, 0.22);
+}
+
+/* Cross-promo card pointing faculty to the student AI Learning Hub. */
+.crossPromo {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.2rem); flex-wrap: wrap;
+  border-left: 4px solid var(--gold);
+  background: linear-gradient(135deg, rgba(169, 121, 31, 0.14), var(--glass-bg) 55%);
+}
+/* 56ch rather than 60: the actions column now carries a second line, and at 60ch
+   the pair overflowed the content box by ~13px and wrapped the button below the
+   text. Measured at 1280px, where the card's content box is 1003px. */
+.crossPromoText { max-width: 56ch; }
+.crossPromo h2 { margin: 0 0 0.5rem; }
+.crossPromo .actions { flex-shrink: 0; flex-wrap: nowrap; }
+/* The student action plus one quiet faculty link beneath it. The aside is capped
+   narrow enough that the pair still sits beside the 60ch text column on desktop
+   rather than wrapping below it; below 640px the whole section stacks anyway. */
+.crossPromoActions { flex: 0 1 auto; min-width: 0; display: grid; gap: 0.55rem; justify-items: start; }
+.crossPromoAside { margin: 0; font-size: 0.9rem; max-width: 26ch; }
+
+/* ---- Home: five destinations ----------------------------------------------
+   The homepage used to name every guide. With eight guides across two collections
+   that became a wall of questions above the other four destinations, so the list
+   moved to /learn-ai/ and the homepage carries one card per destination with a
+   derived count.
+   -------------------------------------------------------------------------- */
+/* The five destination cards. Three across on a wide screen, two on a laptop, one
+   on a phone: the fifth card starting a new row is deliberate — a 5-across row
+   would squeeze every description into a column too narrow to read. */
+.homeDestinations {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.3rem); margin-top: 1.3rem;
+}
+.homeDestination h3 { font-size: 1.12rem; }
+.homeDestination p.muted { font-size: 0.93rem; }
+
+/* Two directories as a text row rather than two more cards: looked up when a
+   question arises, not chosen as a starting point. */
+.homeLookup { margin-top: 2.2rem; }
+.homeLookupList { margin: 0.8rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.homeLookupList > li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.7rem; }
+.homeLookupNote { font-size: 0.9rem; }
+
+@media (max-width: 1080px) {
+  .homeDestinations { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .homeDestinations { grid-template-columns: 1fr; }
+}
+/* Skill files and the agent guide, side by side as equals. The pill sits beneath
+   the title rather than beside it: the skill-file count is long enough to wrap in
+   one card and not the other, which left the pair looking misaligned. */
+.homeCardHead {
+  display: grid; gap: 0.45rem; justify-items: start; margin-bottom: 0.55rem;
+}
+.homeCardHead h3 { margin: 0; }
+
+/* The get-set-up row: the pages that used to be reachable from no menu. */
+.setUpRow { margin-top: 2rem; }
+.setUpLinks {
+  margin: 0.8rem 0 0; padding: 0; list-style: none;
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem;
+}
+
+/* Home portal: featured support area (AI Skills) + secondary/upcoming areas. */
+.featureCard {
+  display: block; text-decoration: none; color: inherit;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+.featureCard:hover { transform: translateY(-4px); box-shadow: var(--glass-shadow-lg); background: var(--glass-bg-strong); }
+.featureHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.chipRow { display: flex; gap: 0.45rem; flex-wrap: wrap; margin: 0.9rem 0 1.1rem; }
+.chipRow .pill { background: var(--glass-bg-strong); }
+.soonArea { opacity: 0.92; }
+.digestCard .explore {
+  display: block; margin-top: 1rem;
+  color: var(--link); font-weight: 700; font-size: 0.92rem;
+}
+
+/* ---- The AI Upload -------------------------------------------------------- */
+.digestEmbed {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: block;
+  width: 100vw;
+  height: calc(100dvh - 68px);
+  top: 68px;
+  border: 0;
+  background: #fff;
+}
+
+/* ---- AI Resources --------------------------------------------------------- */
+.resourcesHero { max-width: 850px; padding: clamp(1rem, 4vw, 3rem) 0 0; }
+.resourcesHero .lede { max-width: 66ch; }
+.resourceNotice { border-left: 4px solid var(--cardinal); }
+.resourceNotice p { margin: 0; }
+.resourceSection { margin-top: clamp(3.5rem, 7vw, 6rem); }
+.resourceSectionHead { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; }
+.resourceIcon {
+  display: grid; place-items: center; flex: 0 0 2.7rem; width: 2.7rem; height: 2.7rem;
+  border: 1px solid var(--glass-border); border-radius: 14px; color: var(--gold); background: var(--glass-bg-strong);
+}
+.resourceIcon svg { width: 1.25rem; height: 1.25rem; }
+.resourceSectionHead h2, .resourceSectionHead p { margin-bottom: .2rem; }
+.resourceGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.85rem, 2vw, 1.2rem); }
+.resourceCard { display: flex !important; flex-direction: column; min-height: 230px; }
+.resourceCard h3 { font-family: var(--font-serif); font-size: 1.3rem; }
+.resourceCard .resourceTag { margin-bottom: .8rem; align-self: flex-start; }
+.resourceCard .muted { flex: 1; }
+.resourceCard .explore, .resourcePortalCard .explore { display: block; margin-top: 1rem; color: var(--link); font-weight: 700; }
+.resourceFeatured {
+  background: linear-gradient(135deg, rgba(140,21,21,.38), rgba(79,48,130,.25)), var(--glass-bg-strong);
+  border-color: rgba(178,58,58,.45);
+}
+.resourceFeatured h3 { font-size: 1.65rem; }
+.resourceCallout { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; }
+.resourceCallout > div { max-width: 68ch; }
+/* One restrained secondary read, never a second competing call to action. */
+.calloutSecondary { margin: 0.6rem 0 0; font-size: 0.93rem; display: flex; flex-wrap: wrap; gap: 0.9rem; }
+:root[data-theme="dark"] .resourceNotice a,
+:root[data-theme="dark"] .note a,
+:root[data-theme="dark"] .resourceCard .explore {
+  color: #e06a6a;
+}
+:root[data-theme="dark"] .resourceNotice a:hover,
+:root[data-theme="dark"] .note a:hover,
+:root[data-theme="dark"] .resourceCard:hover .explore {
+  color: #f09a9a;
+}
+
+/* The showcase is a large liquid-glass panel (inherits glass + specular from
+   .panel); collection tiles inside stay flatter to avoid glass-on-glass mud. */
+.showcase {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow-lg);
+  background: var(--glass-bg-strong);
+  padding: clamp(1.3rem, 3vw, 2.4rem);
+}
+.showcaseHead {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin-bottom: 1.3rem;
+}
+.showcaseHead h2 { margin: 0; }
+.showcaseHead .eyebrow { margin-bottom: 0.25rem; }
+
+.collectionGrid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.7vw, 1.2rem);
+}
+.collectionTile {
+  position: relative; display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
+  padding: 1.25rem 1.35rem 1.2rem 1.5rem;
+  border-radius: 18px;
+  border: 1px solid var(--glass-hairline);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+}
+/* Vertical accent spine, cardinal → gold; grows on hover for the live tiles. */
+.collectionTile::after {
+  content: ""; position: absolute; left: 0; top: 0.9rem; bottom: 0.9rem; width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(var(--cardinal), var(--gold));
+  opacity: 0.7; transition: width 0.22s ease, opacity 0.22s ease, top 0.22s ease, bottom 0.22s ease;
+}
+a.collectionTile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow);
+  background: var(--glass-bg-strong);
+  border-color: rgba(140, 21, 21, 0.28);
+}
+a.collectionTile:hover::after { width: 5px; opacity: 1; top: 0; bottom: 0; }
+.collectionTile h3 { margin: 0.55rem 0 0.15rem; font-family: var(--font-serif); font-size: 1.26rem; }
+.collectionTile .tileTagline { color: var(--gold); font-weight: 600; font-size: 0.95rem; margin: 0 0 0.45rem; }
+.collectionTile .tileBlurb {
+  color: var(--muted); font-size: 0.92rem; margin: 0 0 1.1rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.collectionTile .tileFoot {
+  margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+}
+.collectionTile .explore { color: var(--link); font-weight: 700; font-size: 0.92rem; white-space: nowrap; }
+.collectionTile.soon { border-style: dashed; }
+.collectionTile.soon::after { opacity: 0.4; }
+.collectionTile.soon h3, .collectionTile.soon .tileTagline { color: var(--muted); }
+
+/* ---- Video demo ------------------------------------------------------------ */
+.videoDemo { display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.5rem; align-items: center; }
+.videoDemo iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 16px; background: var(--paper-2); }
+
+/* ---- Markdown explainer specifics ----------------------------------------- */
+.md-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; }
+.md-demo .md-source, .md-demo .md-rendered {
+  padding: 1.1rem 1.25rem; border-radius: 16px; border: 1px solid var(--glass-border);
+  background: var(--glass-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+.md-demo pre {
+  margin: 0; white-space: pre-wrap; word-break: break-word;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.86rem; line-height: 1.7; color: var(--ink);
+}
+.md-demo .tok-h { color: var(--link); font-weight: 700; }
+.md-demo .tok-b { font-weight: 700; }
+.md-demo .tok-m { color: var(--muted); }
+.md-rendered h4 { font-family: var(--font-serif); font-size: 1.2rem; margin: 0 0 0.5rem; }
+.md-rendered ul { margin: 0.3rem 0 0; padding-left: 1.2rem; }
+
+/* ---- Long-form guides (document look) --------------------------------------
+   Used by /build-an-agent. The intent is a printed handbook: front matter, a
+   contents list, numbered modules, paste-ready prompts, and reserved slots for
+   recordings and screenshots. Print rules live at the bottom of this file. */
+.docPage { max-width: 82ch; }
+.docPage .lede { max-width: 70ch; }
+/* The site header is fixed, so in-page contents links need clearance. */
+.docPage [id] { scroll-margin-top: 7rem; }
+
+.docMeta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.6rem 1.4rem; margin: 1.4rem 0 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--glass-border); border-radius: 16px;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+.docMeta dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 700; color: var(--gold);
+}
+.docMeta dd { margin: 0.15rem 0 0; font-size: 0.94rem; }
+
+.docToc {
+  margin: clamp(1.6rem, 4vw, 2.4rem) 0;
+  padding: 1.2rem 1.4rem 1.3rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 18px 18px 8px;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+.docToc ol { margin: 0.3rem 0 0; padding-left: 1.4rem; }
+.docToc li { margin-bottom: 0.35rem; }
+.docToc a { text-decoration: none; }
+.docToc a:hover { text-decoration: underline; }
+.docTocNote { color: var(--muted); font-size: 0.9rem; }
+.docTocNote::before { content: " — "; }
+
+/* Wide tables scroll inside their own column rather than pushing the page. */
+.tableScroll { overflow-x: auto; margin: 0.5rem 0; }
+.tableScroll table { min-width: 32rem; margin: 0; }
+
+.docPart {
+  margin: clamp(2.6rem, 6vw, 4rem) 0 clamp(1.2rem, 3vw, 1.8rem);
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+  border-top: 2px solid var(--glass-border);
+}
+.docPart h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); margin-bottom: 0.7rem; }
+
+.module { margin: clamp(2rem, 4.5vw, 3rem) 0; }
+.moduleHead { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.moduleNum {
+  flex: 0 0 2.6rem; width: 2.6rem; height: 2.6rem; margin-top: 0.2rem;
+  display: grid; place-items: center;
+  border-radius: 50%; border: 1px solid rgba(140, 21, 21, 0.4);
+  background: linear-gradient(150deg, rgba(140, 21, 21, 0.28), rgba(169, 121, 31, 0.18));
+  font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--ink);
+}
+.moduleHeadText { min-width: 0; }
+.moduleHeadText .eyebrow { margin-bottom: 0.15rem; }
+.moduleHeadText h2 { margin: 0; }
+
+/* Reserved media slots: obviously empty, obviously intentional. */
+.mediaPlaceholder { margin: 1.3rem 0; }
+.mediaFrame {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.25rem; padding: 1.2rem; text-align: center;
+  /* Width is fixed to the column so the max-height cap shortens the box
+     instead of narrowing it when the declared ratio would be too tall. */
+  width: 100%; max-height: 19rem; min-height: 8.5rem;
+  border: 2px dashed rgba(169, 121, 31, 0.55); border-radius: 18px;
+  background:
+    repeating-linear-gradient(135deg, rgba(169, 121, 31, 0.05) 0 12px, transparent 12px 24px),
+    var(--glass-bg);
+}
+.mediaPlaceholder.recording .mediaFrame { border-color: rgba(178, 58, 58, 0.55); }
+.mediaGlyph { font-size: 1.5rem; color: var(--gold); line-height: 1; }
+.mediaPlaceholder.recording .mediaGlyph { color: var(--link); }
+.mediaKind {
+  margin: 0.3rem 0 0; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.16em; font-weight: 700; color: var(--muted);
+}
+.mediaTitle { margin: 0.2rem 0 0.6rem; font-family: var(--font-serif); font-size: 1.05rem; max-width: 46ch; }
+.mediaId { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.mediaPlaceholder figcaption,
+.mediaFigure figcaption { margin-top: 0.5rem; font-size: 0.9rem; color: var(--muted); }
+
+/* Filled media slots: the asset itself, framed where the empty slot stood. */
+.mediaFigure { margin: 1.3rem 0; }
+.mediaAsset {
+  display: block; width: 100%;
+  border: 0; border-radius: 18px; background: var(--paper-2);
+}
+img.mediaAsset {
+  height: auto; border: 1px solid var(--glass-border);
+}
+
+/* Paste-ready prompts. */
+.promptBlock {
+  margin: 1.2rem 0; padding: 1rem 1.15rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--cardinal);
+  border-radius: 8px 16px 16px 8px;
+  background: var(--glass-bg-strong);
+}
+.promptHead { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+.promptHead .eyebrow { margin: 0; }
+.promptBlock pre {
+  margin: 0.6rem 0 0; white-space: pre-wrap; word-break: break-word;
+  font-family: var(--font-sans); font-size: 0.96rem; line-height: 1.6; color: var(--ink);
+}
+.promptAfter { margin: 0.7rem 0 0; font-size: 0.9rem; }
+.copyBtn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.35rem 0.8rem; border-radius: 999px; cursor: pointer;
+  font-size: 0.8rem; font-weight: 650; white-space: nowrap;
+  color: var(--ink); background: var(--glass-bg); border: 1px solid var(--glass-border);
+}
+.copyBtn:hover { background: var(--glass-bg-strong); }
+@media (max-width: 420px) {
+  /* A long label — "Copy evidence-and-uncertainty ledger" — must wrap rather than
+     push the page sideways on a narrow phone. The pill keeps its shape; only the
+     text reflows. */
+  .copyBtn { white-space: normal; text-align: left; border-radius: 14px; }
+  .copyBtnLabel { overflow-wrap: anywhere; }
+}
+
+/* A downloadable sample or handout offered inside a guide. */
+.fileDownload {
+  margin: 1.3rem 0; padding: 1rem 1.15rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 16px 16px 8px;
+  background: var(--glass-bg);
+}
+.fileDownload h3 { margin: 0.1rem 0 0.4rem; font-size: 1.05rem; }
+.fileDownload p { margin: 0 0 0.5rem; }
+.fileDownload .eyebrow { margin: 0; }
+.fileDownload .fileAction { margin: 0.85rem 0 0; }
+
+/* End-of-module checks. */
+.doneWhen {
+  margin: 1.2rem 0 0; padding: 0.95rem 1.15rem;
+  border: 1px solid rgba(46, 158, 91, 0.32); border-left: 4px solid #2e9e5b;
+  border-radius: 8px 16px 16px 8px;
+  background: linear-gradient(135deg, rgba(46, 158, 91, 0.12), rgba(46, 158, 91, 0.04));
+}
+.doneWhenHead {
+  margin: 0 0 0.4rem; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.14em; font-weight: 700; color: var(--muted);
+}
+.checkList { margin: 0; padding: 0; list-style: none; }
+.checkList li { position: relative; padding-left: 1.6rem; margin-bottom: 0.3rem; }
+.checkList li::before {
+  content: "☐"; position: absolute; left: 0; top: -0.05rem;
+  color: #2e9e5b; font-size: 1.05rem;
+}
+.checkList li:last-child { margin-bottom: 0; }
+
+/* Warning-flavoured sibling of .note, for limits and boundaries. */
+.caution {
+  background: linear-gradient(135deg, rgba(140, 21, 21, 0.18), rgba(140, 21, 21, 0.06));
+  border: 1px solid rgba(178, 58, 58, 0.35);
+  border-left: 4px solid var(--cardinal);
+  padding: 1rem 1.15rem; border-radius: 8px 16px 16px 8px;
+}
+.caution > :last-child, .note > :last-child { margin-bottom: 0; }
+
+/* A short, quotable line that carries the idea of a module. */
+.pullQuote {
+  margin: 1.3rem 0; padding: 1.1rem 1.3rem;
+  border-left: 4px solid var(--gold); border-radius: 4px 14px 14px 4px;
+  background: var(--glass-bg);
+  font-family: var(--font-serif); font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.4;
+}
+.pullQuote p { margin: 0; }
+
+.docNav {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  flex-wrap: wrap; margin-top: clamp(2.4rem, 5vw, 3.5rem);
+  padding-top: 1.4rem; border-top: 1px solid var(--glass-hairline);
+}
+
+/* ---- Learn AI guides ("AI on the Record") ----------------------------------
+   Reuses the existing tokens, .card, .pill and .eyebrow language. The article
+   column is narrower than .docPage so prose sits near 65–75 characters. */
+/* 61ch measures ~70 characters per line in this face: the ch unit is the width
+   of "0", which is wider than the average character, so a 72ch column reads at
+   roughly 83. Measured rather than assumed. */
+.guidePage { max-width: 61ch; }
+.guidePage [id] { scroll-margin-top: 7rem; }
+.guidePage h2 { margin-top: 2.1rem; }
+.guidePage h3 { margin-top: 1.5rem; }
+
+.guideMeta { color: var(--muted); font-size: 0.92rem; margin: 0.4rem 0 1.4rem; }
+
+/* The answer, given first. Prominent but deliberately not an alert. */
+.answerFirst {
+  margin: 1.4rem 0 1.6rem; padding: 1.15rem 1.35rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 18px 18px 8px;
+  background: var(--glass-bg-strong);
+}
+.answerFirst p { margin: 0; font-size: 1.12rem; line-height: 1.55; }
+.answerFirst p + p { margin-top: 0.7rem; }
+
+/* One action to carry into real work. */
+.facultyMove {
+  margin: 1.5rem 0; padding: 1rem 1.2rem;
+  border: 1px solid rgba(46, 158, 91, 0.32); border-left: 4px solid #2e9e5b;
+  border-radius: 8px 16px 16px 8px;
+  background: linear-gradient(135deg, rgba(46, 158, 91, 0.12), rgba(46, 158, 91, 0.04));
+}
+.facultyMove .eyebrow { margin-bottom: 0.35rem; }
+.facultyMove p:last-child { margin-bottom: 0; }
+
+/* Guide series list. Planned cards keep visual parity but never interact. */
+.guideGrid {
+  display: grid; gap: clamp(0.9rem, 2vw, 1.2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  margin-top: 1.3rem;
+}
+.guideCard { display: flex; flex-direction: column; gap: 0.4rem; }
+/* A published card is an <a>, so its body copy would otherwise inherit link
+   weight and look different from the planned cards beside it. */
+.guideCard p { font-weight: 400; }
+.guideCard h3 { margin: 0.3rem 0 0; font-size: 1.12rem; }
+.guideCard .pill { align-self: flex-start; }
+.guideCard .explore {
+  margin-top: auto; padding-top: 0.5rem;
+  color: var(--link); font-weight: 700; font-size: 0.92rem;
+}
+.guideCardPlanned { opacity: 0.92; }
+.guideCardNote {
+  margin: auto 0 0; padding-top: 0.5rem;
+  font-size: 0.85rem; color: var(--muted); font-style: italic;
+}
+
+/* The exercise. */
+.exerciseBlock {
+  margin: 1.8rem 0; padding: 1.2rem 1.35rem 1.35rem;
+  border: 1px solid var(--glass-border); border-radius: 18px;
+  background: var(--glass-bg);
+}
+.exerciseHead {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem;
+}
+.exerciseHead h2 { margin: 0; font-size: 1.3rem; }
+.exerciseBlock > :last-child { margin-bottom: 0; }
+.guideSteps { margin: 1rem 0 0; padding-left: 1.4rem; }
+.guideSteps > li { margin-bottom: 0.9rem; padding-left: 0.2rem; }
+.guideSteps > li > :last-child { margin-bottom: 0; }
+
+/* Sources · Sensitivity · Stakes, as a definition list. */
+.sssList { margin: 1.3rem 0; display: grid; gap: 0.9rem; }
+.sssCards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+/* Four items sit 2x2 rather than leaving one orphaned under a row of three. */
+.sssCards.sssFour { grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+.sssItem {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px;
+  background: var(--glass-bg);
+}
+.sssItem dt {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em;
+  font-weight: 700; color: var(--gold); margin-bottom: 0.35rem;
+}
+.sssItem dd { margin: 0; }
+.sssPrimary { display: block; font-weight: 600; }
+.sssDetail { display: block; margin-top: 0.4rem; color: var(--muted); font-size: 0.95rem; }
+
+/* The line to remember. */
+.worthRepeating {
+  margin: 1.9rem 0; padding: 1.1rem 1.35rem;
+  border: 1px solid var(--glass-border); border-top: 3px solid var(--cardinal-bright);
+  border-radius: 4px 4px 18px 18px;
+  background: var(--glass-bg-strong);
+}
+.worthRepeating .eyebrow { margin-bottom: 0.3rem; }
+.worthRepeatingText {
+  margin: 0; font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.35;
+}
+
+.sourceNotes { margin: 0.8rem 0 0; padding-left: 1.2rem; }
+.sourceNotes li { margin-bottom: 0.6rem; }
+.sourceStability, .sourceType {
+  display: block; font-size: 0.8rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem;
+}
+
+.seriesStatus { margin-top: 2rem; }
+.seriesNextTitle { font-size: 1.25rem; margin: 0 0 0.4rem; }
+.seriesStatusLabel { margin: 0 0 0.6rem; }
+.seriesAsk { margin: 0.8rem 0 0; font-size: 0.95rem; }
+
+/* ---- Stanford AI service snapshot ------------------------------------------
+   Two representations of one record. Exactly one is rendered at any width;
+   display:none takes the other out of the accessibility tree too, so the data
+   is never announced twice. */
+.serviceSnapshot { margin: 2rem 0; }
+.snapshotChecked { color: var(--muted); font-size: 0.92rem; margin: 0 0 0.9rem; }
+.snapshotLinks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin: 0 0 1.2rem; }
+
+/* Status is always spelled out; the dot is decorative reinforcement only. */
+.approval { display: inline-flex; align-items: baseline; gap: 0.4rem; font-weight: 600; font-size: 0.92rem; }
+.approvalDot { flex: 0 0 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); transform: translateY(-1px); }
+.approval-approved .approvalDot { background: #2e9e5b; }
+.approval-not-approved .approvalDot { background: var(--cardinal-bright); }
+.approval-special-route .approvalDot { background: var(--gold); }
+.approval-verify-locally .approvalDot { background: #7f9ac9; }
+.approval-not-approved { color: var(--ink); }
+
+/* The guide's reading column is deliberately ~70 characters, which is far too
+   narrow for six columns of data. The table therefore widens to the page's
+   content width — the article's left edge already aligns with it, so mirroring
+   main's own max-width and padding cannot overflow the viewport. */
+.snapshotTableWrap { overflow-x: auto; }
+@media (min-width: 1000px) {
+  .snapshotTableWrap { width: calc(min(var(--maxw), 100vw) - 2 * clamp(1.1rem, 4vw, 3rem)); }
+}
+.snapshotTable { width: 100%; margin: 0; font-size: 0.94rem; }
+/* Global `th` is uppercase muted small-caps, which suits a column header but
+   not a service name in a row header. */
+.snapshotTable th[scope="row"] { text-transform: none; color: var(--ink); font-size: 0.94rem; }
+.snapshotTable caption {
+  caption-side: top; text-align: left; padding-bottom: 0.6rem;
+  color: var(--muted); font-size: 0.88rem;
+}
+.snapshotTable th[scope="row"] { text-align: left; vertical-align: top; min-width: 12rem; }
+.snapshotTable td { vertical-align: top; }
+.snapshotServiceName { display: block; font-weight: 700; overflow-wrap: break-word; }
+.snapshotVariant { display: block; font-size: 0.84rem; color: var(--muted); font-weight: 400; }
+.snapshotNotes { font-size: 0.86rem; color: var(--muted); min-width: 14rem; }
+.snapshotConnector { font-weight: 600; color: var(--ink); }
+
+.snapshotCards { display: none; }
+.snapshotCaption { color: var(--muted); font-size: 0.88rem; margin-bottom: 0.8rem; }
+.snapshotCard {
+  margin-bottom: 0.9rem; padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.snapshotCard h3 { margin: 0 0 0.2rem; font-size: 1.05rem; overflow-wrap: break-word; }
+.snapshotCardRisks { margin: 0.8rem 0 0.7rem; display: grid; gap: 0.4rem; }
+.snapshotCardRisks > div {
+  display: flex; flex-wrap: wrap; gap: 0.2rem 0.6rem;
+  justify-content: space-between; align-items: baseline;
+  padding-bottom: 0.35rem; border-bottom: 1px solid var(--glass-hairline);
+}
+.snapshotCardRisks dt { font-size: 0.86rem; color: var(--muted); }
+.snapshotCardRisks dd { margin: 0; }
+.snapshotCaveat { margin-top: 1.2rem; }
+
+/* Below the width where the table can widen and fit, comparing it would mean
+   horizontal scrolling, so the stacked cards are used instead. Exactly one
+   representation is displayed, which keeps the other out of the accessibility
+   tree as well as out of view. */
+@media (max-width: 999px) {
+  .snapshotTableWrap { display: none; }
+  .snapshotCards { display: block; }
+}
+
+/* Same-vendor confusions. */
+.distinctionList { margin: 1.2rem 0; display: grid; gap: 0.8rem; }
+.distinctionItem {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 16px 16px 8px; background: var(--glass-bg);
+}
+.distinctionItem dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin-bottom: 0.35rem; }
+.distinctionName { font-weight: 700; }
+.distinctionVs { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+.distinctionItem dd { margin: 0; color: var(--muted); font-size: 0.94rem; }
+
+/* ---- Legal claim verification ----------------------------------------------
+   No progress bars, scores, percentages, or confidence meters anywhere: the
+   audit is something a person performs against a source, and a widget that
+   looked like it did the work would defeat the guide. */
+.auditList { margin: 1.3rem 0; padding: 0; list-style: none; counter-reset: audit; display: grid; gap: 1rem; }
+.auditStep {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 18px 18px 8px; background: var(--glass-bg);
+}
+.auditStep h3 { display: flex; align-items: baseline; gap: 0.6rem; margin: 0 0 0.3rem; font-size: 1.16rem; }
+.auditStepNumber {
+  flex: 0 0 1.7rem; width: 1.7rem; height: 1.7rem; display: grid; place-items: center;
+  border-radius: 50%; border: 1px solid rgba(169, 121, 31, 0.5);
+  background: linear-gradient(150deg, rgba(169, 121, 31, 0.26), rgba(140, 21, 21, 0.14));
+  font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700;
+}
+.auditQuestion { margin: 0 0 0.6rem; font-weight: 650; }
+.auditChecksHead {
+  margin: 0.8rem 0 0.25rem; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.14em; font-weight: 700; color: var(--muted);
+}
+.auditChecks { margin: 0; padding-left: 1.2rem; font-size: 0.95rem; }
+.auditChecks li { margin-bottom: 0.2rem; }
+.auditFieldLabel, .auditStopLabel {
+  display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--muted);
+}
+.auditStopRule {
+  margin: 0.9rem 0 0.6rem; padding: 0.65rem 0.85rem;
+  border-left: 3px solid var(--cardinal-bright); border-radius: 4px 10px 10px 4px;
+  background: rgba(178, 58, 58, 0.08); font-size: 0.94rem;
+}
+.auditStopRule .auditStopLabel { color: var(--link); }
+.auditEvidence { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+/* Failure modes. */
+.failureList { margin: 1.2rem 0; display: grid; gap: 0.8rem; }
+.failureItem {
+  padding: 0.95rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.failureItem dt { font-weight: 700; margin-bottom: 0.35rem; }
+.failureItem dd { margin: 0; }
+.failureDescription { margin: 0 0 0.5rem; font-size: 0.95rem; }
+.failureExample, .failureCaught { margin: 0 0 0.4rem; font-size: 0.9rem; color: var(--muted); }
+.failureCaught { margin-bottom: 0; }
+
+/* The simulated claim. The label is text and comes first; the dashed border is
+   reinforcement, never the signal. */
+.simulatedClaim {
+  margin: 1.2rem 0; padding: 1rem 1.2rem;
+  border: 2px dashed rgba(178, 58, 58, 0.55); border-radius: 16px;
+  background: repeating-linear-gradient(135deg, rgba(178, 58, 58, 0.05) 0 12px, transparent 12px 24px), var(--glass-bg);
+}
+.simulatedLabel {
+  margin: 0 0 0.6rem; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--link);
+}
+.simulatedClaimText { margin: 0 0 0.9rem; padding-left: 0.9rem; border-left: 3px solid var(--glass-border); }
+.simulatedClaimText p { margin: 0; font-family: var(--font-serif); font-size: 1.08rem; }
+.simulatedMeta { margin: 0; display: grid; gap: 0.5rem; }
+.simulatedMeta dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--muted);
+}
+.simulatedMeta dd { margin: 0; font-size: 0.92rem; overflow-wrap: break-word; }
+.simulatedStale { margin-top: 1rem; }
+.answerKey { margin-top: 1.2rem; }
+.answerKeyOutcome { margin: 0 0 0.7rem; }
+
+/* Outcomes: text labels only. */
+.outcomeList { margin: 1.2rem 0; display: grid; gap: 0.7rem; }
+.outcomeItem {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 16px 16px 8px; background: var(--glass-bg);
+}
+.outcomeItem dt { font-weight: 700; margin-bottom: 0.3rem; }
+.outcomeItem dd { margin: 0; font-size: 0.94rem; }
+.outcomeNext { margin: 0.45rem 0 0; color: var(--muted); }
+
+/* Source-type checks: Find · Read · Place · Update, stacked at any width. */
+.sourceTypeList { display: grid; gap: 0.9rem; margin: 1.2rem 0; }
+.sourceTypeCard {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.sourceTypeCard h3 { margin: 0 0 0.6rem; font-size: 1.06rem; }
+.sourceTypeCard dl { margin: 0; display: grid; gap: 0.45rem; }
+.sourceTypeCard dl > div { display: grid; grid-template-columns: 4.2rem 1fr; gap: 0.2rem 0.7rem; }
+.sourceTypeCard dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.sourceTypeCard dd { margin: 0; font-size: 0.92rem; }
+.sourceTypeTrap { margin: 0.7rem 0 0; font-size: 0.9rem; color: var(--muted); }
+@media (max-width: 560px) {
+  .sourceTypeCard dl > div { grid-template-columns: 1fr; }
+}
+
+.citatorName, .citatorCaveat { margin: 0 0 0.5rem; font-size: 0.9rem; }
+
+/* ---- Citation provenance ("Why did it invent a case?") ---------------------
+   Long case names and reporter citations have to wrap at 320px, so every block
+   that can hold one sets overflow-wrap. Nothing here uses colour or an icon as
+   the only signal: statuses, labels, and the simulation warning are all text.
+   -------------------------------------------------------------------------- */
+
+/* Source-mode notes: one card per mode, stacked at every width. */
+.provenanceList { display: grid; gap: 0.9rem; margin: 1.2rem 0; }
+.provenanceCard {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.provenanceCard h3 { margin: 0 0 0.5rem; font-size: 1.06rem; }
+.provenanceStatus { margin: 0 0 0.7rem; font-size: 0.95rem; }
+.provenanceCard dl { margin: 0; display: grid; gap: 0.5rem; }
+.provenanceCard dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.provenanceCard dd { margin: 0.1rem 0 0; font-size: 0.92rem; }
+
+/* Citation anatomy: an ordered list, so the sequence survives without a diagram. */
+.citationAnatomy { margin: 1.2rem 0; padding: 0; list-style: none; display: grid; gap: 0.8rem; }
+.anatomyPart {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 4px 16px 16px 4px; background: var(--glass-bg);
+}
+.anatomyPart h3 {
+  margin: 0 0 0.5rem; font-size: 1rem; display: flex; align-items: baseline; gap: 0.55rem;
+}
+.anatomyPartNumber, .evidenceStateNumber {
+  flex-shrink: 0; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; font-weight: 700; color: var(--ink);
+  border: 1px solid var(--glass-border); background: var(--glass-bg-strong);
+}
+.citationFragment {
+  margin: 0 0 0.5rem; padding: 0.4rem 0.6rem;
+  font-family: var(--font-serif); font-size: 0.98rem;
+  border-left: 2px solid var(--glass-border); background: var(--glass-bg-strong);
+  border-radius: 0 6px 6px 0; overflow-wrap: break-word;
+}
+.anatomyExplanation { margin: 0 0 0.5rem; font-size: 0.94rem; }
+.anatomyQuestion { margin: 0; font-size: 0.92rem; }
+
+/* Evidence states: a semantic ordered list, no score and no progress meter. */
+.evidenceStates { margin: 1.2rem 0; padding: 0; list-style: none; display: grid; gap: 0.85rem; }
+.evidenceState {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.evidenceState h3 {
+  margin: 0 0 0.4rem; font-size: 1.06rem; display: flex; align-items: baseline; gap: 0.55rem;
+}
+.evidencePresent { margin: 0 0 0.7rem; font-size: 0.94rem; color: var(--muted); }
+.evidenceState dl { margin: 0; display: grid; gap: 0.5rem; }
+.evidenceState dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.evidenceState dd { margin: 0.1rem 0 0; font-size: 0.92rem; }
+
+/* The simulated claim's second label line, and the "not a transcript" note. */
+.simulatedSupport { margin: 0 0 0.8rem; font-size: 0.92rem; font-weight: 600; }
+.simulatedNotTranscript { margin: 0.9rem 0 0; font-size: 0.88rem; }
+.exerciseSources { margin-top: 1.2rem; }
+.exerciseQuestion { margin: 0.4rem 0 0; font-size: 0.94rem; }
+/* Classification choices are read, not submitted: plain text, no form control. */
+.classifyList { margin: 0.5rem 0 0; }
+.classifyList li { margin-bottom: 0.2rem; }
+.answerKeyList { margin: 0.8rem 0 0.9rem; display: grid; gap: 0.6rem; }
+.answerKeyList dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.answerKeyList dd { margin: 0.1rem 0 0; font-size: 0.94rem; }
+
+/* Related guides: two restrained cards side by side, stacked on small screens. */
+.relatedGuides { display: grid; gap: 0.9rem; margin: 1.2rem 0; }
+@media (min-width: 700px) {
+  .relatedGuides { grid-template-columns: 1fr 1fr; }
+}
+.relatedGuideCard h3 { margin: 0 0 0.4rem; font-size: 1.04rem; }
+.relatedGuideCard p { margin: 0 0 0.7rem; font-size: 0.94rem; }
+
+/* ---- Dated evidence snapshot ----------------------------------------------
+   The figure is the only number on the page and it expires. When stale, the
+   component swaps in a text label — freshness is never signalled by colour
+   alone — and keeps the live link so a reader can still get a current total.
+   -------------------------------------------------------------------------- */
+.evidenceSnapshot {
+  margin: 2rem 0; padding: 1.2rem 1.35rem;
+  border: 1px solid var(--glass-border); border-radius: 18px; background: var(--glass-bg);
+}
+.evidenceSnapshot h2 { margin: 0.2rem 0 0.9rem; font-size: 1.3rem; }
+.evidenceFigure {
+  margin: 0 0 1rem; padding: 0.85rem 1.05rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 4px 14px 14px 4px; background: var(--glass-bg-strong);
+}
+.evidenceFigureStale { border-left-style: dashed; }
+.evidenceCount { margin: 0; font-size: 1.1rem; }
+.evidenceCount strong { font-size: 1.6rem; font-family: var(--font-serif); }
+.evidenceDates, .evidenceStaleNote { margin: 0.35rem 0 0; font-size: 0.88rem; color: var(--muted); }
+.evidenceScope { font-size: 0.94rem; }
+.evidenceLimitation { margin: 0 0 0.9rem; font-size: 0.92rem; }
+.evidenceLink { margin: 0; overflow-wrap: break-word; }
+.evidenceMaintenance { margin: 0.9rem 0 0; font-size: 0.88rem; }
+
+/* ---- Responding to suspected student AI use --------------------------------
+   Every distinction on this page has to survive without colour: a governing rule,
+   an observable fact, an automated signal, an inference, and an unknown are told
+   apart by their labels and by the establishes / cannot-establish pair, never by
+   a hue or an icon. The "do" and "do not" lists are labelled in text for the same
+   reason. Long policy names and source titles wrap rather than overflow at 320px.
+   -------------------------------------------------------------------------- */
+
+/* The six-step response. An ordered list; no step is hidden in a disclosure. */
+.concernSteps { margin: 1.3rem 0; padding: 0; list-style: none; display: grid; gap: 1rem; }
+.concernStep {
+  padding: 1.05rem 1.2rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.concernStep h3 {
+  margin: 0 0 0.5rem; font-size: 1.08rem; display: flex; align-items: baseline; gap: 0.6rem;
+}
+.concernStepNumber {
+  flex-shrink: 0; width: 1.75rem; height: 1.75rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: var(--ink);
+  border: 1px solid var(--glass-border); background: var(--glass-bg-strong);
+}
+.concernInstruction { margin: 0 0 0.6rem; font-weight: 600; }
+.concernLists { display: grid; gap: 0.9rem; margin: 0.9rem 0 0; }
+@media (min-width: 760px) {
+  .concernLists { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+}
+.concernListHead {
+  margin: 0 0 0.3rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.concernDo, .concernDont { margin: 0; padding-left: 1.2rem; font-size: 0.92rem; }
+.concernDo li, .concernDont li { margin-bottom: 0.3rem; }
+/* The "do not" column is dimmer, but its heading already says what it is. */
+.concernDont { color: var(--muted); }
+.concernEvidence { margin: 0.9rem 0 0; font-size: 0.9rem; }
+
+.pullQuestion {
+  margin: 1rem 0; padding: 0.85rem 1.1rem;
+  font-family: var(--font-serif); font-size: 1.08rem;
+  border-left: 3px solid var(--gold); background: var(--glass-bg);
+  border-radius: 0 12px 12px 0;
+}
+
+/* The governing-materials checklist. */
+.materialsList { margin: 1.2rem 0; display: grid; gap: 0.8rem; }
+.materialsItem {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg);
+}
+.materialsItem dt { font-weight: 700; margin-bottom: 0.35rem; }
+.materialsItem dd { margin: 0; }
+.materialsQuestion { margin: 0 0 0.45rem; font-size: 0.95rem; }
+.materialsExamples, .materialsRequirement { margin: 0 0 0.35rem; font-size: 0.9rem; color: var(--muted); }
+.materialsRequirement { margin-bottom: 0; }
+
+/* ---- Current Stanford process insert ---------------------------------------
+   Dated, and it withholds the reporting deadline and the student-contact
+   sequence once overdue. The stale state is a text label, never a colour change.
+   -------------------------------------------------------------------------- */
+.processInsert {
+  margin: 2rem 0; padding: 1.2rem 1.35rem;
+  border: 1px solid var(--glass-border); border-radius: 18px; background: var(--glass-bg);
+}
+.processInsert h2 { margin: 0.2rem 0 0.5rem; font-size: 1.3rem; }
+.processChecked, .detectionChecked {
+  margin: 0 0 1rem; font-size: 0.85rem; color: var(--muted);
+}
+.processStale {
+  margin: 0 0 1rem; padding: 0.8rem 1rem;
+  border: 1px dashed var(--glass-border); border-left: 4px dashed var(--gold);
+  border-radius: 4px 12px 12px 4px; background: var(--glass-bg-strong);
+}
+.processStaleLabel { margin: 0 0 0.35rem; font-weight: 700; }
+.processStale p:last-child { margin-bottom: 0; }
+.processActions { margin: 0 0 1rem; padding-left: 1.4rem; }
+.processActions li { margin-bottom: 0.45rem; }
+.processCaveat { margin: 0 0 1rem; font-size: 0.94rem; }
+.processTertiary { margin: 0.9rem 0 0; font-size: 0.9rem; overflow-wrap: break-word; }
+
+/* The SLS policy insert. Publishes nothing about the policy until confirmed. */
+.policyInsert {
+  margin: 1.6rem 0; padding: 1rem 1.2rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 4px 16px 16px 4px; background: var(--glass-bg);
+}
+.policyInsert h2 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+.policySummary { margin: 0.6rem 0; }
+.policyDates { margin: 0.4rem 0; font-size: 0.88rem; }
+.policyLink { margin: 0.6rem 0 0; overflow-wrap: break-word; }
+
+/* The seven evidence categories. Not ranked, and no strength score. */
+.evidenceCategoryList { display: grid; gap: 0.9rem; margin: 1.2rem 0; }
+@media (min-width: 900px) {
+  .evidenceCategoryList { grid-template-columns: 1fr 1fr; }
+}
+.evidenceCategory {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.evidenceCategory h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+.categoryDefinition { margin: 0 0 0.7rem; font-size: 0.94rem; }
+.categoryExamplesHead, .workTypeExamplesHead, .conversationQuestionsHead, .conversationOpeningLabel {
+  margin: 0 0 0.3rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.categoryExamples { margin: 0 0 0.8rem; padding-left: 1.2rem; font-size: 0.9rem; color: var(--muted); }
+.categoryExamples li { margin-bottom: 0.15rem; }
+.evidenceCategory dl { margin: 0; display: grid; gap: 0.5rem; }
+.evidenceCategory dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.evidenceCategory dd { margin: 0.1rem 0 0; font-size: 0.92rem; }
+
+/* The practice scenario. The fictional label leads, in text. */
+.practiceScenario {
+  margin: 1.2rem 0; padding: 1rem 1.2rem;
+  border: 2px dashed rgba(169, 121, 31, 0.5); border-radius: 16px;
+  background: var(--glass-bg);
+}
+.practiceLabel {
+  margin: 0 0 0.7rem; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--gold);
+}
+.practiceTask, .practiceQuestion { margin: 1rem 0 0.5rem; }
+.practiceItems { margin: 0 0 0.5rem; padding-left: 1.4rem; }
+.practiceItems li { margin-bottom: 0.35rem; }
+.practiceChoices { margin: 0; padding-left: 1.2rem; color: var(--muted); }
+.practiceChoices li { margin-bottom: 0.2rem; }
+
+/* Detection guidance: durable position always shown, dated claims gated. */
+.detectionGuidance {
+  margin: 1.3rem 0; padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.detectionGuidance dl { margin: 0; display: grid; gap: 0.65rem; }
+.detectionGuidance dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.detectionGuidance dd { margin: 0.1rem 0 0; font-size: 0.93rem; }
+.detectionMaintenance { margin: 0.9rem 0 0; font-size: 0.88rem; }
+
+/* The neutral conversation. */
+.conversationGuide { margin: 1.2rem 0; }
+.conversationOpening {
+  margin: 0 0 1.2rem; padding: 0.8rem 1.1rem;
+  border-left: 3px solid var(--glass-border); background: var(--glass-bg);
+  border-radius: 0 12px 12px 0;
+}
+.conversationOpening p { margin: 0; font-family: var(--font-serif); font-size: 1.02rem; }
+.conversationQuestions { margin: 0 0 1rem; padding-left: 1.4rem; }
+.conversationQuestions li { margin-bottom: 0.4rem; }
+.conversationLimits { margin: 0; font-size: 0.92rem; }
+
+/* Graded and ungraded paths: two balanced cards, stacked on small screens. */
+.workTypePaths { display: grid; gap: 0.9rem; margin: 1.2rem 0; }
+@media (min-width: 760px) {
+  .workTypePaths { grid-template-columns: 1fr 1fr; }
+}
+.workTypeCard {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+  display: flex; flex-direction: column;
+}
+.workTypeCard h3 { margin: 0 0 0.5rem; font-size: 1.06rem; }
+.workTypeCard > p { font-size: 0.94rem; }
+.workTypeCard ul { margin: 0 0 0.8rem; padding-left: 1.2rem; font-size: 0.9rem; color: var(--muted); }
+.workTypeCard ul li { margin-bottom: 0.15rem; }
+.workTypeAction { margin: auto 0 0; font-size: 0.92rem; }
+
+/* The assignment boundary template. */
+.boundaryTemplate { margin: 1.2rem 0; }
+.boundaryFields { margin: 1.2rem 0; display: grid; gap: 0.8rem; }
+.boundaryField {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg);
+}
+.boundaryField dt { font-weight: 700; margin-bottom: 0.35rem; }
+.boundaryField dd { margin: 0; }
+.boundaryQuestion { margin: 0 0 0.45rem; font-size: 0.95rem; }
+/* Permission states as plain text — deliberately not colour-coded. */
+.boundaryChoices { margin: 0 0 0.5rem; padding-left: 1.2rem; font-size: 0.92rem; }
+.boundaryExamples, .boundaryRequirement { margin: 0 0 0.35rem; font-size: 0.9rem; color: var(--muted); }
+.boundaryFixed { margin: 0; font-size: 0.93rem; }
+.boundaryCopyText {
+  margin: 0.9rem 0; padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg-strong);
+  font-size: 0.88rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: break-word;
+}
+.boundaryAttribution { margin: 0.8rem 0 0; font-size: 0.9rem; overflow-wrap: break-word; }
+
+/* Series completion, in place of an empty "Coming next" slot. */
+.releaseNote {
+  margin: 1.4rem 0 0; padding: 1rem 1.2rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.releaseNote h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+.releaseNote p { margin: 0; }
+.seriesCompletionIntro { margin: 0 0 0.9rem; }
+.seriesCompletion { margin: 0; }
+.seriesCompletionList { margin: 0.8rem 0 1.1rem; padding-left: 1.4rem; }
+.seriesCompletionList li { margin-bottom: 0.3rem; }
+.seriesCurrentNote { font-size: 0.9rem; }
+
+/* ---- Designing AI-supported legal learning ---------------------------------
+   The strong/weak example pair on each design check is the teaching, so both are
+   labelled in text ("Stronger" / "Weaker") and readable with no colour at all —
+   the border treatment is reinforcement only. Same for the assignment modes:
+   required, permitted, optional, and prohibited are words, never a traffic light.
+   -------------------------------------------------------------------------- */
+
+.policyLede { margin: 1.1rem 0 0; font-size: 0.95rem; overflow-wrap: break-word; }
+
+/* Five design checks, numbered. */
+.designChecks { margin: 1.3rem 0; padding: 0; list-style: none; display: grid; gap: 0.95rem; }
+.designCheck {
+  padding: 1.05rem 1.2rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.designCheck h3 {
+  margin: 0 0 0.5rem; font-size: 1.08rem; display: flex; align-items: baseline; gap: 0.6rem;
+}
+.designCheckNumber {
+  flex-shrink: 0; width: 1.75rem; height: 1.75rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: var(--ink);
+  border: 1px solid var(--glass-border); background: var(--glass-bg-strong);
+}
+.designQuestion { margin: 0 0 0.5rem; font-weight: 600; }
+.designPurpose { margin: 0 0 0.9rem; font-size: 0.94rem; }
+.designExamples { margin: 0 0 0.85rem; display: grid; gap: 0.6rem; }
+@media (min-width: 760px) {
+  .designExamples { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+}
+.designExamples dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; margin-bottom: 0.25rem;
+}
+.designExamples dd { margin: 0; font-size: 0.92rem; }
+.designStrong, .designWeak {
+  padding: 0.65rem 0.85rem; border-radius: 10px; background: var(--glass-bg-strong);
+  border-left: 3px solid var(--glass-border);
+}
+.designStrong { border-left-color: var(--gold); }
+.designStrong dt { color: var(--gold); }
+.designWeak { border-left-style: dashed; }
+.designWeak dt { color: var(--muted); }
+.designWeak dd { color: var(--muted); }
+.designEvidence { margin: 0; font-size: 0.92rem; }
+
+/* Five assignment modes. */
+.assignmentModes { display: grid; gap: 0.9rem; margin: 1.3rem 0; }
+@media (min-width: 900px) {
+  .assignmentModes { grid-template-columns: 1fr 1fr; }
+}
+.assignmentMode {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+  display: flex; flex-direction: column;
+}
+.assignmentMode h3 { margin: 0 0 0.4rem; font-size: 1.06rem; }
+.modeDescription { margin: 0 0 0.8rem; font-size: 0.94rem; }
+.assignmentMode dl { margin: 0 0 0.9rem; display: grid; gap: 0.5rem; }
+.assignmentMode dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.assignmentMode dd { margin: 0.1rem 0 0; font-size: 0.92rem; }
+.modeStarterHead {
+  margin: auto 0 0.3rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700; color: var(--muted);
+}
+.modeStarter {
+  margin: 0; padding: 0.7rem 0.9rem;
+  border-left: 3px solid var(--glass-border); background: var(--glass-bg-strong);
+  border-radius: 0 10px 10px 0;
+}
+.modeStarter p { margin: 0; font-size: 0.9rem; font-family: var(--font-serif); }
+
+/* The activity library. The filter is anchors, so it works with no JavaScript. */
+.activityFilter { margin: 1.2rem 0; }
+.activityFilterLabel {
+  margin: 0 0 0.45rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700; color: var(--gold);
+}
+.activityFilter ul {
+  margin: 0; padding: 0; list-style: none;
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-size: 0.93rem;
+}
+.activityList { display: grid; gap: 1rem; margin: 1.3rem 0; }
+.activityPattern {
+  padding: 1.05rem 1.2rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.activityPattern h3 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+.activityBestFor { margin: 0 0 0.8rem; font-size: 0.92rem; }
+.activityFields { margin: 0 0 0.9rem; display: grid; gap: 0.55rem; }
+.activityFields dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.activityFields dd { margin: 0.1rem 0 0; font-size: 0.92rem; }
+.activitySequenceHead {
+  margin: 0 0 0.35rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700; color: var(--gold);
+}
+.activitySequence { margin: 0 0 0.9rem; padding-left: 1.4rem; font-size: 0.92rem; }
+.activitySequence li { margin-bottom: 0.28rem; }
+.activityMeta { margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.activityRelated { margin: 0.7rem 0 0; font-size: 0.92rem; }
+.activityByCourse { margin: 1.6rem 0 0; }
+.activityByCourse h3 { font-size: 1.06rem; margin: 0 0 0.7rem; }
+.activityByCourse dl { margin: 0; display: grid; gap: 0.7rem; }
+.activityByCourse dt { font-weight: 700; margin-bottom: 0.2rem; }
+.activityByCourse dd { margin: 0; }
+.activityByCourse dd ul {
+  margin: 0; padding: 0; list-style: none;
+  display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; font-size: 0.92rem;
+}
+
+/* The complete case-brief activity. */
+.caseBriefActivity { margin: 1.2rem 0; }
+.caseBriefMeta { margin: 0 0 1.2rem; display: grid; gap: 0.55rem; }
+.caseBriefMeta dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; color: var(--gold);
+}
+.caseBriefMeta dd { margin: 0.1rem 0 0; font-size: 0.94rem; }
+.caseBriefParts { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.85rem; }
+.caseBriefPart {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 4px 14px 14px 4px; background: var(--glass-bg);
+}
+.caseBriefPart h3 {
+  margin: 0 0 0.5rem; font-size: 1rem;
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;
+}
+.caseBriefPart p { margin: 0 0 0.5rem; font-size: 0.94rem; }
+.caseBriefPart ul { margin: 0; padding-left: 1.2rem; font-size: 0.92rem; }
+.caseBriefPart ul li { margin-bottom: 0.2rem; }
+.caseBriefFirst { flex-shrink: 0; }
+
+/* The sample rubric. Weights are text, and the disclaimer is rendered. */
+.sampleRubric { margin: 1.2rem 0; }
+.sampleRubric dl { margin: 0; display: grid; gap: 0.7rem; }
+.rubricCriterion {
+  padding: 0.85rem 1.05rem;
+  border: 1px solid var(--glass-border); border-radius: 12px; background: var(--glass-bg);
+}
+.rubricCriterion dt {
+  font-weight: 700; margin-bottom: 0.35rem;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem;
+}
+.rubricWeight { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+.rubricCriterion dd { margin: 0; font-size: 0.92rem; }
+.rubricDisclaimer { margin: 0.9rem 0 0; font-size: 0.9rem; }
+
+/* Proportionate process evidence, beside the things never to ask for. */
+.evidenceLists { display: grid; gap: 1.1rem; margin: 1.2rem 0; }
+@media (min-width: 760px) {
+  .evidenceLists { grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+}
+.evidenceListHead {
+  margin: 0 0 0.4rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700; color: var(--gold);
+}
+.evidenceLists ul { margin: 0; padding-left: 1.2rem; font-size: 0.93rem; }
+.evidenceLists li { margin-bottom: 0.25rem; }
+.evidenceNever { color: var(--muted); }
+
+/* Four kinds of AI judgment. */
+.literacyCards { display: grid; gap: 0.85rem; margin: 1.2rem 0; }
+@media (min-width: 760px) {
+  .literacyCards { grid-template-columns: 1fr 1fr; }
+}
+.literacyCard {
+  padding: 0.95rem 1.1rem;
+  border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg);
+}
+.literacyCard h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+.literacyCard p { margin: 0; font-size: 0.92rem; }
+
+/* Five pre-launch questions. */
+.launchChecklist { margin: 1.2rem 0; padding-left: 1.4rem; }
+.launchChecklist > li { margin-bottom: 0.7rem; }
+.launchLabel {
+  margin: 0 0 0.15rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700; color: var(--gold);
+}
+.launchQuestion { margin: 0; font-size: 0.94rem; }
+
+/* The SLS policy card. Prominent, and the link text is always descriptive. */
+.slsPolicyCard {
+  margin: 1.3rem 0; padding: 1.2rem 1.35rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--cardinal);
+  border-radius: 4px 18px 18px 4px; background: var(--glass-bg);
+}
+.slsPolicyCard h2 { margin: 0.2rem 0 0.2rem; font-size: 1.25rem; }
+.slsPolicyPublisher { margin: 0 0 0.7rem; font-size: 0.9rem; color: var(--muted); }
+
+.capabilityList { columns: 2; column-gap: 2rem; }
+@media (max-width: 620px) { .capabilityList { columns: 1; } }
+
+/* The concern companion card on the teaching guide — clearly secondary. */
+.concernCompanionCard { margin-top: 1.2rem; }
+.concernCompanionCard h3 { margin: 0 0 0.4rem; font-size: 1.02rem; }
+.concernCompanionCard p { margin: 0 0 0.5rem; font-size: 0.93rem; }
+.concernCompanionCard p:last-child { margin-bottom: 0; }
+
+/* Process resources on the Learn AI landing page, beneath the collection. */
+.processResources { margin-top: 2.2rem; }
+.processResourceList { display: grid; gap: 0.9rem; margin-top: 1.1rem; }
+@media (min-width: 760px) {
+  .processResourceList { grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
+}
+.processResourceCard h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+.processResourceCard p { margin: 0 0 0.7rem; font-size: 0.93rem; }
+/* The quieter of the two resource groups. */
+.resourceSectionQuiet .resourceSectionHead h2 { font-size: 1.35rem; }
+.crossPromoTertiary { margin: 0; font-size: 0.85rem; }
+
+/* A restrained aside — quieter than .caution, which is reserved for warnings. */
+.quietCallout {
+  margin: 1.2rem 0; padding: 0.85rem 1.1rem;
+  border: 1px solid var(--glass-border); border-left: 3px solid var(--gold);
+  border-radius: 4px 14px 14px 4px; background: var(--glass-bg);
+}
+.quietCallout > :last-child { margin-bottom: 0; }
+
+/* The copyable worksheet, shown as text so it works with JS disabled. */
+.worksheet {
+  margin: 1.2rem 0; padding: 1rem 1.2rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg-strong);
+}
+.worksheetSection + .worksheetSection { margin-top: 0.9rem; }
+.worksheetHeading {
+  margin: 0 0 0.3rem; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em;
+  font-weight: 700; color: var(--gold);
+}
+.worksheetLines { margin: 0; padding-left: 1.1rem; font-size: 0.93rem; }
+.worksheetLines li { margin-bottom: 0.15rem; color: var(--muted); }
+
+/* Common faculty materials. A definition list rather than a table: each entry
+   is read top to bottom, so it needs no horizontal comparison at any width, and
+   the starting point is always labelled in text. */
+.materialList { margin: 1.2rem 0; display: grid; gap: 0.9rem; }
+.materialItem {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.materialItem dt { font-weight: 700; font-size: 1.02rem; margin-bottom: 0.35rem; }
+.materialItem dd { margin: 0; }
+.materialExamples { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.94rem; }
+.materialField { margin: 0 0 0.5rem; font-size: 0.94rem; }
+.materialField:last-child { margin-bottom: 0; }
+.materialLabel {
+  display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 700; color: var(--gold); margin-bottom: 0.1rem;
+}
+
+/* ---- Tool modes, routing, and the canonical tool cards ---------------------
+   The durable mode description leads; current product examples are visually
+   quieter on purpose, so the page survives its own examples going stale. No
+   scores, stars, or ranking anywhere. */
+.modeList { display: grid; gap: 1rem; margin: 1.3rem 0; }
+.modeCard {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 18px 18px 8px; background: var(--glass-bg);
+}
+.modeCard h3 { margin: 0 0 0.3rem; font-size: 1.14rem; }
+.modeRule { margin: 0 0 0.8rem; font-weight: 600; }
+.modeFields { margin: 0; display: grid; gap: 0.7rem; }
+.modeFields dt {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 700; color: var(--muted); margin-bottom: 0.2rem;
+}
+.modeFields dd { margin: 0; font-size: 0.95rem; }
+.modeFields ul { margin: 0; padding-left: 1.15rem; }
+.modeFields li { margin-bottom: 0.15rem; }
+.modeExamples {
+  margin-top: 0.9rem; padding-top: 0.7rem;
+  border-top: 1px solid var(--glass-hairline);
+}
+.modeExamplesHead {
+  margin: 0; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 700; color: var(--muted);
+}
+.modeExamplesList { margin: 0.2rem 0 0.3rem; font-size: 0.92rem; }
+.modeExamplesQualifier { margin: 0; font-size: 0.84rem; color: var(--muted); }
+
+.modeBadge { font-size: 0.74rem; }
+.modeBadgeRow { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0 0.7rem; }
+
+/* Routing map: need → mode → what to check. */
+.routeList { margin: 1.2rem 0; padding-left: 1.4rem; display: grid; gap: 0.9rem; }
+.routeList > li > p { margin: 0 0 0.2rem; }
+.routeNeed { font-weight: 650; }
+.routeStart, .routeCheck { font-size: 0.94rem; }
+.routeCheck { color: var(--muted); }
+.routeLabel {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--gold);
+}
+
+/* One subject, several jobs. A definition list so it never needs horizontal
+   comparison and every label travels with its value. */
+.jobList { margin: 1.2rem 0; display: grid; gap: 0.8rem; }
+.jobItem {
+  padding: 0.95rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.jobItem dt { font-weight: 650; margin-bottom: 0.4rem; }
+.jobItem dd { margin: 0; }
+.jobField { margin: 0 0 0.35rem; font-size: 0.94rem; }
+.jobField:last-child { margin-bottom: 0; }
+.jobLabel {
+  display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--gold);
+}
+
+/* Canonical tool cards, shared by the guide insert and AI Resources. */
+.toolCardList {
+  display: grid; gap: 0.9rem; margin: 1.2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+}
+.toolCard {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass-bg);
+}
+.toolCard h3 { margin: 0 0 0.1rem; font-size: 1.05rem; overflow-wrap: break-word; }
+.toolFormerNames, .toolProvider { margin: 0; font-size: 0.84rem; color: var(--muted); }
+.toolFit { margin: 0.5rem 0 0.6rem; font-size: 0.94rem; }
+.toolSourcePath, .toolAccess, .toolGuidance { margin: 0 0 0.5rem; font-size: 0.9rem; }
+.toolLabel {
+  display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em;
+  font-weight: 700; color: var(--muted);
+}
+.toolLocalNote { margin: 0 0 0.5rem; font-size: 0.86rem; color: var(--muted); font-style: italic; }
+.toolLinks { margin: 0.6rem 0 0; font-size: 0.9rem; }
+
+/* Worked example inside the exercise block. */
+.workedExample { margin: 0.8rem 0 0.6rem; display: grid; gap: 0.4rem; }
+.workedExample > div {
+  display: grid; grid-template-columns: 7rem 1fr; gap: 0.2rem 0.8rem;
+  padding-bottom: 0.35rem; border-bottom: 1px solid var(--glass-hairline);
+}
+.workedExample dt { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--muted); }
+.workedExample dd { margin: 0; font-size: 0.94rem; }
+@media (max-width: 520px) {
+  .workedExample > div { grid-template-columns: 1fr; }
+}
+
+/* Preflight checklist: label and question pairs, copyable as plain text. */
+.preflightList { margin: 1rem 0 0; display: grid; gap: 0.6rem; }
+.preflightList > div {
+  padding-bottom: 0.55rem; border-bottom: 1px solid var(--glass-hairline);
+}
+.preflightList dt { font-weight: 700; font-size: 0.9rem; }
+.preflightList dd { margin: 0.15rem 0 0; color: var(--muted); }
+
+/* Series navigation with a previous and a next entry. */
+.seriesPrev { margin: 0 0 1.1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-hairline); }
+.seriesPrevTitle { font-size: 1.1rem; margin: 0; }
+
+/* Go-deeper disclosure. Keeps the native keyboard behaviour; only the marker
+   and spacing are restyled. */
+.guideDetails {
+  margin: 1.6rem 0; padding: 0.9rem 1.15rem;
+  border: 1px solid var(--glass-border); border-radius: 14px;
+  background: var(--glass-bg);
+}
+.guideDetails > summary {
+  cursor: pointer; font-weight: 650;
+  padding: 0.1rem 0; list-style-position: outside;
+}
+.guideDetails > summary:focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px;
+}
+.guideDetails[open] > summary { margin-bottom: 0.7rem; }
+.guideDetails > :last-child { margin-bottom: 0; }
+
+/* ---- Breadcrumb (skill detail pages, since the site is headerless) --------- */
+.crumb {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 700; color: var(--muted); margin: 0 0 1rem;
+}
+.crumb a { color: var(--link); text-decoration: none; }
+.crumb a:hover { color: var(--link-hover); text-decoration: underline; }
+
+/* ---- Floating light/dark toggle -------------------------------------------- */
+.themeToggle {
+  position: fixed; z-index: 30;
+  right: clamp(0.9rem, 2vw, 1.4rem); bottom: clamp(0.9rem, 2vw, 1.4rem);
+  width: 46px; height: 46px; border-radius: 999px;
+  display: grid; place-items: center; cursor: pointer;
+  color: var(--ink);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+.themeToggle:hover { transform: translateY(-2px); }
+.themeToggle svg { width: 20px; height: 20px; }
+
+/* ---- Footer ---------------------------------------------------------------- */
+.footer {
+  margin-top: 2rem;
+  padding: clamp(1.6rem, 4vw, 2.6rem) clamp(1.1rem, 4vw, 3rem);
+  border-top: 1px solid var(--glass-hairline);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  color: var(--muted); font-size: 0.9rem;
+}
+.footer-inner { max-width: var(--maxw); margin: auto; }
+.footer-inner p { margin: 0; }
+.footer a { color: var(--ink); }
+
+/* The footer lists outbound Stanford links, grouped under a heading for
+   screen-reader navigation. */
+.footerNav {
+  display: grid; gap: 1.4rem clamp(1.2rem, 4vw, 3rem);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin-bottom: 1.6rem;
+}
+.footerHeading {
+  margin: 0 0 0.55rem; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.13em; font-weight: 700; color: var(--gold);
+}
+.footerNav ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.4rem; }
+.footerNav li { line-height: 1.4; }
+.footerNav a { text-decoration: none; border-bottom: 1px solid transparent; }
+.footerNav a:hover, .footerNav a:focus-visible {
+  color: var(--link-hover); border-bottom-color: currentColor;
+}
+.footerNote { display: block; font-size: 0.82rem; color: var(--muted); }
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 860px) {
+  .hero, .homeHero, .grid, .grid.two, .grid.four, .videoDemo, .md-demo, .collectionGrid, .resourceGrid { grid-template-columns: 1fr; }
+  .siteHeader { flex-wrap: wrap; justify-content: flex-end; }
+  .headerLogo { display: none; }
+  .headerNavigation { width: 100%; }
+  .navToggleBtn { display: inline-flex; }
+  .siteHeader nav.primaryNav {
+    display: none; order: 3; width: 100%;
+    flex-direction: column; align-items: stretch; gap: 0.2rem;
+    padding-top: 0.5rem;
+  }
+  .siteHeader nav.primaryNav.isOpen { display: flex; }
+  .siteHeader nav.primaryNav { background: rgba(20,16,13,.92); padding: .75rem; border-radius: 16px; }
+  :root[data-theme="light"] .siteHeader nav.primaryNav {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 16px 32px -20px rgba(28, 26, 23, 0.5);
+  }
+  .siteSearch { margin: .3rem 0 0; }
+  .siteSearch input { flex: 1; width: auto; }
+  /* In the collapsed menu it is a full-width row like every other entry. */
+  .siteHeader nav a.headerAccount { margin: .3rem 0 0; text-align: center; }
+  .siteHeader nav a { padding: 0.7rem 0.9rem; }
+  .siteHeader nav a.navCta { text-align: center; justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .moduleHead { gap: 0.7rem; }
+  .moduleNum { flex-basis: 2.1rem; width: 2.1rem; height: 2.1rem; font-size: 1rem; }
+  .promptHead { align-items: flex-start; flex-direction: column; }
+  /* Keeping this row at max-content is what holds the button beside the text on
+     wide screens; once the card has stacked, it has to be allowed to shrink or
+     a long label pushes the whole page wider than a 320px viewport. */
+  .crossPromo .actions { flex-shrink: 1; flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---- Sign-in, account, and the admin portal -------------------------------- */
+/* Every access state is text plus one action. Status is never colour alone: the
+   pill carries words, and an error is announced through role="alert". */
+.authPage { max-width: 74ch; }
+.authCard { margin-top: 1.4rem; }
+.authPanel { margin-top: 0.9rem; }
+.authMessage { margin: 0 0 0.4rem; max-width: 68ch; }
+/* The unconfigured state names the missing environment variables, and
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID is one unbreakable 41-character token —
+   measured at 320px, it pushed the page 47px wider than the viewport. */
+.authPanel p, .authError, .authNotice { overflow-wrap: anywhere; }
+.authActions { margin-top: 1rem; }
+.authButton { cursor: pointer; font: inherit; }
+.authButton[disabled] { opacity: 0.6; cursor: default; }
+.authDanger { border-color: rgba(178, 58, 58, 0.55); }
+.authError {
+  margin: 1rem 0 0; padding: 0.8rem 1rem; border-radius: 8px 14px 14px 8px;
+  border: 1px solid rgba(178, 58, 58, 0.4); border-left: 4px solid var(--cardinal);
+  background: rgba(140, 21, 21, 0.14);
+}
+.authNotice {
+  margin: 1rem 0 0; padding: 0.8rem 1rem; border-radius: 8px 14px 14px 8px;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  background: var(--glass-bg);
+}
+.accessSummary { display: grid; gap: 0.7rem 1.4rem; margin: 0.9rem 0 0; }
+.accessSummaryItem dt {
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.15rem;
+}
+.accessSummaryItem dd { margin: 0; font-size: 0.95rem; word-break: break-word; }
+
+/* The student referral on the sign-in page. Set apart from the faculty explanation,
+   because the reader it is for has already been told this site is not for them and
+   should not have to read the rest to find where they should go. */
+.studentRedirect { margin-top: 2rem; }
+.studentRedirect h2 { margin-top: 0; font-size: 1.2rem; }
+.studentRedirect p { max-width: 62ch; overflow-wrap: anywhere; }
+.studentRedirect .actions { margin-top: 1rem; }
+
+.adminPortal { margin-top: 1.4rem; display: grid; gap: 2rem; }
+.adminCounts { font-size: 0.9rem; }
+.adminList { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.7rem; }
+/* Address on the left, actions on the right; stacked once the row is narrow, so a
+   long address never pushes the buttons off the page. */
+.adminRow {
+  display: flex; flex-wrap: wrap; gap: 0.7rem 1.2rem; align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem; border: 1px solid var(--glass-border);
+  border-radius: 12px; background: var(--glass-bg);
+}
+.adminRowMain { min-width: 0; flex: 1 1 18rem; }
+.adminRowEmail { margin: 0; font-weight: 600; word-break: break-all; }
+.adminRowMeta { margin: 0.15rem 0 0; font-size: 0.86rem; }
+.adminRowActions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.adminRowActions .authButton { padding: 0.4rem 0.8rem; font-size: 0.88rem; }
+.adminAddRow { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: flex-end; margin-top: 1rem; }
+.adminField { display: grid; gap: 0.25rem; font-size: 0.88rem; }
+.adminField > span { color: var(--muted); }
+.adminField input, .adminField select {
+  font: inherit; padding: 0.5rem 0.7rem; border-radius: 8px;
+  border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--ink);
+  min-width: 15rem;
+}
+.adminFilter { margin-top: 1rem; }
+
+@media (max-width: 640px) {
+  .adminRow { flex-direction: column; align-items: stretch; }
+  .adminField input, .adminField select { min-width: 0; width: 100%; }
+  .adminAddRow { flex-direction: column; align-items: stretch; }
+}
+
+/* ---- Guide collections ---------------------------------------------------- */
+/* Two collections on one landing page, each numbered from 1. The status line and
+   the planned-guide state are visible text inside a pill, never colour alone: a
+   reader in greyscale, in print, or with a screen reader gets the same facts. */
+.collectionsIntro { color: var(--muted); font-size: 0.9rem; margin: 1.6rem 0 0; }
+.guideCollection { margin-top: 2.4rem; }
+.guideCollection > h2 { margin-top: 0.2rem; }
+.collectionBody { max-width: 72ch; }
+.collectionStatus { margin: 0.7rem 0 0; }
+.plannedGuideList { display: grid; gap: 0.8rem; margin-top: 0.9rem; }
+/* Planned guides are articles, not links. They are visibly quieter than a
+   published card, but the status is stated in text so the difference never
+   depends on that styling. */
+.plannedGuideCard { background: var(--glass-bg); opacity: 0.92; }
+.plannedGuideCard h3 { margin: 0.5rem 0 0.35rem; font-size: 1.02rem; }
+.plannedGuideCard p.muted { margin: 0; font-size: 0.92rem; }
+.plannedGuideStatus { margin: 0; }
+
+/* The bridge from a finished collection to a new one. Deliberately lighter than
+   the completion card above it: it is an invitation, not the next step. */
+.continuationCard {
+  margin-top: 2.2rem; padding: 1.3rem 1.4rem;
+  border: 1px dashed var(--glass-border); border-radius: var(--radius-lg, 16px);
+  background: none;
+}
+.continuationTitle { margin: 0.3rem 0 0.5rem; font-size: 1.25rem; }
+.continuationCard p.muted { max-width: 66ch; margin: 0; }
+.continuationMeta { margin-top: 0.8rem !important; font-size: 0.85rem; }
+.guideCollectionLine { margin: 0.1rem 0 0.2rem; color: var(--muted); font-size: 0.92rem; }
+
+.collectionNav { display: grid; gap: 1rem; margin-top: 2.2rem; }
+.collectionNavCard { padding: 1.1rem 1.25rem; }
+.collectionNavTitle { margin: 0.3rem 0 0.5rem; font-size: 1.1rem; }
+.collectionNavCard p.muted { margin: 0 0 0.6rem; font-size: 0.93rem; }
+.collectionNavList { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+.collectionNavList li { margin-bottom: 0.35rem; }
+
+/* ---- Critical review (Collection 2, guide 1) ------------------------------ */
+.agreementTypes { list-style: none; counter-reset: agreement; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 1rem; }
+.agreementType {
+  counter-increment: agreement; padding: 1.1rem 1.25rem;
+  border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg);
+}
+.agreementTitle { margin: 0 0 0.6rem; font-size: 1.05rem; }
+.agreementTitle::before { content: counter(agreement) ". "; color: var(--muted); }
+.agreementFields { margin: 0; }
+.agreementFields dt {
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.7rem;
+}
+.agreementFields dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
+.agreementExample { display: block; font-family: var(--font-serif); font-style: italic; }
+.agreementNextMove { font-weight: 550; }
+.agreementToneNote { margin-top: 1rem; font-size: 0.93rem; color: var(--muted); max-width: 70ch; }
+
+.reviewSteps { margin: 1.1rem 0 0; padding-left: 0; list-style: none; counter-reset: none; display: grid; gap: 1rem; }
+.reviewStep {
+  padding: 1.1rem 1.25rem; border: 1px solid var(--glass-border);
+  border-radius: 14px; background: var(--glass-bg);
+}
+.reviewStepHead { display: flex; align-items: center; gap: 0.7rem; margin: 0 0 0.5rem; }
+.reviewStepNumber {
+  flex: 0 0 1.9rem; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(140, 21, 21, 0.16); color: var(--ink); font-weight: 700;
+}
+.reviewStepTitle { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; }
+.reviewStepFields { margin: 0; }
+.reviewStepFields dt {
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.65rem;
+}
+.reviewStepFields dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
+.reviewStepHuman { font-weight: 550; }
+.reviewClosingNote { margin-top: 1rem; max-width: 72ch; }
+
+.promptComparison { margin-top: 1rem; }
+.scenarioLabel { margin: 0 0 0.6rem; }
+.scenarioText { margin: 0 0 1.1rem; max-width: 70ch; }
+.comparisonPrompt { margin-bottom: 1.1rem; }
+.exerciseSteps { margin: 1.2rem 0 0; padding-left: 1.3rem; }
+.exerciseSteps > li { margin-bottom: 0.8rem; }
+.exerciseStepInstruction { font-weight: 550; }
+.exerciseStepQuestion { margin: 0.25rem 0 0; color: var(--muted); }
+.exerciseLookForHead { margin: 0.4rem 0 0.2rem; font-size: 0.9rem; }
+.exerciseLookFor { margin: 0; padding-left: 1.1rem; font-size: 0.93rem; columns: 2; }
+
+.answerKeyBody h3 { font-size: 1rem; margin: 1rem 0 0.3rem; }
+.answerKeyControlHead { margin: 1rem 0 0.2rem; font-weight: 600; }
+.answerKeyControl { margin: 0; padding-left: 1.2rem; font-weight: 600; }
+.answerKeyClosing { margin-top: 0.9rem; }
+
+.criticalReviewPrompt { margin-top: 0.9rem; }
+.promptLimitations {
+  margin-top: 1rem; padding: 0.9rem 1.1rem;
+  border-left: 3px solid var(--gold); background: var(--glass-bg); border-radius: 4px 12px 12px 4px;
+}
+.promptLimitationsHead { margin: 0 0 0.4rem; font-weight: 600; font-size: 0.95rem; }
+.promptLimitations ul { margin: 0; padding-left: 1.2rem; font-size: 0.93rem; }
+.promptLimitations li { margin-bottom: 0.3rem; }
+.facultyMovePrimary { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; margin: 0 0 0.5rem; }
+.facultyMoveRelated { margin-top: 0.7rem !important; font-size: 0.9rem; }
+.detailsBody > :last-child { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+  /* Two columns of short phrases become unreadable on a phone. */
+  .exerciseLookFor { columns: 1; }
+}
+
+/* ---- Context guide (Collection 2, guide 2) -------------------------------- */
+/* The four locations and the three recovery steps reuse the card-in-a-list shape
+   from the critical-review guide rather than inventing a second one. The current
+   feature insert is visually separated because it is the only dated part of the
+   page: when it goes stale it withholds its summaries and says so. */
+.contextLocations, .recoverySteps {
+  list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 1rem;
+}
+.contextLocation, .recoveryStep {
+  padding: 1.1rem 1.25rem; border: 1px solid var(--glass-border);
+  border-radius: 14px; background: var(--glass-bg);
+}
+.contextLocations { counter-reset: contextLocation; }
+.contextLocation { counter-increment: contextLocation; }
+.contextLocationTitle { margin: 0 0 0.6rem; font-size: 1.05rem; }
+.contextLocationTitle::before { content: counter(contextLocation) ". "; color: var(--muted); }
+.contextLocationFields, .recoveryStepFields { margin: 0; }
+.contextLocationFields dt, .recoveryStepFields dt {
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.7rem;
+}
+.contextLocationFields dd, .recoveryStepFields dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
+.contextLocationCheck, .recoveryOutput { font-weight: 550; }
+.contextLocationExample { font-family: var(--font-serif); font-style: italic; }
+.contextVisibilityNote, .receiptScopeNote {
+  margin-top: 1rem; font-size: 0.93rem; color: var(--muted); max-width: 72ch;
+}
+
+.recoveryStepHead { display: flex; align-items: center; gap: 0.7rem; margin: 0 0 0.5rem; }
+.recoveryStepNumber {
+  flex: 0 0 1.9rem; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(140, 21, 21, 0.16); color: var(--ink); font-weight: 700;
+}
+.recoveryStepTitle { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; }
+.recoveryInclude { margin: 0; padding-left: 1.1rem; }
+.recoveryInclude li { margin-bottom: 0.2rem; }
+
+.contextExercise { margin-top: 1rem; }
+
+/* The dated insert. The checked/stale line is text, and the stale variant gets a
+   gold rule as well — the state must not depend on colour alone. */
+.contextFeatures {
+  margin-top: 2.2rem; padding: 1.3rem 1.4rem;
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg, 16px);
+  background: var(--glass-bg);
+}
+.contextFeatures > h2 { margin: 0.3rem 0 0.5rem; font-size: 1.3rem; }
+.contextFeaturesChecked { margin: 0 0 0.6rem; font-size: 0.9rem; color: var(--muted); }
+.contextFeaturesChecked.stale {
+  color: var(--ink); border-left: 3px solid var(--gold); padding-left: 0.7rem;
+}
+.contextFeaturesIntro { max-width: 72ch; }
+.contextFeatureList { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 0.9rem; }
+.contextFeature {
+  padding: 1rem 1.1rem; border: 1px solid var(--glass-hairline);
+  border-radius: 12px; background: var(--glass-bg-strong);
+}
+.contextFeatureName { margin: 0; font-size: 1rem; }
+.contextFeatureFields { margin: 0; }
+.contextFeatureFields dt {
+  font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.6rem;
+}
+.contextFeatureFields dd { margin: 0.15rem 0 0; font-size: 0.93rem; }
+.contextFeatureCheck { font-weight: 550; }
+.contextFeatureSources { margin: 0.7rem 0 0; font-size: 0.88rem; word-break: break-word; }
+.contextFeatureSourcesLabel { color: var(--muted); }
+.contextFeatureStaleLinks { margin: 1rem 0 0; padding-left: 1.2rem; font-size: 0.9rem; }
+.contextFeatureStaleLinks li { margin-bottom: 0.3rem; }
+
+/* ---- Confidence guide (Collection 2, guide 3) ----------------------------- */
+/* The five claim statuses and the four framework steps reuse the card-in-a-list
+   shape from the two guides before them rather than inventing a third one. Every
+   field is labelled in text: no status has a colour, an icon, a score, or a
+   position that carries meaning on its own. */
+.claimStatuses, .evidenceSteps {
+  list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 1rem;
+}
+.claimStatus, .evidenceStep {
+  padding: 1.1rem 1.25rem; border: 1px solid var(--glass-border);
+  border-radius: 14px; background: var(--glass-bg);
+}
+.claimStatuses { counter-reset: claimStatus; }
+.claimStatus { counter-increment: claimStatus; }
+.claimStatusTitle { margin: 0 0 0.6rem; font-size: 1.05rem; }
+.claimStatusTitle::before { content: counter(claimStatus) ". "; color: var(--muted); }
+.claimStatusFields, .evidenceStepFields { margin: 0; }
+.claimStatusFields dt, .evidenceStepFields dt {
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.7rem;
+}
+.claimStatusFields dd, .evidenceStepFields dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
+.claimStatusAction, .evidenceStepOutput { font-weight: 550; }
+.claimStatusExample { font-family: var(--font-serif); font-style: italic; }
+.claimStatusNote, .evidenceClosingNote {
+  margin-top: 1rem; font-size: 0.93rem; color: var(--muted); max-width: 72ch;
+}
+
+.evidenceStepHead { display: flex; align-items: center; gap: 0.7rem; margin: 0 0 0.5rem; }
+.evidenceStepNumber {
+  flex: 0 0 1.9rem; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(140, 21, 21, 0.16); color: var(--ink); font-weight: 700;
+}
+.evidenceStepTitle { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; }
+
+.confidenceExercise { margin-top: 1rem; }
+/* The four phrasings the rewrite step does not accept. A separate list from the
+   status choices above it, so "do not merely add" is never read as an option. */
+.exerciseNotEnough { margin: 0; padding-left: 1.1rem; font-size: 0.93rem; }
+.exerciseNotEnough li { margin-bottom: 0.2rem; }
+.evidenceLedger { margin-top: 1.4rem; }
+.ledgerPrivacyNote { font-size: 0.9rem; }
+.answerKeyRewrite {
+  margin: 0.3rem 0 0; padding-left: 0.9rem; border-left: 3px solid var(--glass-border);
+}
+.answerKeyRewrite p { margin: 0; font-family: var(--font-serif); font-size: 1.02rem; }
+
+/* ---- Tutorial library ----------------------------------------------------- */
+/* Long-form documents rather than five-minute guides, so the page leads with the
+   facts a reader needs before opening a 42-page PDF: format, length, size, and
+   the two dates. The preview is the browser's own PDF viewer — there is no viewer
+   library and no canvas — so the only styling it needs is a sensible box. */
+.tutorialList { display: grid; gap: 1rem; margin-top: 1.1rem; }
+/* Thumbnail beside the text on wide screens, above it once the card is narrow.
+   The image keeps its intrinsic aspect ratio from the width/height attributes, so
+   nothing reflows once it loads. */
+/* `a.card` sets display:block with element+class specificity, so the selector has
+   to match it or the thumbnail column silently collapses. */
+a.card.tutorialCard { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1.1rem; align-items: start; }
+.tutorialCardThumb {
+  width: 100%; height: auto; border: 1px solid var(--glass-border); border-radius: 6px;
+  background: #fff;
+}
+.tutorialCardBody { min-width: 0; }
+.tutorialCard h3 { margin: 0.55rem 0 0.3rem; font-size: 1.15rem; }
+.tutorialCardSubtitle { margin: 0 0 0.5rem; font-family: var(--font-serif); font-size: 1rem; }
+.tutorialCard p.muted { margin: 0 0 0.7rem; font-size: 0.93rem; }
+.tutorialCardMeta { margin: 0 0 0.7rem; font-size: 0.85rem; color: var(--muted); }
+.tutorialGrowthNote { margin-top: 1rem; font-size: 0.9rem; max-width: 70ch; }
+
+.tutorialFacts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.75rem 1.4rem; margin: 1rem 0 0.9rem; padding: 0;
+}
+.tutorialFact dt {
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.15rem;
+}
+.tutorialFact dd { margin: 0; font-size: 0.95rem; }
+/* The currency line is a claim with a shelf life: past the review date the
+   record withholds it, and the stale variant has to read as a caution without
+   relying on colour alone — hence the "Review due." lead-in in the markup. */
+.tutorialCurrency { margin: 0 0 0.4rem; font-size: 0.9rem; color: var(--muted); max-width: 70ch; }
+.tutorialCurrency.stale {
+  color: var(--ink); border-left: 3px solid var(--gold);
+  padding-left: 0.7rem;
+}
+
+.tutorialCovers { list-style: none; padding: 0; margin: 0.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tutorialCover {
+  border: 1px solid var(--glass-border); background: var(--glass-bg);
+  border-radius: 999px; padding: 0.3rem 0.8rem; font-size: 0.88rem;
+}
+
+.tutorialCautions { margin: 1.6rem 0; }
+.tutorialCautions ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+.tutorialCautions li { margin-bottom: 0.55rem; }
+.tutorialCautions li:last-child { margin-bottom: 0; }
+
+.tutorialOutcomes { margin: 0.7rem 0 0; padding-left: 1.2rem; }
+.tutorialOutcomes li { margin-bottom: 0.5rem; }
+
+.tutorialContents { margin: 0.9rem 0 0; padding-left: 1.4rem; }
+.tutorialContentsItem { margin-bottom: 0.9rem; }
+.tutorialContentsTitle { display: block; font-weight: 650; }
+.tutorialContentsItem .muted { display: block; font-size: 0.92rem; margin-top: 0.15rem; }
+
+.tutorialPreview { margin: 1rem 0 0; padding: 0; }
+.tutorialPreviewFrame {
+  display: block; width: 100%; height: 80vh; min-height: 30rem;
+  border: 1px solid var(--glass-border); border-radius: var(--radius, 12px);
+  background: var(--glass-bg);
+}
+.tutorialPreviewFallback { padding: 1.6rem 1.2rem; text-align: center; }
+.tutorialPreviewFallback p:last-child { margin-bottom: 0; }
+/* The guaranteed layer of the preview: an image of the real first page, shown
+   whether or not the browser will embed a PDF. */
+.tutorialCoverFigure { margin: 1rem 0 1.6rem; padding: 0; }
+.tutorialCoverImage {
+  display: block; width: 100%; max-width: 30rem; height: auto; margin: 0;
+  border: 1px solid var(--glass-border); border-radius: 6px; background: #fff;
+}
+.tutorialPreviewFallback .tutorialCoverImage { margin: 0 auto 1rem; }
+.tutorialPreviewCaption { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+
+.tutorialRelated { margin: 0.9rem 0 0; padding-left: 1.2rem; }
+.tutorialRelated li { margin-bottom: 0.7rem; }
+.tutorialRelated .muted { font-size: 0.92rem; }
+.tutorialBackLink { margin-top: 2rem; font-size: 0.95rem; }
+
+@media (max-width: 640px) {
+  /* A viewport-height viewer is unusable on a phone; the fallback — the first-page
+     image and the download link — is what most mobile browsers will show anyway. */
+  .tutorialPreviewFrame { height: 60vh; min-height: 18rem; }
+  .tutorialFacts { gap: 0.6rem; }
+  /* The thumbnail stops earning a column once the card is this narrow. */
+  a.card.tutorialCard { grid-template-columns: 1fr; gap: 0.8rem; }
+  .tutorialCardThumb { max-width: 11rem; }
+}
+
+/* ---- Print: the guides should come out of a printer as a clean handout ----- */
+@media print {
+  .siteHeader, .footer, .themeToggle, .skip, .copyBtn, .docNav, .siteSearch,
+  .tutorialVideo, .installVideo, .audioEmbedFrame { display: none !important; }
+  body { background: #fff; color: #000; }
+  body::before { display: none; }
+  main { max-width: none; padding: 0; }
+  .panel, .card, .videoDemo, .docMeta, .docToc, .promptBlock, .doneWhen, .note, .caution, .step, .mediaFrame {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .panel::before, .card::before, .videoDemo::before { display: none; }
+  a { color: #000; text-decoration: underline; }
+  .eyebrow, .muted, .docMeta dt { color: #444 !important; }
+  .module, .step, .promptBlock, .mediaPlaceholder, .doneWhen, .dayCard { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+  .mediaFrame { aspect-ratio: auto !important; min-height: 6rem; }
+
+  /* The legal claim audit is meant to be printed and worked through on paper, so
+     the four steps, the worksheet, the simulation label, source citations and
+     review dates all have to survive. Details are forced open because a printed
+     collapsed disclosure is just missing content. */
+  .auditStep, .failureItem, .outcomeItem, .sourceTypeCard, .worksheet, .worksheetSection,
+  .simulatedClaim, .guideDetails, .toolCard, .materialItem { break-inside: avoid; }
+  .auditStep, .failureItem, .outcomeItem, .sourceTypeCard, .worksheet, .simulatedClaim,
+  .quietCallout, .answerFirst, .facultyMove, .worthRepeating, .exerciseBlock, .toolCard,
+  .sssItem, .materialItem, .guideDetails {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .guideDetails { display: block; }
+  .guideDetails > summary { font-weight: 700; list-style: none; }
+  .guideDetails > *:not(summary) { display: revert !important; }
+  /* The simulation label must never be lost in print. */
+  .simulatedLabel { color: #000 !important; border-bottom: 1px solid #000; }
+  .auditStopLabel, .auditFieldLabel, .worksheetHeading, .simulatedMeta dt,
+  .sourceTypeCard dt, .snapshotChecked, .guideMeta, .sourceStability { color: #000 !important; }
+  .auditStopRule { background: #f2f2f2 !important; border-left: 3px solid #000 !important; }
+  .auditStepNumber { background: none !important; border: 1px solid #000 !important; }
+  /* Worksheet lines need room to be written on. */
+  .worksheetLines li { color: #000 !important; margin-bottom: 0.45rem; }
+
+  /* The citation-provenance guide is printed and worked through on paper, so the
+     source-mode comparison, citation anatomy, evidence states, exercise steps,
+     answer key and dated snapshot all have to survive. The simulation label and
+     the "not a transcript" note must stay legible: a printed page that showed
+     the fictional citation without them would read as a real authority. */
+  .provenanceCard, .anatomyPart, .evidenceState, .evidenceSnapshot, .evidenceFigure,
+  .relatedGuideCard { break-inside: avoid; }
+  .provenanceCard, .anatomyPart, .evidenceState, .evidenceSnapshot, .relatedGuideCard {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .provenanceCard dt, .evidenceState dt, .answerKeyList dt, .evidencePresent,
+  .evidenceDates, .evidenceStaleNote, .anatomyPartNumber, .evidenceStateNumber {
+    color: #000 !important;
+  }
+  .anatomyPartNumber, .evidenceStateNumber { background: none !important; border: 1px solid #000 !important; }
+  .citationFragment, .evidenceFigure { background: #f2f2f2 !important; border-color: #000 !important; }
+  .simulatedSupport, .simulatedNotTranscript { color: #000 !important; font-weight: 700; }
+  /* The answer key is forced open by the .guideDetails rules above, so say what
+     it is rather than letting it read as part of the exercise. */
+  .answerKey > summary::after { content: " (answer key)"; font-weight: 400; }
+
+  /* The student-AI concern guide is printed and worked through while handling a
+     live concern, so the six steps, the OCS routing, the evidence categories, the
+     practice scenario, the assignment template, and every review date have to
+     survive. The "Do not" column and the practice label must stay legible in
+     black: a printed page that lost either would read as permission. */
+  .concernStep, .materialsItem, .evidenceCategory, .workTypeCard, .boundaryField,
+  .processInsert, .policyInsert, .detectionGuidance, .practiceScenario,
+  .conversationOpening, .releaseNote, .boundaryCopyText { break-inside: avoid; }
+  .concernStep, .materialsItem, .evidenceCategory, .workTypeCard, .boundaryField,
+  .processInsert, .policyInsert, .detectionGuidance, .practiceScenario, .releaseNote,
+  .boundaryCopyText, .conversationOpening, .pullQuestion {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .concernListHead, .concernDont, .concernEvidence, .categoryExamplesHead, .categoryExamples,
+  .evidenceCategory dt, .materialsExamples, .materialsRequirement, .workTypeExamplesHead,
+  .conversationQuestionsHead, .conversationOpeningLabel, .detectionGuidance dt,
+  .processChecked, .detectionChecked, .practiceChoices, .boundaryExamples, .boundaryRequirement,
+  .boundaryChoices, .boundaryAttribution, .policyDates, .concernStepNumber {
+    color: #000 !important;
+  }
+  .concernStepNumber { background: none !important; border: 1px solid #000 !important; }
+  /* The practice label and the stale-process label must not read as ordinary copy. */
+  .practiceLabel, .processStaleLabel { color: #000 !important; border-bottom: 1px solid #000; }
+  .practiceScenario { border-style: dashed !important; }
+  .boundaryCopyText, .processStale { background: #f2f2f2 !important; border-color: #000 !important; }
+  /* Print the two columns side by side so a step fits on one page. */
+  .concernLists { grid-template-columns: 1fr 1fr !important; }
+
+  /* The teaching guide is printed and worked through while designing an
+     assignment, so the design checks, modes, activity patterns, the complete
+     case-brief activity, the prompt, the rubric, the boundary template, and the
+     SLS policy card all have to survive. The strong/weak labels must stay legible
+     in black: a printed page that lost the distinction would read as approval of
+     the weak example. */
+  .designCheck, .assignmentMode, .activityPattern, .caseBriefPart, .rubricCriterion,
+  .literacyCard, .slsPolicyCard, .modeStarter, .designStrong, .designWeak,
+  .processResourceCard, .concernCompanionCard { break-inside: avoid; }
+  .designCheck, .assignmentMode, .activityPattern, .caseBriefPart, .rubricCriterion,
+  .literacyCard, .slsPolicyCard, .processResourceCard, .concernCompanionCard,
+  .pullQuestion, .modeStarter, .designStrong, .designWeak {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .designExamples dt, .designWeak dd, .assignmentMode dt, .activityFields dt,
+  .activitySequenceHead, .caseBriefMeta dt, .rubricWeight, .evidenceListHead,
+  .evidenceNever, .launchLabel, .modeStarterHead, .designPurpose, .slsPolicyPublisher,
+  .rubricDisclaimer, .designCheckNumber, .activityFilterLabel {
+    color: #000 !important;
+  }
+  .designCheckNumber { background: none !important; border: 1px solid #000 !important; }
+  .designStrong { border-left: 4px solid #000 !important; }
+  .designWeak { border-left: 4px dashed #000 !important; }
+  .designExamples { grid-template-columns: 1fr 1fr !important; }
+  .capabilityList { columns: 2 !important; }
+  /* The activity filter is navigation, useless on paper; the by-course index stays. */
+  .activityFilter { display: none !important; }
+
+  /* The critical-review guide is printed and worked through on paper: the three
+     agreement types, the four framework steps, both exercise prompts, the answer
+     key's heading, the reusable prompt and its limits, and the collection line all
+     have to survive. Backgrounds go white so the text stays legible. */
+  .agreementType, .reviewStep, .promptLimitations, .plannedGuideCard, .continuationCard,
+  .collectionNavCard { break-inside: avoid; }
+  .agreementType, .reviewStep, .promptLimitations, .plannedGuideCard, .collectionNavCard {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .continuationCard { border: 1px dashed #666 !important; }
+  .agreementFields dt, .reviewStepFields dt, .guideCollectionLine, .collectionStatus,
+  .agreementToneNote, .exerciseStepQuestion, .promptLimitationsHead { color: #000 !important; }
+  .reviewStepNumber { background: none !important; border: 1px solid #000 !important; }
+  .promptLimitations { border-left: 3px solid #000 !important; }
+  /* Two columns of look-fors become one on paper, where the measure is narrower. */
+  .exerciseLookFor { columns: 1 !important; }
+
+  /* The context guide prints too: the four locations, the three recovery steps,
+     the packet, the receipt prompt, and the dated feature line all have to survive,
+     and the feature review date is the part a printed copy most needs. */
+  .contextLocation, .recoveryStep, .contextFeature, .contextFeatures { break-inside: avoid; }
+  .contextLocation, .recoveryStep, .contextFeature, .contextFeatures {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .contextLocationFields dt, .recoveryStepFields dt, .contextFeatureFields dt,
+  .contextFeaturesChecked, .contextVisibilityNote, .receiptScopeNote { color: #000 !important; }
+  .recoveryStepNumber { background: none !important; border: 1px solid #000 !important; }
+  .contextFeaturesChecked.stale { border-left: 3px solid #000 !important; }
+
+  /* The confidence guide is printed and worked through on paper: the five claim
+     statuses, the four framework steps, the simulated response and its label, the
+     exercise, the ledger a reader writes on, the reusable prompt and its limits,
+     the sources, and the review date all have to survive. The simulation label is
+     handled by the .simulatedLabel rule above, which underlines it in black — a
+     printed page that lost it would read as a real recommendation. */
+  .claimStatus, .evidenceStep, .evidenceLedger, .answerKeyRewrite { break-inside: avoid; }
+  .claimStatus, .evidenceStep {
+    background: #fff !important; box-shadow: none !important;
+    border: 1px solid #999 !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .claimStatusFields dt, .evidenceStepFields dt, .claimStatusNote, .evidenceClosingNote,
+  .ledgerPrivacyNote { color: #000 !important; }
+  .evidenceStepNumber { background: none !important; border: 1px solid #000 !important; }
+  .answerKeyRewrite { border-left: 3px solid #000 !important; }
+  /* Status choices and rejected phrasings must stay distinguishable on paper. */
+  .exerciseNotEnough li { color: #000 !important; }
+
+  /* A tutorial page printed on paper should still say what the document is, what
+     is in it, and where to get it. An embedded PDF viewer prints as an empty box,
+     so the frame goes and the file's URL is printed after the download link
+     instead — a reader holding the sheet can still find the file. */
+  .tutorialPreviewFrame { display: none !important; }
+  /* The first-page image survives print: on paper it is the only preview there
+     can be, and it identifies the document a reader is holding a description of. */
+  .tutorialCoverImage, .tutorialCardThumb { border: 1px solid #999 !important; max-width: 18rem; }
+  .tutorialPreviewCaption { color: #000 !important; }
+  a[href^="/tutorials/"][download]::after { content: " — " attr(href); font-size: 0.85em; }
+  .tutorialFact dt, .tutorialCurrency, .tutorialCardMeta { color: #000 !important; }
+  .tutorialCover { border: 1px solid #999 !important; background: none !important; }
+  .tutorialCautions, .tutorialContentsItem, .tutorialCard { break-inside: avoid; }
+  .tutorialCurrency.stale { border-left: 3px solid #000 !important; }
+}
+
+/* ============================================================================
+   AI Learning Hub — additions
+   ---------------------------------------------------------------------------
+   Everything above this line is the faculty site's design system, copied
+   verbatim so the two sites are visually one family. Everything below is what
+   the hub needs and the faculty site does not.
+
+   Two differences drive all of it. The hub is open to the whole Law School, so
+   there is no gate, no account link, and no search endpoint to post to — the
+   header is destinations only. And the hub carries the PAUSE Rule, which is a
+   decision procedure rather than an article, so it needs gates, verdicts, and a
+   flow chart that the faculty site never had a use for.
+   ========================================================================== */
+
+/* ---- Header: no gate, so the bar is destinations only ---------------------- */
+/* The faculty bar reserves its right edge for search and an account link. With
+   neither, the nav would sit hard against the viewport edge, so it is pushed off
+   the edge by the same amount the account pill used to occupy. */
+.siteHeader nav.primaryNav { margin-left: auto; }
+
+/* Home hero without the PAUSE side card: one column, brand and actions only. */
+.hero.solo { grid-template-columns: 1fr; max-width: 48rem; }
+.heroAside { margin: 1rem 0 0; font-size: 0.95rem; }
+.heroAside a { font-weight: 600; }
+
+/* ---- Verdicts: Proceed / ABORT / Use an alternative ------------------------
+   The PAUSE Rule ends each gate in one of three outcomes. They are pills rather
+   than coloured text because colour is never the only signal here: each one
+   carries the word, and the arrow says which way it sends you. */
+.verdictRow { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin: 1rem 0 0; }
+.verdict {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.32rem 0.8rem; border-radius: 999px;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.01em;
+  border: 1px solid transparent;
+}
+.verdict.go {
+  color: #0f6b39; background: rgba(46, 158, 91, 0.16); border-color: rgba(46, 158, 91, 0.45);
+}
+.verdict.stop {
+  color: #7c1414; background: rgba(140, 21, 21, 0.16); border-color: rgba(178, 58, 58, 0.5);
+}
+.verdict.warn {
+  color: #7a5410; background: rgba(169, 121, 31, 0.18); border-color: rgba(169, 121, 31, 0.5);
+}
+/* On the dark surfaces the three fills are legible but their text is not: the
+   light-mode inks land near 2:1 against them. Lightened per theme, the way
+   --link is. */
+:root[data-theme="dark"] .verdict.go { color: #74d99f; }
+:root[data-theme="dark"] .verdict.stop { color: #f09a9a; }
+:root[data-theme="dark"] .verdict.warn { color: #e4bb6b; }
+
+/* ---- The acronym strip ----------------------------------------------------
+   P A U S E across the top of the page, one cell each. Five columns on a wide
+   screen; below that the letters would be narrower than the words beneath them,
+   so it drops to two and then one. */
+.acronymStrip {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1.6vw, 1.1rem); margin-top: 1.4rem;
+}
+.acronymCell { text-align: center; }
+.acronymLetter {
+  display: block; font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1; color: var(--link);
+}
+.acronymWord {
+  display: block; margin-top: 0.35rem;
+  font-size: 0.92rem; font-weight: 650; color: var(--ink);
+}
+@media (max-width: 760px) { .acronymStrip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* One column on a phone, but each cell turns on its side rather than stacking:
+   five centred letter-over-word blocks ran to most of a 390px screen, so the
+   reader scrolled past the whole acronym before reaching the first gate. */
+@media (max-width: 420px) {
+  .acronymStrip { grid-template-columns: 1fr; gap: 0.5rem; }
+  .acronymCell { display: flex; align-items: baseline; gap: 0.7rem; text-align: left; }
+  .acronymLetter { font-size: 1.5rem; flex: 0 0 1.1rem; }
+  .acronymWord { margin-top: 0; }
+}
+
+/* The gate letter in a module head. .moduleNum already draws the circle; this
+   only swaps the digit face for the serif capital the old site used. */
+.moduleNum.gate { font-size: 1.35rem; }
+
+/* ---- Worked examples: good / poor / borderline ----------------------------
+   Three cards read as a set only if the difference between them is visible
+   before the text is. A top rule, not a whole tinted card: the glass surface is
+   doing the work already. */
+.exampleGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.9rem, 2vw, 1.3rem); }
+.exampleCard { border-top-width: 4px; border-top-style: solid; }
+.exampleCard.good { border-top-color: #2e9e5b; }
+.exampleCard.poor { border-top-color: var(--cardinal); }
+.exampleCard.borderline { border-top-color: var(--gold); }
+.exampleVerdict { margin: 0 0 0.5rem; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; }
+.exampleCard.good .exampleVerdict { color: #2e9e5b; }
+.exampleCard.poor .exampleVerdict { color: var(--link); }
+.exampleCard.borderline .exampleVerdict { color: var(--gold); }
+@media (max-width: 860px) { .exampleGrid { grid-template-columns: 1fr; } }
+
+/* ---- The one-page decision flow ------------------------------------------
+   A single narrow column: it is read top to bottom, and a wider one would let
+   the eye skip a gate. Each gate states its question, then the two ways out. */
+.decisionFlow { max-width: 32rem; margin: 1.4rem auto 0; display: grid; gap: 0.5rem; }
+.decisionTerminus {
+  padding: 0.85rem 1rem; border-radius: 14px; text-align: center;
+  font-weight: 700; color: #fff;
+}
+.decisionTerminus.start { background: linear-gradient(145deg, var(--cardinal-bright), var(--cardinal) 60%, #6f1111); }
+.decisionTerminus.end { background: linear-gradient(145deg, #35b071, #1f7a4a 60%, #155f39); }
+.decisionArrow { text-align: center; color: var(--muted); font-size: 1.3rem; line-height: 1; }
+.decisionGate {
+  padding: 1rem 1.15rem; border-radius: 16px;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+.decisionGate p { margin: 0 0 0.7rem; font-weight: 650; text-align: center; }
+.decisionSplit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+.decisionSplit > span {
+  padding: 0.5rem 0.6rem; border-radius: 10px; text-align: center;
+  font-size: 0.86rem; font-weight: 700;
+}
+.decisionSplit .no { color: #7c1414; background: rgba(140, 21, 21, 0.16); }
+.decisionSplit .yes { color: #0f6b39; background: rgba(46, 158, 91, 0.16); }
+:root[data-theme="dark"] .decisionSplit .no { color: #f09a9a; }
+:root[data-theme="dark"] .decisionSplit .yes { color: #74d99f; }
+
+/* ---- Audience columns: faculty / students / staff ------------------------- */
+/* The five PAUSE letters restated for one reader. A definition list, because
+   that is what it is: the letter is the term and the guidance is the
+   definition. */
+.audienceList { margin: 0; }
+.audienceList dt {
+  float: left; clear: left; width: 1.6rem;
+  font-family: var(--font-serif); font-weight: 700; color: var(--link);
+}
+.audienceList dd { margin: 0 0 0.55rem 1.6rem; font-size: 0.93rem; }
+.audienceList dd:last-child { margin-bottom: 0; }
+
+/* A long paste-me block — the agent instructions run to 1,300 words — scrolls
+   inside its own box rather than burying the rest of the page. The copy button
+   takes the whole text either way. */
+.codeBlock.long pre { max-height: 30rem; overflow: auto; }
+.codeBlock.long code { white-space: pre-wrap; }
+/* The screen recording sits in the same frame the guides give a screenshot. */
+video.mediaAsset { height: auto; border: 1px solid var(--glass-border); }
+
+/* ---- Site search -----------------------------------------------------------
+   search.html. The field is the page's one job, so it is sized like a hero
+   control rather than the small one in the header bar. */
+.searchField { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 1.4rem 0 0.6rem; max-width: 46rem; }
+.searchField input {
+  flex: 1 1 18rem; min-width: 0;
+  padding: 0.8rem 1.1rem; font-size: 1.02rem; color: var(--ink);
+  border-radius: 999px; border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+.searchField input::placeholder { color: var(--muted); }
+.searchField .primary { flex: 0 0 auto; }
+.searchStatus { min-height: 1.4rem; margin: 0.4rem 0 0; color: var(--muted); font-size: 0.92rem; }
+
+.searchResults { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: 1.1rem; max-width: 78ch; }
+.searchResult { padding-bottom: 1.1rem; border-bottom: 1px solid var(--glass-hairline); }
+.searchResult:last-child { border-bottom: 0; }
+.searchResult h2 { margin: 0 0 0.2rem; font-size: 1.12rem; }
+.searchResult h2 a { text-decoration: none; }
+.searchResult h2 a:hover { text-decoration: underline; }
+/* Where the hit lives, when that is not already the result's own title. */
+.searchWhere { margin: 0 0 0.35rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); }
+.searchSnippet { margin: 0; color: var(--muted); font-size: 0.94rem; line-height: 1.6; }
+.searchSnippet mark {
+  background: rgba(169, 121, 31, 0.28); color: var(--ink);
+  border-radius: 3px; padding: 0 0.12em;
+}
+:root[data-theme="light"] .searchSnippet mark { background: rgba(169, 121, 31, 0.34); }
+
+/* ---- Audio explainer -------------------------------------------------------
+   A Drive-hosted recording, framed like the install walkthroughs but sized for a
+   player rather than a picture: an audio preview needs a bar, not sixteen-by-ten
+   of empty black. The frame is capped short and the surrounding block carries
+   the duration and a way out, because a framed player is the one element on the
+   page that can silently fail — a signed-out reader, a blocked third-party
+   frame, or a sharing setting can each leave it blank. */
+.audioEmbed { margin: 1.2rem 0 0; }
+.audioEmbedFrame {
+  width: 100%; height: 10.5rem; margin: 0.7rem 0 0.6rem;
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.25);
+}
+.audioEmbedFrame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.audioEmbedMeta { display: flex; align-items: center; gap: 0.5rem 1rem; flex-wrap: wrap; font-size: 0.86rem; color: var(--muted); margin: 0; }
+/* Inside a cross-promo card the player takes a row of its own beneath the text
+   and the button, rather than squeezing into the column beside them. */
+.crossPromo .audioEmbed { flex: 1 1 100%; margin-top: 0.4rem; padding-top: 1.1rem; border-top: 1px solid var(--glass-hairline); }
+
+/* ---- In-page jumps on the landing pages ------------------------------------
+   The site header is fixed, so an anchor lands its target under the bar unless
+   the target reserves room. .docPage and .stackPage each declare their own
+   clearance; nothing covered the ordinary pages, so "jump to this section"
+   links on skills.html dropped the heading behind the header. 8rem clears the
+   bar at both its desktop and its phone height. */
+main section[id] { scroll-margin-top: 8rem; }
+
+/* ---- Case study figures ----------------------------------------------------
+   case-study-anthropic-legal-skills.html reads the Anthropic repository like a
+   machine drawing, so it needs figures rather than prose in several places. The
+   source document drew those as ASCII art, which does not survive a phone: it
+   either scrolls sideways or shrinks past legibility. Each one is rebuilt here
+   as ordinary elements that reflow, so the diagram is readable at 320px and to a
+   screen reader, and inherits both themes. Nothing here is page-specific enough
+   to belong in a <style> block on that one page. */
+
+/* Code and file listings. Monospace, labelled with what the reader is looking
+   at, and scrolling inside its own box: a YAML line must not widen the page. */
+.codeBlock { margin: 1.2rem 0; border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg-strong); overflow: hidden; }
+.codeHead {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap;
+  padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--glass-hairline); background: var(--glass-bg);
+}
+.codeName { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.8rem; font-weight: 650; color: var(--muted); }
+.codeBlock pre { margin: 0; padding: 0.95rem 1.1rem; overflow-x: auto; }
+.codeBlock code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem; line-height: 1.65; color: var(--ink); white-space: pre;
+}
+.codeBlock .tok-key { color: var(--link); }
+.codeBlock .tok-com { color: var(--muted); }
+.codeCaption { margin: 0.5rem 0 0; font-size: 0.88rem; color: var(--muted); }
+
+/* Stacked layers: the legal AI stack, and the four kinds of file in a skill
+   folder. A row is a label plus a gloss, so it stays two lines on a phone. */
+.layerStack { margin: 1.3rem 0; border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; background: var(--glass-bg); }
+.layerRow { padding: 0.8rem 1.05rem; border-bottom: 1px solid var(--glass-hairline); }
+.layerRow:last-child { border-bottom: 0; }
+.layerRow.top { background: linear-gradient(135deg, rgba(140, 21, 21, 0.16), transparent 70%); }
+.layerRow.base { background: linear-gradient(135deg, rgba(169, 121, 31, 0.16), transparent 70%); }
+.layerName { display: block; font-weight: 700; font-size: 0.98rem; }
+.layerName code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.92rem; }
+.layerGloss { display: block; margin-top: 0.15rem; font-size: 0.88rem; color: var(--muted); }
+
+/* A sequence with an arrow between steps, and an optional fan of outcomes.
+   The arrow is a pseudo-element so it is decoration, not content a screen
+   reader has to read out between every step. */
+.flowChain { list-style: none; margin: 1.3rem 0; padding: 0; display: grid; gap: 1.35rem; justify-items: start; }
+.flowChain li { position: relative; margin: 0; padding: 0.6rem 1rem; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass-bg); font-size: 0.93rem; }
+.flowChain li + li::before {
+  content: "↓"; position: absolute; left: 1.2rem; top: -1.15rem;
+  font-size: 0.95rem; line-height: 1; color: var(--gold);
+}
+.flowChain li.outcome { border-color: rgba(46, 158, 91, 0.4); }
+.flowBranch { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+/* The fan is parallel, not sequential: the chain's arrow must not repeat
+   between outcomes that all follow from the same step. */
+.flowBranch li + li::before { content: none; }
+.flowBranch li { margin: 0; padding: 0.5rem 0.95rem; border: 1px solid var(--glass-hairline); border-radius: 999px; background: var(--glass-bg-strong); font-size: 0.88rem; }
+
+/* Two ends of a spectrum with the players placed along it. Horizontal rather
+   than the source's vertical axis, because a wide bar reads better in a text
+   column than a tall one. */
+.spectrumFig { margin: 1.4rem 0; }
+.spectrumBar { height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--cardinal), var(--gold)); }
+.spectrumEnds { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.5rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--muted); }
+.spectrumMarks { display: flex; justify-content: space-between; gap: 1rem; margin: 0.9rem 0 0; padding: 0; list-style: none; flex-wrap: wrap; }
+.spectrumMarks li { font-size: 0.92rem; max-width: 22ch; }
+.spectrumMarks li:last-child { text-align: right; }
+
+/* The skills inside one plugin, as the repository names them. Monospace because
+   these are directory names the reader can go and look at. */
+.jobList { list-style: none; margin: 1.2rem 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.jobList a {
+  display: inline-block; padding: 0.4rem 0.85rem; border-radius: 999px;
+  border: 1px solid var(--glass-hairline); background: var(--glass-bg-strong);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.84rem;
+  text-decoration: none; color: var(--ink);
+}
+.jobList a:hover { border-color: var(--link); color: var(--link); }
+
+/* skill + configuration + facts = result. */
+.formulaFig { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0.7rem; margin: 1.4rem 0; }
+.formulaTerm { flex: 1 1 13rem; padding: 0.85rem 1rem; border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg); }
+.formulaTerm.result { border-color: rgba(140, 21, 21, 0.45); background: linear-gradient(135deg, rgba(140, 21, 21, 0.14), var(--glass-bg) 60%); }
+.formulaTerm b { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.25rem; }
+.formulaOp { align-self: center; font-size: 1.2rem; font-weight: 700; color: var(--muted); }
+
+/* A long list of short items — the fifteen due-diligence questions — set in
+   columns so it does not become a screenful of one-line rows. */
+.splitList { margin: 1.1rem 0; padding-left: 1.2rem; columns: 2; column-gap: 2rem; }
+.splitList li { margin-bottom: 0.4rem; break-inside: avoid; }
+@media (max-width: 620px) { .splitList { columns: 1; } .spectrumMarks li:last-child { text-align: left; } }
+
+/* ---- Skill sets ----------------------------------------------------------- */
+/* One-click sets, above the individual cards. A set is a single ZIP holding the
+   skill ZIPs, so the primary action is an ordinary download link and looks like
+   every other one on the page; the second button (added by skill-bundles.js and
+   absent without it) fetches the same skills as separate files. */
+.bundleGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.9rem, 2vw, 1.3rem); }
+.bundleCard { display: flex; flex-direction: column; }
+/* The lead set runs the full width: it is the one a reader is meant to take,
+   and it is the only card with room to name what is inside it. */
+.bundleCard.featured { grid-column: 1 / -1; background: var(--glass-bg-strong); }
+.bundleHead { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.bundleCard h3 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+.bundleCard.featured h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
+.bundleCard .desc { color: var(--muted); font-size: 0.94rem; margin-bottom: 1rem; max-width: 72ch; }
+.pill.set .dot { background: var(--cardinal-bright); }
+/* What is in the set, as plain text rather than ten more download buttons —
+   the individual buttons are in the section the card links to. */
+.bundleContents { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.15rem; padding: 0; }
+.bundleContents li {
+  font-size: 0.78rem; color: var(--muted);
+  background: var(--glass-bg); border: 1px solid var(--glass-hairline);
+  border-radius: 999px; padding: 0.26rem 0.68rem;
+}
+.bundleFoot {
+  margin-top: auto; padding-top: 0.9rem; border-top: 1px solid var(--glass-hairline);
+  display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap;
+}
+.bundleFoot .downloadButton, .bundleFoot .secondary { min-height: 44px; padding: 0.6rem 1.1rem; font-size: 0.9rem; }
+.bundleFoot .downloadButton svg { width: 16px; height: 16px; }
+.bundleFoot .textLink { font-size: 0.88rem; }
+/* Pushed to the end of the row so the two buttons stay paired at the left. */
+.bundleNote { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+.bundleStatus { font-size: 0.82rem; color: var(--muted); }
+.bundleSeparate[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+@media (max-width: 860px) {
+  .bundleGrid { grid-template-columns: 1fr; }
+  .bundleNote { margin-left: 0; }
+}
+
+/* ---- Skill cards ---------------------------------------------------------- */
+/* The download grid. A card is a fixed shape with the button pinned to the
+   bottom, so a two-line description in one card does not lift its button above
+   the neighbour's. */
+.skillGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.9rem, 2vw, 1.3rem); }
+.skillCard { display: flex; flex-direction: column; }
+.skillCardHead { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.55rem; }
+.skillNum { font-size: 0.76rem; font-weight: 700; color: var(--gold); letter-spacing: 0.06em; }
+.skillCard h3 { margin: 0 0 0.45rem; font-size: 1.08rem; }
+.skillCard .desc { color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem; }
+.skillCardFoot {
+  margin-top: auto; padding-top: 0.9rem; border-top: 1px solid var(--glass-hairline);
+  display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap;
+}
+/* Inside a card the download pill is one of nine on the page, so it is sized
+   down from the page-level call to action. */
+.skillCardFoot .downloadButton { min-height: 42px; padding: 0.55rem 1.05rem; font-size: 0.88rem; }
+.skillCardFoot .downloadButton svg { width: 16px; height: 16px; }
+.skillPlatform { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+@media (max-width: 1080px) { .skillGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .skillGrid { grid-template-columns: 1fr; } }
+
+/* The practice drafts reuse .skillCard, plus one line naming the skills each
+   draft is worth running. */
+.sampleTry { margin: -0.4rem 0 1rem; font-size: 0.84rem; color: var(--muted); }
+.sampleTry b { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.15rem; }
+
+/* ---- Install walkthroughs ------------------------------------------------- */
+/* A numbered list that is genuinely ordered, so it is an <ol> with the counter
+   drawn in the cardinal disc the faculty site uses for .moduleNum. */
+.installSteps { list-style: none; margin: 0; padding: 0; counter-reset: install; display: grid; gap: 0.75rem; }
+.installSteps li { position: relative; padding-left: 2.4rem; font-size: 0.95rem; }
+.installSteps li::before {
+  counter-increment: install; content: counter(install);
+  position: absolute; left: 0; top: 0;
+  width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 0.82rem; font-weight: 700; color: #fff;
+  background: var(--cardinal);
+}
+/* The screen recordings. A fixed ratio so the card does not resize when the
+   iframe loads. */
+.installVideo {
+  position: relative; width: 100%; aspect-ratio: 16 / 10;
+  margin: 0.9rem 0 1.1rem; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.25);
+}
+.installVideo iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Same frame for the recordings that carry a tutorial module, at the 16:9 the
+   API course was recorded in. Separate from .installVideo because that one is
+   tied to the skill-install page and its 16:10 captures. */
+.tutorialVideo {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  margin: 0.9rem 0 1.1rem; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.25);
+}
+.tutorialVideo iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* The 30-day launch plan: one small card per day, as many to a row as fit and
+   down to one on a phone. A day is a title and two or three check boxes, so a
+   full .grid column would leave each card mostly empty. */
+.dayGrid {
+  display: grid; gap: 0.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  margin-top: 1.1rem;
+}
+.dayCard { padding: 0.95rem 1.1rem; }
+.dayCard h3 { margin: 0.15rem 0 0.5rem; font-size: 1.02rem; }
+.dayCard .checkList li { font-size: 0.9rem; }
+
+/* ---- Full-page embeds ----------------------------------------------------
+   The faculty sites and The AI Upload are shown whole, and nothing of this site
+   is shown around them: no header, no strip, no theme toggle. Both framed sites
+   have their own navigation and their own branding, so hub chrome above one
+   would put two sets of destinations on the same screen, and a floating theme
+   button would only be dressing chrome that is no longer there.
+
+   That leaves nothing to measure around, so the frame is simply the viewport —
+   no flex column, no offset. (The faculty site's own .digestEmbed, further up
+   this sheet, still assumes 68px of chrome above it; nothing here uses it.)
+
+   overflow:hidden on the body: the frame is already exactly the viewport, so any
+   scrolling belongs to the framed document, not to this page around it. */
+body.hasEmbed { overflow: hidden; }
+.embedFrame {
+  position: fixed; inset: 0;
+  display: block; width: 100vw; height: 100dvh;
+  border: 0; background: #fff;
+}
+
+/* The five gates listed compactly, for the hero card and anywhere else the
+   letters need to be named without the full acronym strip's scale. */
+.gateList { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.4rem; }
+.gateList li { font-size: 0.93rem; display: flex; gap: 0.6rem; }
+.gateList b { font-family: var(--font-serif); color: var(--link); flex: 0 0 0.9rem; }
+
+/* A .promptBlock shown as the better of a pair. The cardinal left edge is the
+   sheet's default for a prompt; the green one marks the version to copy, so a
+   reader skimming the pair can tell which is which before reading either. */
+.promptBlock.strong { border-left-color: #2e9e5b; }
+.promptBlock .eyebrow.good { color: #2e9e5b; }
+
+/* Inside the comparison grid the blocks are laid out by the grid's own gap, so
+   the vertical margin a standalone .promptBlock carries would double it. */
+.promptComparison.grid .promptBlock { margin: 0; }
+
+/* ---- Posters ---------------------------------------------------------------
+   The training and framework posters are the content, not decoration, so they
+   are shown at a size worth reading and each one keeps its own aspect ratio.
+   object-fit is deliberately absent: these are posters full of small type, and
+   cropping one to a uniform tile would cut the text off. */
+.posterGrid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(0.9rem, 2vw, 1.4rem); margin: 1.3rem 0 0;
+}
+.posterFigure { margin: 0; }
+.posterFigure img {
+  display: block; width: 100%; height: auto;
+  border-radius: 16px; border: 1px solid var(--glass-border);
+  background: #fff;
+  box-shadow: var(--glass-shadow);
+}
+.posterFigure figcaption { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+/* A poster is a flat image with its own white ground, so on the dark theme it
+   sits as a bright rectangle. Dimming it slightly stops it glaring against the
+   glass without washing out the type. */
+:root[data-theme="dark"] .posterFigure img { filter: brightness(0.94); }
+
+/* ---- Inline embeds --------------------------------------------------------
+   Panels that hold a third-party frame inside the normal flow of a page — the
+   week-at-a-glance board and the event calendar — as distinct from the
+   full-page .embedFrame. Height is explicit because the framed document cannot
+   report its own, and both of these have a fixed amount to show. */
+.embedPanel {
+  position: relative; margin: 1.2rem 0 0;
+  border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+}
+.embedPanel iframe { display: block; width: 100%; height: 100%; border: 0; }
+.embedPanel.tall { height: 620px; }
+.embedPanel.board { height: 560px; }
+.embedPanel.publicationsEmbed { height: max(720px, 80vh); }
+@media (max-width: 640px) {
+  .embedPanel.tall { height: 520px; }
+  .embedPanel.board { height: 620px; }
+  .embedPanel.publicationsEmbed { height: 680px; }
+}
+
+/* ---- Event listings ------------------------------------------------------- */
+/* One session per row inside a card: title, then the facts, then what it covered.
+   The meta line is a definition-free list of short facts, so it wraps as a row of
+   items rather than stacking into five short lines. */
+.eventMeta {
+  display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem;
+  margin: 0 0 0.6rem; font-size: 0.88rem; color: var(--muted);
+}
+.eventMeta > span { display: inline-flex; gap: 0.35rem; }
+.eventMeta b { font-weight: 650; color: var(--ink); }
+.eventCard { display: flex; flex-direction: column; }
+.eventCard h3 { margin: 0 0 0.5rem; font-size: 1.08rem; }
+.eventCard .actions { margin-top: auto; }
+.eventCard .actions .secondary { min-height: 40px; padding: 0.45rem 0.95rem; font-size: 0.87rem; }
+/* Sessions whose materials are not up yet say so in words. It is the same
+   information the pill dot carries, because colour is never the only signal. */
+.materialsPending {
+  margin-top: auto; padding-top: 0.6rem;
+  font-size: 0.87rem; font-style: italic; color: var(--muted);
+}
+
+/* ============================================================================
+   AI in the Library
+   ---------------------------------------------------------------------------
+   The library's physical AI display, brought into the hub. It was a separate
+   Vite + React app; this is the same content as static pages in this design
+   system. The app's Gemini "AI Curator" chat did not come across — it needed an
+   API key, and a key shipped to the browser of a public static site is a
+   published key.
+   ========================================================================== */
+
+/* Exhibit cards sit in a three-column grid when they are text-only. Cards that
+   carry posters span the full row and put the poster(s) beside the copy at a
+   readable width — stuffing a full-length poster into a one-third column made
+   the display look like a mobile stack on desktop. */
+.exhibitGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.3rem);
+  align-items: start;
+}
+.exhibitCard { display: flex; flex-direction: column; }
+.exhibitCard.hasPosters {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.95fr) minmax(18rem, 1.2fr);
+  gap: clamp(1rem, 2.5vw, 1.8rem);
+  align-items: start;
+}
+/* Two or more posters: copy on top, posters in a readable row beneath — putting
+   both beside the text clipped the second poster on laptop widths. */
+.exhibitCard.hasPosters.multiPoster {
+  grid-template-columns: 1fr;
+}
+.exhibitBody { min-width: 0; }
+.exhibitHead { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.5rem; }
+.exhibitIcon {
+  flex: 0 0 2.4rem; width: 2.4rem; height: 2.4rem;
+  display: grid; place-items: center;
+  border-radius: 50%; border: 1px solid rgba(140, 21, 21, 0.4);
+  background: linear-gradient(150deg, rgba(140, 21, 21, 0.28), rgba(169, 121, 31, 0.18));
+  font-size: 1.15rem; line-height: 1;
+}
+.exhibitHeadText { min-width: 0; }
+.exhibitHeadText .eyebrow { margin-bottom: 0.1rem; }
+.exhibitHeadText h3 { margin: 0; }
+.exhibitPosters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  min-width: 0;
+}
+.exhibitCard.hasPosters.multiPoster .exhibitPosters {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 52rem;
+}
+.exhibitCard .posterFigure { margin: 0; }
+.exhibitCard > :last-child { margin-bottom: 0; }
+.readingShelfHead { margin-top: 2rem; }
+.readingShelfHead h3 { margin-bottom: 0.4rem; }
+/* The ten-part course lists its modules in order, so it is an <ol>. */
+.moduleList { margin: 0.9rem 0 0; padding-left: 1.3rem; font-size: 0.92rem; }
+.moduleList li { margin-bottom: 0.25rem; }
+@media (max-width: 1100px) {
+  .exhibitGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .exhibitGrid { grid-template-columns: 1fr; }
+  .exhibitCard.hasPosters { grid-template-columns: 1fr; }
+  .exhibitCard.hasPosters.multiPoster .exhibitPosters { grid-template-columns: 1fr; }
+}
+
+/* ---- The book collection --------------------------------------------------
+   Thirty-two titles, each with a cover, the publication facts, and why it is
+   worth reading. Wider minimum than the card grids: a cover beside a paragraph
+   needs room, and below that width the pair stacks instead. */
+.bookGrid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+  gap: clamp(0.9rem, 2vw, 1.3rem); margin-top: 1.3rem;
+}
+.bookCard { display: flex; gap: 1.1rem; align-items: flex-start; }
+.bookCover {
+  flex: 0 0 5.5rem; width: 5.5rem;
+  border-radius: 6px; border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.6);
+}
+.bookBody { min-width: 0; }
+.bookBody h3 { margin: 0 0 0.2rem; font-size: 1rem; line-height: 1.3; }
+.bookAuthor { margin: 0 0 0.35rem; font-size: 0.92rem; font-weight: 650; }
+.bookFacts { margin: 0 0 0.5rem; font-size: 0.82rem; color: var(--muted); }
+.bookBody p:last-child { margin-bottom: 0; }
+.bookBlurb { font-size: 0.9rem; color: var(--muted); }
+@media (max-width: 460px) {
+  /* At this width the cover leaves the blurb about 12 characters a line. */
+  .bookCard { flex-direction: column; }
+  .bookCover { flex-basis: auto; width: 6.5rem; }
+}
+
+/* The About section's own note: this exhibit was built with AI, and says so. */
+.processNote {
+  margin: 1.4rem 0 0; padding: 1.1rem 1.3rem;
+  border: 1px solid var(--glass-border); border-left: 4px solid var(--gold);
+  border-radius: 8px 18px 18px 8px; background: var(--glass-bg-strong);
+}
+.processNote > :last-child { margin-bottom: 0; }
+
+/* Acknowledgments: names and roles, as a list rather than prose. */
+.creditGroup { margin-top: 1.2rem; }
+.creditGroup h3 { margin: 0 0 0.5rem; font-size: 1.02rem; }
+.creditList { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+.creditList li { font-size: 0.95rem; }
+
+/* ---- Major generative-AI papers ------------------------------------------
+   A dense research collection that still uses the Hub's editorial glass
+   language. The cards are links in their entirety, while topic labels and
+   authors make a long list easy to scan. */
+.papersPage { max-width: 1280px; }
+.papersHero {
+  position: relative; overflow: hidden;
+  margin-top: 0.5rem; padding: clamp(2rem, 6vw, 4.5rem);
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(217, 173, 85, 0.24), transparent 30%),
+    linear-gradient(135deg, rgba(140, 21, 21, 0.78), rgba(41, 24, 21, 0.72));
+  box-shadow: var(--glass-shadow-lg);
+}
+.papersHero::after {
+  content: ""; position: absolute; width: 22rem; height: 22rem;
+  right: -7rem; bottom: -12rem; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3rem rgba(255,255,255,.025), 0 0 0 7rem rgba(255,255,255,.018);
+  pointer-events: none;
+}
+.papersHero > * { position: relative; z-index: 1; }
+.papersHero h1 { max-width: 16ch; color: #fff; }
+.papersHero .lede { color: rgba(255,255,255,.83); max-width: 66ch; }
+.papersHero .eyebrow { color: #f3cf88; }
+.paperSearch { max-width: 44rem; margin-top: 1.7rem; }
+.paperSearch label { display: block; color: #fff; font-size: .86rem; font-weight: 700; margin-bottom: .4rem; }
+.paperSearch input {
+  width: 100%; padding: .9rem 1rem; border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.32); background: rgba(15,10,8,.36);
+  color: #fff; font: inherit; box-shadow: inset 0 1px rgba(255,255,255,.08);
+}
+.paperSearch input::placeholder { color: rgba(255,255,255,.67); }
+.paperSearch .muted { color: rgba(255,255,255,.72); margin: .45rem 0 0; font-size: .84rem; }
+.paperTip {
+  margin: 1.4rem 0 3rem; padding: 1rem 1.25rem;
+  border-left: 4px solid var(--gold); border-radius: 8px 18px 18px 8px;
+  background: var(--glass-bg-strong); color: var(--muted);
+}
+.paperTip strong { color: var(--ink); }
+.paperSection { margin: 0 0 clamp(2.8rem, 6vw, 4.8rem); }
+.paperSectionHead { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; border-bottom: 1px solid var(--glass-hairline); }
+.paperSectionHead h2 { margin-bottom: .8rem; }
+.paperSectionHead > span { flex: none; margin-bottom: .9rem; color: var(--muted); font-size: .82rem; }
+.paperSectionHead .eyebrow { margin: 0; }
+.paperGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.paperCard {
+  display: flex; flex-direction: column; min-width: 0; padding: 1.35rem;
+  text-decoration: none; color: var(--ink); background: var(--glass-bg);
+  border: 1px solid var(--glass-border); border-radius: 18px;
+  box-shadow: var(--glass-shadow);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.paperCard:hover { color: var(--ink); transform: translateY(-4px); border-color: rgba(224,106,106,.5); box-shadow: var(--glass-shadow-lg); }
+.paperCard h3 { font-family: var(--font-serif); font-size: 1.18rem; line-height: 1.28; margin: .65rem 0 .5rem; }
+.paperCard > p { font-size: .9rem; color: var(--muted); }
+.paperCard .paperAuthors { font-size: .78rem; font-style: italic; line-height: 1.45; }
+.paperTopic { align-self: flex-start; padding: .25rem .55rem; border-radius: 999px; background: rgba(140,21,21,.16); color: var(--link); font-size: .7rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+.paperCta { margin-top: auto; padding-top: .45rem; color: var(--link); font-size: .86rem; font-weight: 700; }
+.featuredPaperGrid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 1rem; }
+.featuredPaperCard { padding: clamp(1.5rem, 3vw, 2.2rem); background: linear-gradient(145deg, #8c1515, #641010); color: #fff; border-color: rgba(255,255,255,.2); }
+.featuredPaperCard:hover { color: #fff; }
+.featuredPaperCard .paperTopic { background: rgba(255,255,255,.14); color: #fff; }
+.featuredPaperCard h3 { font-size: clamp(1.65rem, 3vw, 2.25rem); }
+.featuredPaperCard h3 span { white-space: nowrap; }
+.featuredPaperCard > p, .featuredPaperCard .paperAuthors { color: rgba(255,255,255,.76); }
+.featuredPaperCard .paperCta { color: #fff; }
+.paperVideo { min-height: 22rem; overflow: hidden; border: 1px solid var(--glass-border); border-radius: 18px; background: #0d0b09; box-shadow: var(--glass-shadow); }
+.paperVideo iframe { display: block; width: 100%; height: 100%; border: 0; }
+.paperEmpty { margin: 2rem 0; }
+.paperClosing { max-width: 62ch; margin: 5rem auto 1rem; text-align: center; color: var(--muted); font-family: var(--font-serif); font-style: italic; font-size: 1.12rem; }
+@media (max-width: 960px) {
+  .paperGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .featuredPaperGrid { grid-template-columns: 1fr; }
+  .paperVideo { min-height: min(56vw, 28rem); }
+}
+@media (max-width: 620px) {
+  .papersHero { padding: 1.5rem; }
+  .paperGrid { grid-template-columns: 1fr; }
+  .paperSectionHead > span { display: none; }
+  .paperVideo { min-height: 58vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paperCard { transition: none; }
+  .paperCard:hover { transform: none; }
+}
+
+/* ---- Your AI Stack ---------------------------------------------------------
+   The tool catalogue, rebuilt from the standalone Your AI Stack app so it runs
+   natively here. It is the Hub's only page whose main content is assembled at
+   runtime, so the classes below cover both the furniture the HTML ships with
+   (hero, jump bar, filter rail) and the cards ai-stack.js writes into it.
+
+   Nothing here introduces a new colour: the catalogue borrows .card, .pill and
+   .note from the design system above and adds only the layout the app needs. */
+.stackPage { max-width: 1280px; }
+
+.stackHero {
+  position: relative; overflow: hidden;
+  margin-top: 0.5rem; padding: clamp(1.8rem, 5vw, 3.6rem);
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 86% 16%, rgba(217, 173, 85, 0.24), transparent 32%),
+    linear-gradient(135deg, rgba(140, 21, 21, 0.80), rgba(41, 24, 21, 0.74));
+  box-shadow: var(--glass-shadow-lg);
+}
+.stackHero::after {
+  content: ""; position: absolute; width: 22rem; height: 22rem;
+  right: -7rem; bottom: -12rem; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3rem rgba(255,255,255,.025), 0 0 0 7rem rgba(255,255,255,.018);
+  pointer-events: none;
+}
+.stackHero > * { position: relative; z-index: 1; }
+.stackHero h1 { max-width: 14ch; color: #fff; }
+.stackHero .lede { color: rgba(255,255,255,.85); max-width: 60ch; }
+.stackHero .eyebrow { color: #f3cf88; }
+.stackHero .actions { margin-top: 1.4rem; }
+.stackHero .secondary { border-color: rgba(255,255,255,.42); color: #fff; background: rgba(255,255,255,.12); }
+.stackHero .secondary:hover { background: rgba(255,255,255,.22); color: #fff; }
+.stackHeroMeta {
+  margin: 1.2rem 0 0; font-size: 0.84rem; color: rgba(255,255,255,.75);
+  display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem;
+}
+
+/* The jump bar. The site header is fixed rather than sticky, so this sits at a
+   fixed offset below it and stays put while the catalogue scrolls — with 113
+   tools, getting back to the guide or the retired list should never mean
+   scrolling up through the whole grid. */
+.stackJump {
+  position: sticky; top: var(--stack-sticky-top, 7.2rem); z-index: 40;
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin: 1.4rem 0 0; padding: 0.5rem;
+  border: 1px solid var(--glass-border); border-radius: 999px;
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+.stackJump a {
+  padding: 0.4rem 0.85rem; border-radius: 999px;
+  font-size: 0.88rem; font-weight: 650; text-decoration: none; color: var(--ink);
+}
+.stackJump a:hover { background: rgba(140, 21, 21, 0.16); color: var(--link); }
+.stackJump a[aria-current="true"] { background: var(--cardinal); color: #fff; }
+.stackPage [id] { scroll-margin-top: var(--stack-sticky-next, 11rem); }
+
+/* The three-step explainer and the collapsible essays. */
+.stackSteps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.9rem, 2vw, 1.3rem); margin-top: 1.2rem; }
+.stackStepNum {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.1rem; height: 2.1rem; margin-bottom: 0.6rem;
+  border-radius: 50%; background: rgba(140, 21, 21, 0.22);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-serif); font-size: 1.05rem; color: var(--link);
+}
+.stackDetails {
+  margin: 1rem 0 0; padding: 1.1rem clamp(1.1rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--glass-border); border-radius: var(--radius);
+  background: var(--glass-bg);
+}
+.stackDetails > summary {
+  cursor: pointer; font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600;
+}
+.stackDetails[open] > summary { margin-bottom: 0.9rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--glass-hairline); }
+.stackDetails > :last-child { margin-bottom: 0; }
+.stackPointList { margin: 1.1rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+.stackPoint {
+  padding: 0.95rem 1.1rem; border: 1px solid var(--glass-border);
+  border-radius: 14px; background: var(--glass-bg-strong);
+}
+.stackPoint h4 { margin: 0 0 0.3rem; font-size: 1rem; }
+.stackPoint p { margin: 0; font-size: 0.92rem; color: var(--muted); }
+.stackModelGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; margin: 1.1rem 0; }
+
+/* ---- The filter rail ------------------------------------------------------
+   Sticks under the jump bar so the search box, the result count and the active
+   filters stay reachable no matter how far down the grid the reader has gone. */
+/* Deliberately not sticky. It is three hundred pixels tall with the quick
+   filters and the chip row open, and pinning that to the top of a phone leaves
+   almost nothing for the results. The jump bar keeps a one-tap route back to
+   it, and "/" focuses the search box from anywhere on the page. */
+.stackToolbar {
+  margin: 1.2rem 0 1.4rem; padding: clamp(0.85rem, 2vw, 1.15rem);
+  border: 1px solid var(--glass-border); border-radius: var(--radius);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+.stackToolbarRow { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: flex-end; }
+.stackField { display: grid; gap: 0.25rem; min-width: 0; }
+.stackField > span { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stackSearchField { flex: 1 1 20rem; }
+.stackField input, .stackField select {
+  width: 100%; padding: 0.62rem 0.85rem; font: inherit;
+  border: 1px solid var(--glass-border); border-radius: 12px;
+  background: var(--glass-bg); color: var(--ink);
+}
+.stackField input::placeholder { color: var(--muted); }
+.stackField select option { background: var(--paper-2); color: var(--ink); }
+.stackToolbarActions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.8rem; }
+.stackChip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.42rem 0.85rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--glass-border); background: var(--glass-bg);
+  color: var(--ink); font: inherit; font-size: 0.86rem; font-weight: 650;
+}
+.stackChip:hover { background: var(--glass-bg-strong); }
+.stackChip[aria-pressed="true"], .stackChip.isActive { background: var(--cardinal); border-color: var(--cardinal); color: #fff; }
+.stackChip[disabled] { opacity: 0.45; cursor: not-allowed; }
+.stackChipCount {
+  min-width: 1.35rem; padding: 0 0.35rem; border-radius: 999px;
+  background: rgba(255,255,255,.18); font-size: 0.78rem; text-align: center;
+}
+.stackChip:not([aria-pressed="true"]):not(.isActive) .stackChipCount { background: rgba(140,21,21,.18); color: var(--link); }
+.stackFilterChips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
+.stackStatus { margin: 0.75rem 0 0; font-size: 0.88rem; color: var(--muted); }
+.stackStatus strong { color: var(--ink); }
+
+/* Category rail down the left of the grid on wide screens; a scrolling chip row
+   on a phone, where a 16-item vertical list would push the grid off-screen. */
+.stackBrowse { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: clamp(1rem, 2.4vw, 1.8rem); align-items: start; }
+/* Grid children default to min-width:auto, which lets the horizontally
+   scrolling category row on narrow screens push the whole page sideways. */
+.stackBrowse > * { min-width: 0; }
+.stackRail {
+  position: sticky; top: var(--stack-sticky-next, 11rem);
+  padding: 0.9rem; border: 1px solid var(--glass-border);
+  border-radius: var(--radius); background: var(--glass-bg);
+}
+.stackRail h2 { font-family: var(--font-sans); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.stackRailList { display: grid; gap: 0.15rem; max-height: min(52vh, 30rem); overflow-y: auto; }
+.stackRailList button {
+  display: flex; justify-content: space-between; gap: 0.6rem; width: 100%;
+  padding: 0.45rem 0.6rem; border: 0; border-radius: 10px; cursor: pointer;
+  background: none; color: var(--muted); font: inherit; font-size: 0.9rem; text-align: left;
+}
+.stackRailList button:hover { background: var(--glass-bg-strong); color: var(--ink); }
+.stackRailList button[aria-pressed="true"] { background: var(--cardinal); color: #fff; font-weight: 650; }
+.stackRailList span { flex: none; font-size: 0.8rem; opacity: 0.75; }
+
+/* ---- Tool cards ----------------------------------------------------------- */
+.stackGroup { margin: 0 0 2rem; }
+.stackGroupHead {
+  position: sticky; top: var(--stack-sticky-head, 10rem); z-index: 20;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  margin: 0 0 0.9rem; padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--glass-hairline);
+  /* Opaque, not a fade: cards scroll underneath, and a translucent heading with
+     a tool name showing through it is unreadable. */
+  background: var(--paper);
+  box-shadow: 0 8px 14px -12px rgba(0, 0, 0, 0.7);
+}
+.stackGroupHead h3 { margin: 0; font-family: var(--font-serif); font-size: 1.2rem; }
+.stackGroupHead span { flex: none; font-size: 0.8rem; color: var(--muted); }
+.stackGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr)); gap: clamp(0.8rem, 1.8vw, 1.1rem); }
+.stackCard { display: flex; flex-direction: column; padding: 1.15rem; }
+.stackCardTop { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.6rem; }
+.stackCard h3 { margin: 0; font-size: 1.06rem; line-height: 1.25; overflow-wrap: break-word; }
+.stackCardFormer { margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--muted); font-style: italic; }
+.stackCardCat { margin: 0.35rem 0 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+.stackCardBlurb { margin: 0.7rem 0 0.9rem; font-size: 0.9rem; color: var(--muted); }
+.stackBadges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.9rem; }
+.stackBadge {
+  padding: 0.2rem 0.55rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border: 1px solid var(--glass-border); background: var(--glass-bg-strong); color: var(--muted);
+}
+.stackBadge.isStanford { border-color: rgba(46, 158, 91, 0.5); color: #58c98a; }
+:root[data-theme="light"] .stackBadge.isStanford { color: #1c7a45; }
+.stackBadge.isFavorite { border-color: rgba(169, 121, 31, 0.55); color: var(--gold); }
+.stackBadge.isRetired { border-color: rgba(178, 58, 58, 0.55); color: var(--link); }
+.stackCardActions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: auto; padding-top: 0.3rem; }
+.stackCardActions .stackChip { font-size: 0.8rem; padding: 0.34rem 0.7rem; }
+.stackOpen {
+  flex: 1 1 auto; padding: 0.42rem 0.8rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--cardinal); background: var(--cardinal); color: #fff;
+  font: inherit; font-size: 0.85rem; font-weight: 650; text-align: center;
+}
+.stackOpen:hover { background: var(--cardinal-bright); border-color: var(--cardinal-bright); }
+.stackIconBtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.15rem; height: 2.15rem; flex: none; padding: 0; cursor: pointer;
+  border: 1px solid var(--glass-border); border-radius: 50%;
+  background: var(--glass-bg); color: var(--muted); font-size: 0.95rem; line-height: 1;
+}
+.stackIconBtn:hover { background: var(--glass-bg-strong); color: var(--ink); }
+.stackIconBtn[aria-pressed="true"] { background: var(--cardinal); border-color: var(--cardinal); color: #fff; }
+.stackIconBtn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.stackEmpty { margin: 2rem 0; }
+
+/* ---- Detail and comparison overlays ---------------------------------------
+   Both are addressable (#tool=… and #compare), so a tool page can be linked to
+   directly and the browser Back button closes the overlay rather than leaving
+   the page — the single biggest navigation complaint about the original app. */
+.stackOverlay {
+  position: fixed; inset: 0; z-index: 120;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(0.5rem, 3vw, 2.5rem);
+  background: rgba(10, 8, 7, 0.62);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.stackOverlay[hidden] { display: none; }
+.stackDialog {
+  display: flex; flex-direction: column;
+  width: min(62rem, 100%); max-height: 100%;
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+  background: var(--paper-2); box-shadow: var(--glass-shadow-lg);
+}
+.stackDialogHead {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  padding: clamp(1.1rem, 2.5vw, 1.7rem) clamp(1.1rem, 2.5vw, 1.9rem) 0.9rem;
+  border-bottom: 1px solid var(--glass-hairline);
+}
+.stackDialogHead h2 { margin: 0; }
+.stackDialogSub { margin: 0.35rem 0 0; font-size: 0.94rem; color: var(--muted); }
+.stackClose {
+  flex: none; width: 2.4rem; height: 2.4rem; padding: 0; cursor: pointer;
+  border: 1px solid var(--glass-border); border-radius: 50%;
+  background: var(--glass-bg); color: var(--ink); font-size: 1.1rem; line-height: 1;
+}
+.stackClose:hover { background: var(--glass-bg-strong); }
+.stackTabs { display: flex; gap: 0.3rem; padding: 0.8rem clamp(1.1rem, 2.5vw, 1.9rem) 0; flex-wrap: wrap; }
+.stackTab {
+  padding: 0.45rem 0.9rem; cursor: pointer; font: inherit; font-size: 0.9rem; font-weight: 650;
+  border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted);
+}
+.stackTab[aria-selected="true"] { border-bottom-color: var(--cardinal); color: var(--ink); }
+.stackDialogBody { padding: 1.1rem clamp(1.1rem, 2.5vw, 1.9rem) clamp(1.2rem, 2.5vw, 1.9rem); overflow-y: auto; }
+.stackDialogBody h3 { margin-top: 1.4rem; font-size: 1.02rem; }
+.stackDialogBody h3:first-child { margin-top: 0; }
+.stackDialogFoot {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; align-items: center;
+  padding: 0.8rem clamp(1.1rem, 2.5vw, 1.9rem); border-top: 1px solid var(--glass-hairline);
+}
+.stackFactList { display: grid; gap: 0.55rem; margin: 0 0 1rem; }
+.stackFactList > div {
+  display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 0.3rem 0.9rem;
+  padding-bottom: 0.5rem; border-bottom: 1px solid var(--glass-hairline);
+}
+.stackFactList dt { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.stackFactList dd { margin: 0; font-size: 0.94rem; overflow-wrap: break-word; }
+.stackTagWrap { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.6rem 0 1rem; }
+.stackLinkList { margin: 0.4rem 0 0; padding-left: 1.2rem; font-size: 0.92rem; }
+.stackLinkList li { margin-bottom: 0.3rem; overflow-wrap: anywhere; }
+.stackCompareTable { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.stackCompareTable th, .stackCompareTable td { padding: 0.6rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--glass-hairline); }
+.stackCompareTable th[scope="row"] { font-weight: 650; color: var(--muted); width: 12rem; }
+.stackCompareTable tr.isDifferent th[scope="row"] { color: var(--link); }
+.stackCompareGroup th { font-family: var(--font-sans); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: var(--glass-bg); }
+.stackTableScroll { overflow-x: auto; }
+
+/* ---- Retired tools --------------------------------------------------------- */
+.stackRetiredList { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: clamp(0.8rem, 1.8vw, 1.1rem); margin-top: 1.2rem; }
+.stackRetiredCard h3 { margin: 0 0 0.15rem; font-size: 1.02rem; }
+.stackRetiredCard .stackRetiredCompany { margin: 0 0 0.6rem; font-size: 0.84rem; color: var(--muted); }
+.stackRetiredCard p { font-size: 0.9rem; }
+.stackRetiredDates { margin: 0.6rem 0 0; font-size: 0.84rem; color: var(--muted); display: grid; gap: 0.15rem; }
+
+.stackTop {
+  position: fixed; right: 1.1rem; bottom: 5.2rem; z-index: 45;
+  width: 2.9rem; height: 2.9rem; padding: 0; cursor: pointer;
+  border: 1px solid var(--glass-border); border-radius: 50%;
+  background: var(--glass-bg-strong); color: var(--ink); font-size: 1rem;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+.stackTop[hidden] { display: none; }
+
+@media (max-width: 1080px) {
+  .stackBrowse { grid-template-columns: 1fr; }
+  .stackRail { position: static; }
+  .stackRailList { display: flex; gap: 0.4rem; max-height: none; overflow-x: auto; padding-bottom: 0.3rem; }
+  .stackRailList button { width: auto; white-space: nowrap; border: 1px solid var(--glass-border); }
+  .stackRailList button span { display: none; }
+}
+@media (max-width: 860px) {
+  .stackJump { overflow-x: auto; flex-wrap: nowrap; border-radius: 16px; }
+  .stackJump a { white-space: nowrap; }
+  .stackSteps, .stackPointList, .stackModelGrid { grid-template-columns: 1fr; }
+  .stackGroupHead { position: static; background: none; }
+  .stackFactList > div { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .stackHero { padding: 1.4rem; }
+  .stackDialog { width: 100%; max-height: 100%; border-radius: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@media print {
+  /* Printing is how a reader takes a saved stack away with them, so the saved
+     list prints and the browsing furniture does not. */
+  .stackJump, .stackToolbar, .stackRail, .stackTop, .stackOverlay, .stackCardActions { display: none !important; }
+  .stackHero { background: none !important; box-shadow: none !important; border: 0 !important; padding: 0 !important; }
+  .stackHero h1, .stackHero .lede, .stackHeroMeta { color: #000 !important; }
+  .stackBrowse { display: block; }
+  .stackCard, .stackRetiredCard, .stackDetails, .stackPoint { break-inside: avoid; background: #fff !important; border: 1px solid #999 !important; box-shadow: none !important; }
+  .stackDetails > *:not(summary) { display: revert !important; }
+  .stackCardCat, .stackBadge { color: #444 !important; }
+}

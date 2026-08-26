@@ -1,0 +1,131 @@
+%PDF-1.7
+%
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 11 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 3125 >>
+stream
+0.549 0.082 0.082 rg 0 756 612 36 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 42 769 Tm (STANFORD LAW SCHOOL  |  ROBERT CROWN LAW LIBRARY) Tj ET
+BT /F1 9 Tf 0.420 0.447 0.502 rg 1 0 0 1 549 25 Tm (1) Tj ET
+BT /F2 10 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 718 Tm (INSTALL A SKILL) Tj ET
+BT /F2 26 Tf 0.067 0.094 0.153 rg 1 0 0 1 42 679 Tm (Install a skill in) Tj ET
+BT /F2 26 Tf 0.067 0.094 0.153 rg 1 0 0 1 42 647 Tm (ChatGPT or Claude) Tj ET
+0.824 0.663 0.000 rg 42 629 72 4 re f
+BT /F1 11 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 602 Tm (Each skill is a small ZIP file: a Markdown instruction file plus references.) Tj ET
+BT /F1 11 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 586 Tm (Download it once, keep it zipped, and upload it to ChatGPT or Claude. After) Tj ET
+BT /F1 11 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 570 Tm (installation, work in plain English.) Tj ET
+0.973 0.953 0.910 rg 42 492 528 62 re f
+BT /F2 10 Tf 0.549 0.082 0.082 rg 1 0 0 1 56 530 Tm (KEEP THE ZIP ZIPPED) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 56 511 Tm (Both platforms want the packaged file. Unzipping it is the most common reason) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 56 496 Tm (an install does not work.) Tj ET
+BT /F2 18 Tf 0.067 0.094 0.153 rg 1 0 0 1 42 452 Tm (What is a skill file?) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 427 Tm (A skill file is a set of written instructions that an AI assistant loads and follows. It) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 412 Tm (is not a program or a separate AI. It tells the assistant how to behave for a particular) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 397 Tm (kind of work: what to ask first, which steps to take, what to refuse, and what to hand) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 382 Tm (back.) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 359 Tm (The instruction file is also where the PAUSE Rule, Honor Code reminder, requirement to) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 344 Tm (verify authorities, and refusal to write your brief for you live.) Tj ET
+BT /F2 18 Tf 0.067 0.094 0.153 rg 1 0 0 1 42 311 Tm (Install in ChatGPT) Tj ET
+0.549 0.082 0.082 rg 42 280 20 20 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 49 285 Tm (1) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 287 Tm (Download the skill ZIP. Keep it zipped.) Tj ET
+0.549 0.082 0.082 rg 42 260 20 20 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 49 265 Tm (2) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 267 Tm (Click Plugins, toggle from Plugins to Skills, click the + icon, then drop) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 252 Tm (the ZIP into the upload box.) Tj ET
+0.549 0.082 0.082 rg 42 225 20 20 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 49 230 Tm (3) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 232 Tm (Start with your goal in plain language, for example: "Help me brief this) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 217 Tm (case.") Tj ET
+BT /F2 10.5 Tf 0.549 0.082 0.082 rg 1 0 0 1 74 196 Tm (Watch the ChatGPT installation video) Tj ET
+0.549 0.082 0.082 rg 74 194 196.56 0.7 re f
+endstream
+endobj
+6 0 obj
+<< /Type /Annot /Subtype /Link /Rect [74.0 192.0 270.6 208.5] /Border [0 0 0] /A << /S /URI /URI (https://drive.google.com/file/d/1U6j814O6CARktBdoXGrMNHzanFbVvjaS/view) >> >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R /Annots [6 0 R] >>
+endobj
+8 0 obj
+<< /Length 3337 >>
+stream
+0.549 0.082 0.082 rg 0 756 612 36 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 42 769 Tm (STANFORD LAW SCHOOL  |  ROBERT CROWN LAW LIBRARY) Tj ET
+BT /F1 9 Tf 0.420 0.447 0.502 rg 1 0 0 1 549 25 Tm (2) Tj ET
+BT /F2 10 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 718 Tm (INSTALL IN CLAUDE) Tj ET
+BT /F2 24 Tf 0.067 0.094 0.153 rg 1 0 0 1 42 680 Tm (Install in Claude) Tj ET
+0.824 0.663 0.000 rg 42 662 72 4 re f
+0.549 0.082 0.082 rg 42 621 20 20 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 49 626 Tm (1) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 628 Tm (Download the skill ZIP. Do not unzip it.) Tj ET
+0.549 0.082 0.082 rg 42 599 20 20 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 49 604 Tm (2) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 606 Tm (Click Customize, then Add in the top right, and drag and drop the ZIP file) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 591 Tm (into the upload box.) Tj ET
+0.549 0.082 0.082 rg 42 562 20 20 re f
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 49 567 Tm (3) Tj ET
+BT /F1 10.5 Tf 0.122 0.161 0.216 rg 1 0 0 1 74 569 Tm (Use natural language: start with your goal and ask Claude to use the skill.) Tj ET
+BT /F2 10.5 Tf 0.549 0.082 0.082 rg 1 0 0 1 74 546 Tm (Watch the Claude installation video) Tj ET
+0.549 0.082 0.082 rg 74 544 191.1 0.7 re f
+BT /F2 20 Tf 0.067 0.094 0.153 rg 1 0 0 1 42 489 Tm (Troubleshooting) Tj ET
+BT /F2 11 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 458 Tm (The upload is rejected) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 441 Tm (Upload the ZIP itself, not an extracted folder, and confirm that the download completed.) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 427 Tm (Re-download it if in doubt.) Tj ET
+BT /F2 11 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 398 Tm (The assistant ignores the installed skill) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 381 Tm (Name the skill in your first message \(for example, "use the Case Learning Coach skill"\)) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 367 Tm (and start a fresh chat.) Tj ET
+BT /F2 11 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 338 Tm (You cannot find where to add skills) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 321 Tm (Interfaces change often. If your menu differs from the video, email the Law Library to) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 307 Tm (confirm the current path.) Tj ET
+BT /F2 11 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 278 Tm (You are unsure whether to use AI) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 261 Tm (Work through the PAUSE Rule before installing anything, and confirm your course's AI) Tj ET
+BT /F1 10 Tf 0.122 0.161 0.216 rg 1 0 0 1 42 247 Tm (policy with the instructor.) Tj ET
+0.953 0.957 0.965 rg 42 146 528 86 re f
+BT /F2 10 Tf 0.549 0.082 0.082 rg 1 0 0 1 56 208 Tm (ACCESS AND HELP) Tj ET
+BT /F1 9.8 Tf 0.122 0.161 0.216 rg 1 0 0 1 56 189 Tm (Access to Law Library-provided AI tools is limited to current SLS community) Tj ET
+BT /F1 9.8 Tf 0.122 0.161 0.216 rg 1 0 0 1 56 175 Tm (members and uses Stanford sign-in. For access, tools, legal research, or) Tj ET
+BT /F1 9.8 Tf 0.122 0.161 0.216 rg 1 0 0 1 56 161 Tm (technical help: library@law.stanford.edu) Tj ET
+BT /F2 9.5 Tf 0.549 0.082 0.082 rg 1 0 0 1 42 67 Tm (View the current online installation guide) Tj ET
+0.549 0.082 0.082 rg 42 65 207.48000000000002 0.7 re f
+endstream
+endobj
+9 0 obj
+<< /Type /Annot /Subtype /Link /Rect [74.0 542.0 265.1 558.5] /Border [0 0 0] /A << /S /URI /URI (https://drive.google.com/file/d/1bLTqOLtblNt-oZgqGs3FtGGk85tBDKMN/view) >> >>
+endobj
+10 0 obj
+<< /Type /Annot /Subtype /Link /Rect [42.0 63.0 249.5 78.5] /Border [0 0 0] /A << /S /URI /URI (https://ai-skills-ten.vercel.app/install.html) >> >>
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R /Annots [9 0 R 10 0 R] >>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000128 00000 n 
+0000000225 00000 n 
+0000000327 00000 n 
+0000003504 00000 n 
+0000003695 00000 n 
+0000003847 00000 n 
+0000007236 00000 n 
+0000007427 00000 n 
+0000007592 00000 n 
+trailer
+<< /Size 12 /Root 1 0 R /Info << /Title (Install a Skill) /Author (Robert Crown Law Library) >> >>
+startxref
+7752
+%%EOF

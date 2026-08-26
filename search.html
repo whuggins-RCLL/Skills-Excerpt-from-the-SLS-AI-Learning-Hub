@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Search | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="Search the AI Learning Hub: skills, tutorials, tools, events, guides, and the reading list." />
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="siteHeader">
+  <a class="headerLogo" href="index.html" aria-label="AI Learning Hub home">
+    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  </a>
+  <div class="headerNavigation">
+    <div class="headerTools">
+      <a class="homeButton" href="index.html">Home</a>
+      <form class="siteSearch" action="search.html" method="get" role="search">
+        <label class="srOnly" for="site-search">Search the AI Learning Hub</label>
+        <input id="site-search" name="q" type="search" placeholder="Search" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
+      <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
+    <a href="ai-upload.html">The AI Upload</a>
+    <a href="tutorials.html">Tutorials</a>
+    <a href="ai-resources.html">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="skills.html">Skills</a>
+    <a href="faculty.html">Faulty Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <p class="crumb"><a href="index.html">AI Learning Hub</a> &rsaquo; Search</p>
+
+  <p class="eyebrow">This site only</p>
+  <h1>Search the hub</h1>
+
+  <form id="searchForm" class="searchField" role="search">
+    <label class="srOnly" for="q">Search terms</label>
+    <input id="q" name="q" type="search" placeholder="Bluebook, PAUSE Rule, Harvey, prompting&hellip;" autocomplete="off" />
+    <button class="primary" type="submit">Search</button>
+  </form>
+
+  <p id="searchStatus" class="searchStatus" role="status" aria-live="polite"></p>
+
+  <ul id="searchResults" class="searchResults"></ul>
+
+  <div id="searchEmpty" hidden>
+    <p class="muted" style="max-width: 70ch;">
+      Every page of this site is searchable from here &mdash; the skills and their guides, the tutorials, the
+      tool directory, the reading list, events, and the white papers. Nothing leaves the site: the search
+      runs in your browser against an index of these pages.
+    </p>
+    <div class="grid" style="margin-top: 1.4rem;">
+      <a class="card interactive" href="skills.html"><h2 style="font-size: 1.1rem;">AI Skills</h2><p class="muted">Twenty-one downloadable skills, the sets, and the practice drafts.</p></a>
+      <a class="card interactive" href="tutorials.html"><h2 style="font-size: 1.1rem;">Tutorials</h2><p class="muted">Guides and courses across eight topics.</p></a>
+      <a class="card interactive" href="your-ai-stack.html"><h2 style="font-size: 1.1rem;">Your AI Stack</h2><p class="muted">The searchable directory of AI tools.</p></a>
+      <a class="card interactive" href="ai-resources.html"><h2 style="font-size: 1.1rem;">Resources</h2><p class="muted">What is available at SLS, and the policy that governs it.</p></a>
+      <a class="card interactive" href="pause-rule.html"><h2 style="font-size: 1.1rem;">The PAUSE Rule</h2><p class="muted">Deciding whether to use AI at all.</p></a>
+      <a class="card interactive" href="events.html"><h2 style="font-size: 1.1rem;">Events</h2><p class="muted">Curiosity Corners, trainings, and the calendar.</p></a>
+    </div>
+  </div>
+
+  <noscript>
+    <p class="note">Search needs JavaScript, because it runs in your browser rather than on a server. The
+    cards above link to every part of the site.</p>
+  </noscript>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footerNav" aria-label="Site footer">
+      <div class="footerGroup">
+        <h2 class="footerHeading" id="footer-elsewhere">Elsewhere at Stanford</h2>
+        <ul aria-labelledby="footer-elsewhere">
+          <li><a href="https://law.stanford.edu/ai-initiative/" target="_blank" rel="noopener noreferrer">SLS AI Initiative<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/robert-crown-law-library/" target="_blank" rel="noopener noreferrer">Robert Crown Law Library<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer">Responsible AI at Stanford<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/" target="_blank" rel="noopener noreferrer">Use of Generative AI at SLS<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/hub.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/search.js"></script>
+
+<!-- embed-map: generated by scripts/build-embed-map.py -->
+<script src="assets/embed-map.js"></script>
+<script src="assets/embed.js"></script>
+</body>
+</html>

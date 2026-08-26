@@ -1,0 +1,47 @@
+{
+  "_comment": "Skill sets offered as one-click downloads on skills.html. Each bundle is one ZIP holding the member skill ZIPs unchanged, built by scripts/build-skill-bundles.py into assets/bundles/. Add a bundle here, run the script, add a card to the Skill sets section of skills.html.",
+  "bundles": [
+    {
+      "slug": "sls-writing-partner-set",
+      "title": "SLS Writing Partner Set",
+      "summary": "Ten skills that review your writing without writing it for you: a policy gate, the full review workflow, and eight focused checks you can run on their own.",
+      "members": [
+        { "title": "SLS AI Use Gate", "file": "skills/sls-ai-orientation/sls-ai-use-gate.zip", "as": "sls-ai-use-gate.zip" },
+        { "title": "SLS Writing Review", "file": "skills/sls-ai-orientation/sls-writing-review.zip", "as": "sls-writing-review.zip" },
+        { "title": "SLS Argument and Structure Check", "file": "skills/sls-ai-orientation/sls-argument-structure.zip", "as": "sls-argument-structure.zip" },
+        { "title": "SLS Flow and Organization Check", "file": "skills/sls-ai-orientation/sls-flow-organization.zip", "as": "sls-flow-organization.zip" },
+        { "title": "SLS Clarity and Precision Check", "file": "skills/sls-ai-orientation/sls-clarity-precision.zip", "as": "sls-clarity-precision.zip" },
+        { "title": "SLS Audience and Reception Check", "file": "skills/sls-ai-orientation/sls-audience-reception.zip", "as": "sls-audience-reception.zip" },
+        { "title": "SLS Counterargument Stress Test", "file": "skills/sls-ai-orientation/sls-counterargument.zip", "as": "sls-counterargument.zip" },
+        { "title": "SLS Claims and Source Traceability", "file": "skills/sls-ai-orientation/sls-claims-traceability.zip", "as": "sls-claims-traceability.zip" },
+        { "title": "SLS Bluebook Audit", "file": "skills/sls-ai-orientation/sls-bluebook-audit.zip", "as": "sls-bluebook-audit.zip" },
+        { "title": "SLS Genre Fit Check", "file": "skills/sls-ai-orientation/sls-genre-fit.zip", "as": "sls-genre-fit.zip" }
+      ]
+    },
+    {
+      "slug": "sls-core-pathway",
+      "title": "SLS Core Pathway Set",
+      "summary": "The five foundational skills in order, from your first AI orientation to auditing AI output like a lawyer.",
+      "members": [
+        { "title": "SLS AI Orientation", "file": "skills/sls-ai-orientation/sls-ai-orientation/skill.zip", "as": "sls-ai-orientation.zip" },
+        { "title": "SLS AI Task-Fit Coach", "file": "skills/sls-ai-orientation/sls-ai-task-fit-coach/skill.zip", "as": "sls-ai-task-fit-coach.zip" },
+        { "title": "SLS Case Learning Coach", "file": "skills/sls-ai-orientation/sls-case-learning-coach/skill.zip", "as": "sls-case-learning-coach.zip" },
+        { "title": "SLS Legal Research Learning Coach", "file": "skills/sls-ai-orientation/sls-legal-research-learning-coach/skill.zip", "as": "sls-legal-research-learning-coach.zip" },
+        { "title": "SLS AI Verification Lab", "file": "skills/sls-ai-orientation/sls-ai-verification-lab/skill.zip", "as": "sls-ai-verification-lab.zip" }
+      ]
+    },
+    {
+      "slug": "sls-tool-studios",
+      "title": "SLS Tool Studios Set",
+      "summary": "Six guided introductions to the AI tools available through the Robert Crown Law Library and Stanford, plus the explorer for anything not on the list.",
+      "members": [
+        { "title": "SLS Harvey Learning Studio", "file": "skills/sls-ai-orientation/sls-harvey-learning-studio/skill.zip", "as": "sls-harvey-learning-studio.zip" },
+        { "title": "SLS Legora Learning Studio", "file": "skills/sls-ai-orientation/sls-legora-learning-studio/skill.zip", "as": "sls-legora-learning-studio.zip" },
+        { "title": "SLS LexText Learning Studio", "file": "skills/sls-ai-orientation/sls-lextext-learning-studio/skill.zip", "as": "sls-lextext-learning-studio.zip" },
+        { "title": "SLS CICERO Oral Argument Studio", "file": "skills/sls-ai-orientation/sls-cicero-oral-argument-studio/skill.zip", "as": "sls-cicero-oral-argument-studio.zip" },
+        { "title": "SLS Gemini Notebook Learning Studio", "file": "skills/sls-ai-orientation/sls-notebooklm-learning-studio/skill.zip", "as": "sls-gemini-notebook-learning-studio.zip" },
+        { "title": "SLS AI Tool Explorer", "file": "skills/sls-ai-orientation/sls-ai-tool-explorer/skill.zip", "as": "sls-ai-tool-explorer.zip" }
+      ]
+    }
+  ]
+}

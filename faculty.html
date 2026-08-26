@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Faculty AI site | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="The Robert Crown Law Library's AI and technology support site for SLS faculty, shown in full. Stanford sign-in required." />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<!-- No hub header, no strip, no theme toggle: the framed site brings its own
+     navigation and its own branding, and a second bar above it would be a second
+     set of destinations competing with the first. This page is the frame.
+
+     A reader who is not signed in sees the faculty site's own sign-in page inside
+     the frame, which is that site's answer to give, not this one's. -->
+<body class="hasEmbed">
+<iframe
+  class="embedFrame"
+  src="https://sls-faculty-ai-skills.vercel.app/"
+  title="AI and Technology Support for SLS Faculty"
+  allow="clipboard-write"
+  referrerpolicy="no-referrer-when-downgrade"
+></iframe>
+</body>
+</html>

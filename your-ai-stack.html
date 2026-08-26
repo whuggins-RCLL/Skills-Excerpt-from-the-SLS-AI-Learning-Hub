@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Your AI Stack | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="A browsable directory of AI tools for the Stanford Law School community — search by category, compare tools side by side, and save the handful that actually fit your work." />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<body>
+<a class="skip" href="#catalogue">Skip to the catalogue</a>
+
+<header class="siteHeader">
+  <a class="headerLogo" href="index.html" aria-label="AI Learning Hub home">
+    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  </a>
+  <div class="headerNavigation">
+    <div class="headerTools">
+      <a class="homeButton" href="index.html">Home</a>
+      <form class="siteSearch" action="search.html" method="get" role="search">
+        <label class="srOnly" for="site-search">Search the AI Learning Hub</label>
+        <input id="site-search" name="q" type="search" placeholder="Search" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
+      <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
+    <a href="ai-upload.html">The AI Upload</a>
+    <a href="tutorials.html">Tutorials</a>
+    <a href="ai-resources.html">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="skills.html">Skills</a>
+    <a href="faculty.html">Faulty Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="stackPage">
+
+  <p class="crumb"><a href="index.html">AI Learning Hub</a> &rsaquo; Your AI Stack</p>
+
+  <section class="stackHero" aria-labelledby="stack-title">
+    <p class="eyebrow">Tool directory</p>
+    <h1 id="stack-title">Your AI Stack</h1>
+    <p class="lede">
+      Find the right AI tool for the job &mdash; then stop. A stack is the small set of tools
+      you actually know how to use, chosen around the work you do, not around whatever
+      launched this month.
+    </p>
+    <div class="actions">
+      <a class="primary" href="#catalogue">Browse the catalogue</a>
+      <a class="secondary" href="#guide">How to build a stack</a>
+    </div>
+    <p class="stackHeroMeta">
+      <span>113 tools</span>
+      <span>16 with Stanford-provided access</span>
+      <span>Entries reviewed 10 August 2026</span>
+    </p>
+  </section>
+
+  <nav id="stack-jump" class="stackJump" aria-label="On this page">
+    <a href="#guide">Building a stack</a>
+    <a href="#models">The major models</a>
+    <a href="#catalogue">Catalogue</a>
+    <a href="#search-tools">Search and filter</a>
+    <a href="#retired-tools">Retired tools</a>
+  </nav>
+
+  <p class="note">
+    <strong>A listing is not an endorsement.</strong> A tool appearing here does not mean Stanford Law School
+    licenses it, provides access to it, or approves it for your coursework. Tools marked
+    <em>Stanford access</em> are the exception, and those use Stanford sign-in. Whether AI is permitted for a
+    particular assignment is set by your instructor, and the Honor Code applies either way. Before a new
+    task, walk through <a href="pause-rule.html">the PAUSE Rule</a>.
+  </p>
+
+  <noscript>
+    <p class="caution">
+      The catalogue is built in the browser from a shared data file, and JavaScript is turned off, so the
+      tool list below will be empty. Email <a href="mailto:library@law.stanford.edu">library@law.stanford.edu</a>
+      and we will send you the list.
+    </p>
+  </noscript>
+
+  <!-- ---- The guide ------------------------------------------------------ -->
+  <section id="guide" aria-labelledby="guide-h">
+    <h2 id="guide-h">What an &ldquo;AI stack&rdquo; is, and how to build one</h2>
+    <p class="lede">
+      Borrowed from software engineering, where a &ldquo;tech stack&rdquo; is the set of tools used to build
+      something. Your AI stack is the personal set you combine to do your work: one tool for research,
+      another for drafting, another for the spreadsheet nobody wants to open.
+    </p>
+
+    <div class="stackSteps">
+      <div class="card">
+        <span class="stackStepNum" aria-hidden="true">1</span>
+        <h3>Discover</h3>
+        <p class="muted">
+          Search the catalogue by the problem, not the product name. &ldquo;Transcribe an interview&rdquo;
+          gets you further than a list of every tool with an AI logo.
+        </p>
+      </div>
+      <div class="card">
+        <span class="stackStepNum" aria-hidden="true">2</span>
+        <h3>Curate</h3>
+        <p class="muted">
+          Save the ones worth trying with the &#9733; button. Start with one or two. A stack of twelve
+          tools you have opened once is not a stack.
+        </p>
+      </div>
+      <div class="card">
+        <span class="stackStepNum" aria-hidden="true">3</span>
+        <h3>Keep it</h3>
+        <p class="muted">
+          Your saved list stays in this browser between visits. Download it as a Markdown file or print
+          it to PDF when you want it somewhere else.
+        </p>
+      </div>
+    </div>
+
+    <details class="stackDetails">
+      <summary>Build your stack around the work that matters</summary>
+      <p><strong>Most people get AI wrong in one of two ways.</strong></p>
+      <p>
+        Some pick one tool and force it into every task, even when the job needs something else. Others
+        chase every launch, bouncing between tools with no system, no depth, and no lasting advantage.
+        Both fail for the same reason: they start from the tool.
+      </p>
+      <p>
+        The better approach starts from the work &mdash; the problems you need to solve, the decisions you
+        need to make, the documents you need to produce, and the standard your role demands. A strong
+        stack is not about access to everything. It is about choosing well, using deliberately, and
+        building a system that makes you faster and sharper over time.
+      </p>
+      <ul>
+        <li>Do not build your stack around what is trending. Build it around what is useful.</li>
+        <li>Do not collect tools. Build capability.</li>
+        <li>Do not confuse experimentation with mastery.</li>
+      </ul>
+      <p>
+        Over the next few years the advantage will not go to the people who tried every AI tool. It will
+        go to the ones who got genuinely good with the right few.
+      </p>
+
+      <h3>The skill areas worth getting good at</h3>
+      <p class="muted">Pick one tool in each area that matters to you. Learn it properly. Use it often enough that it changes how you work.</p>
+      <div class="stackPointList">
+        <div class="stackPoint">
+          <h4>Research and synthesis</h4>
+          <p>Find signal fast, separate quality from noise, and turn a pile of sources into usable insight &mdash; with the citations checked.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Writing and communication</h4>
+          <p>Draft, tighten, and clarify across memos, briefs, emails, and proposals without handing over your judgment or your voice.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Analysis and decision support</h4>
+          <p>Break down complex problems, surface tradeoffs, and stress-test an argument before someone else does.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Workflow automation</h4>
+          <p>Remove the repetitive work &mdash; the renaming, reformatting, and re-sending that quietly eats a week.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Technical creation</h4>
+          <p>Scripts, quick prototypes, and small tools. No longer a niche skill, and increasingly available to non-programmers.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Data fluency</h4>
+          <p>Work through spreadsheets, dockets, and structured records to get from raw data to a defensible conclusion.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Knowledge management</h4>
+          <p>Capture, organize, and retrieve what you learn so it compounds instead of vanishing into scattered notes and tabs.</p>
+        </div>
+        <div class="stackPoint">
+          <h4>Prompting and instruction design</h4>
+          <p>Clear context, sharp inputs, and defined outcomes. The people who get the most from AI are the ones who know how to direct it.</p>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top: 1.4rem;">
+        <strong>The real goal.</strong> You do not need every AI tool. You need the right stack for your work,
+        depth rather than distraction, and real skill in the areas that will still matter once AI stops
+        being novel and starts being expected.
+      </p>
+    </details>
+  </section>
+
+  <!-- ---- The frontier models -------------------------------------------- -->
+  <section id="models" aria-labelledby="models-h">
+    <h2 id="models-h">The major general-purpose models</h2>
+    <p class="lede">
+      Four labs currently ship general-purpose models at the frontier. Version numbers below were checked
+      against each vendor&rsquo;s own documentation on <strong>10 August 2026</strong> &mdash; and they change
+      every few weeks, so treat the names as a snapshot and the shape of the field as the durable part.
+    </p>
+
+    <div class="stackModelGrid">
+      <div class="card">
+        <h3>OpenAI &mdash; GPT&#8209;5.6 (Sol, Terra, Luna)</h3>
+        <p class="muted">
+          Announced 9 July 2026. The number is the generation; Sol, Terra, and Luna are capability tiers
+          &mdash; Sol the strongest, Luna the cheapest. OpenAI describes Sol as its strongest model for
+          coding, knowledge work, and science. GPT&#8209;5.5 remains widely deployed while 5.6 rolls out
+          across ChatGPT and the API.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Anthropic &mdash; Claude Opus 5 and Fable 5</h3>
+        <p class="muted">
+          Claude Fable 5, generally available 9 June 2026, is Anthropic&rsquo;s most capable widely released
+          model; Claude Opus 5 is the recommended default for complex agentic and professional work, with
+          Sonnet 5 as the speed-and-intelligence balance. The current generation carries a 1M-token context
+          window.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Google &mdash; Gemini 3.6 Flash, Gemini Omni</h3>
+        <p class="muted">
+          Gemini 3.6 Flash (July 2026) is the workhorse tier, faster and cheaper than 3.5 Flash. Gemini Omni,
+          introduced at I/O in May 2026, generates video from mixed image, audio, video, and text input. The
+          Pro tier is mid-transition: Google said in late July that Gemini 3.5 Pro was still testing with
+          partners, so Gemini 3.1 Pro remains the shipping Pro model.
+        </p>
+      </div>
+      <div class="card">
+        <h3>xAI &mdash; Grok 4.5</h3>
+        <p class="muted">
+          Released 8 July 2026, with native real-time search and X integration &mdash; the distinguishing
+          feature if what you need is what happened this morning. It also carries the fewest content
+          restrictions of the frontier models, which cuts both ways.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Open weights and everything else</h3>
+      <p class="muted">
+        Meta moved its frontier work from Llama to the Muse family in 2026: Muse Spark shipped closed, and
+        Muse Glimmer &mdash; a 30B multimodal model small enough to run on one GPU &mdash; was released under
+        Apache 2.0 on 10 August 2026. <strong>Mistral</strong>, <strong>DeepSeek</strong>, and
+        <strong>Qwen</strong> are worth tracking for open or self-hostable deployments. Stanford users should
+        reach DeepSeek through the
+        <a href="https://uit.stanford.edu/service/aiplayground" target="_blank" rel="noopener noreferrer">Stanford AI Playground<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>,
+        which University IT recommends as the Stanford-managed environment for AI exploration.
+      </p>
+    </div>
+
+    <p class="note">
+      <strong>A version number is not a strategy.</strong> The gap between the top four models is smaller than
+      the gap between someone who has learned to direct one of them and someone who has not. Pick the one you
+      have proper access to, learn it well, and re-check this section once a term rather than once a week.
+    </p>
+  </section>
+
+  <!-- ---- The catalogue --------------------------------------------------- -->
+  <section id="catalogue" aria-labelledby="catalogue-h">
+    <h2 id="catalogue-h">The catalogue</h2>
+    <p class="lede">
+      Every tool in the directory, searchable by name, description, tag, or use. Press
+      <kbd>/</kbd> anywhere on the page to jump to the search box.
+    </p>
+
+    <div id="search-tools" class="stackToolbar">
+      <div class="stackToolbarRow">
+        <label class="stackField stackSearchField">
+          <span>Search</span>
+          <input id="stack-search" type="search" placeholder="Try &ldquo;transcribe&rdquo;, &ldquo;legal research&rdquo;, or a tool name&hellip;" autocomplete="off" />
+        </label>
+        <label class="stackField">
+          <span>Sort by</span>
+          <select id="stack-sort">
+            <option value="name">Name (A&ndash;Z)</option>
+            <option value="category">Category</option>
+            <option value="new">Recently added</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="stack-quick" class="stackToolbarActions" role="group" aria-label="Quick filters"></div>
+
+      <div class="stackToolbarActions">
+        <button id="stack-saved-toggle" class="stackChip" type="button" aria-pressed="false">
+          My stack <span id="stack-saved-count" class="stackChipCount">0</span>
+        </button>
+        <button id="stack-compare-btn" class="stackChip" type="button" disabled>
+          Compare <span id="stack-compare-count" class="stackChipCount">0</span>
+        </button>
+        <button id="stack-download" class="stackChip" type="button" disabled>Download my stack (.md)</button>
+        <button id="stack-export" class="stackChip" type="button" disabled>Print or save as PDF</button>
+      </div>
+
+      <div id="stack-active-filters" class="stackFilterChips"></div>
+      <p id="stack-status" class="stackStatus" role="status" aria-live="polite"></p>
+      <div class="stackToolbarActions">
+        <button id="stack-clear" class="stackChip" type="button" hidden>Clear all filters</button>
+      </div>
+    </div>
+
+    <div class="stackBrowse">
+      <aside class="stackRail">
+        <h2>Category</h2>
+        <div id="stack-rail" class="stackRailList" role="group" aria-label="Filter by category"></div>
+      </aside>
+
+      <div>
+        <div id="stack-results"></div>
+        <p id="stack-empty" class="note stackEmpty" hidden>
+          <strong>Nothing matches.</strong> Try a broader word, clear the category, or search for what you
+          want to <em>do</em> rather than the name of a product.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Retired tools --------------------------------------------------- -->
+  <section id="retired-tools" aria-labelledby="retired-h">
+    <h2 id="retired-h">Tools that have been retired</h2>
+    <p class="lede">
+      AI products get shut down, and a workflow built on one that disappears is a real problem. These are
+      products that have closed, been wound down, or have a shutdown scheduled &mdash; kept here so a dead
+      link or a stale recommendation can be traced.
+    </p>
+    <p id="stack-retired-meta" class="muted"></p>
+    <div id="stack-retired" class="stackRetiredList"></div>
+  </section>
+
+  <p class="note">
+    <strong>Something out of date?</strong> Tools rename and disappear faster than any directory can follow.
+    Email <a href="mailto:library@law.stanford.edu">library@law.stanford.edu</a> and we will fix the entry.
+  </p>
+
+</main>
+
+<!-- The detail and comparison overlay. Both are addressable, so a tool can be
+     linked to directly and the Back button closes it. -->
+<div id="stack-overlay" class="stackOverlay" hidden>
+  <div id="stack-dialog" class="stackDialog" role="dialog" aria-modal="true" tabindex="-1"></div>
+</div>
+
+<button id="stack-to-top" class="stackTop" type="button" aria-label="Back to top" hidden>&#8593;</button>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footerNav" aria-label="Site footer">
+      <div class="footerGroup">
+        <h2 class="footerHeading" id="footer-elsewhere">Elsewhere at Stanford</h2>
+        <ul aria-labelledby="footer-elsewhere">
+          <li><a href="https://law.stanford.edu/ai-initiative/" target="_blank" rel="noopener noreferrer">SLS AI Initiative<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/robert-crown-law-library/" target="_blank" rel="noopener noreferrer">Robert Crown Law Library<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer">Responsible AI at Stanford<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/" target="_blank" rel="noopener noreferrer">Use of Generative AI at SLS<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/hub.js"></script>
+<script src="assets/ai-stack-data.js"></script>
+<script src="assets/ai-stack.js"></script>
+
+<!-- embed-map: generated by scripts/build-embed-map.py -->
+<script src="assets/embed-map.js"></script>
+<script src="assets/embed.js"></script>
+</body>
+</html>

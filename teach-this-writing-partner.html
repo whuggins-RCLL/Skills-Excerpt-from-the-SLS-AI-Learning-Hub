@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Teach this: the Writing Partner | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="A workshop packet for the SLS writing partner skills: set-up in ChatGPT and Claude, five activities to choose from, discussion topics, explainer notes for each skill and the Anthropic case study, and a glossary. Run it with a class or work through it yourself." />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="siteHeader">
+  <a class="headerLogo" href="index.html" aria-label="AI Learning Hub home">
+    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  </a>
+  <div class="headerNavigation">
+    <div class="headerTools">
+      <a class="homeButton" href="index.html">Home</a>
+      <form class="siteSearch" action="search.html" method="get" role="search">
+        <label class="srOnly" for="site-search">Search the AI Learning Hub</label>
+        <input id="site-search" name="q" type="search" placeholder="Search" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
+      <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
+    <a href="ai-upload.html">The AI Upload</a>
+    <a href="tutorials.html">Tutorials</a>
+    <a href="ai-resources.html">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="skills.html">Skills</a>
+    <a href="faculty.html">Faulty Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="docPage">
+
+  <p class="crumb"><a href="index.html">AI Learning Hub</a> &rsaquo; <a href="skills.html">AI Skills</a> &rsaquo; Teach this</p>
+
+  <p class="eyebrow">Workshop packet &middot; and a do-it-yourself path</p>
+  <h1>Teach this: the Writing Partner</h1>
+  <p class="lede">
+    A session you can run &mdash; for a class, a study group, a journal, a clinic seminar, or a library
+    workshop &mdash; on what these writing skills do, where their limits are, and who is responsible for the
+    result. Everything it needs is already on this site. Work through it alone and it becomes a structured
+    way to learn the whole set instead of poking at it.
+  </p>
+
+  <div class="actions">
+    <a class="primary" href="#setup">Start with set-up</a>
+    <a class="secondary" href="#activities">Jump to the activities</a>
+    <a class="textLink" href="#glossary">Glossary of the jargon &darr;</a>
+  </div>
+
+  <dl class="docMeta">
+    <div>
+      <dt>Runs in</dt>
+      <dd>60 or 90 minutes, or at your own pace</dd>
+    </div>
+    <div>
+      <dt>Set-up before the session</dt>
+      <dd>About 20 minutes, once, per person</dd>
+    </div>
+    <div>
+      <dt>Everyone brings</dt>
+      <dd>A laptop and their Stanford accounts</dd>
+    </div>
+    <div>
+      <dt>Take what you need</dt>
+      <dd>Five activities, five discussion sets &mdash; pick, reorder, cut</dd>
+    </div>
+  </dl>
+
+  <div class="caution" style="margin-top: 1.4rem;">
+    <p><strong>This is a session about reviewing writing, not about producing it.</strong> Nobody should
+    bring work they intend to submit unless the course that will receive it permits AI review, and no part
+    of this packet authorises anything. Use the fictional
+    <a href="skills.html#writing-samples">practice drafts</a> as the shared material: they exist so that a
+    room can look at the same writing without anyone handing their graded work to an AI tool, or to each
+    other.</p>
+  </div>
+
+  <nav class="docToc" aria-labelledby="toc-h">
+    <p class="eyebrow" id="toc-h">In this packet</p>
+    <ol>
+      <li><a href="#accounts">Accounts, first</a><span class="docTocNote">use the Stanford versions</span></li>
+      <li><a href="#setup">Set-up</a><span class="docTocNote">ten skills in ChatGPT, ten in Claude, one agent</span></li>
+      <li><a href="#drafts">The practice drafts</a><span class="docTocNote">and what is deliberately wrong with them</span></li>
+      <li><a href="#activities">Five activities</a><span class="docTocNote">choose two or three</span></li>
+      <li><a href="#discussion">Discussion topics</a><span class="docTocNote">with what to listen for</span></li>
+      <li><a href="#notes">Explainer notes</a><span class="docTocNote">each skill, and the case study</span></li>
+      <li><a href="#plans">Three ways to run it</a><span class="docTocNote">60 minutes, 90 minutes, solo</span></li>
+      <li><a href="#glossary">Glossary</a><span class="docTocNote">the jargon, in plain words</span></li>
+    </ol>
+  </nav>
+
+  <section class="module" id="accounts" aria-labelledby="accounts-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">1</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Before anything else</p>
+        <h2 id="accounts-h">Use the Stanford versions of both tools</h2>
+      </div>
+    </div>
+
+    <p>Sign in through Stanford, not with a personal account. The university versions are the ones covered
+    by Stanford&rsquo;s agreements and its guidance on what may be put into them; a personal free account is
+    not, and what you paste into one is not governed by the same terms.</p>
+
+    <div class="grid two">
+      <article class="card">
+        <p class="eyebrow">OpenAI</p>
+        <h3>ChatGPT Edu at Stanford</h3>
+        <p class="muted">Stanford&rsquo;s ChatGPT service, with university sign-in. This is where the skills
+        and the agent go.</p>
+        <div class="actions" style="margin-top: 0.9rem;">
+          <a class="secondary" href="https://uit.stanford.edu/service/openai-chatgpt-edu" target="_blank" rel="noopener noreferrer">uit.stanford.edu &middot; ChatGPT Edu<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+        </div>
+      </article>
+      <article class="card">
+        <p class="eyebrow">Anthropic</p>
+        <h3>Claude at Stanford</h3>
+        <p class="muted">Stanford&rsquo;s Claude service, with university sign-in. The same ten skill files
+        install here.</p>
+        <div class="actions" style="margin-top: 0.9rem;">
+          <a class="secondary" href="https://uit.stanford.edu/service/claude" target="_blank" rel="noopener noreferrer">uit.stanford.edu &middot; Claude<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="note">
+      <p><strong>Facilitators:</strong> confirm access a week out, not on the day. Getting an account
+      provisioned is the single thing most likely to cost you the first fifteen minutes of a session, and it
+      is the one thing nobody in the room can fix.</p>
+    </div>
+  </section>
+
+  <section class="module" id="setup" aria-labelledby="setup-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">2</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Do this first</p>
+        <h2 id="setup-h">Set-up: the same ten skills, three ways</h2>
+      </div>
+    </div>
+
+    <p>The point of installing in both tools <em>and</em> as an agent is not thoroughness for its own sake.
+    It is that the three set-ups behave differently, and the differences are most of what there is to
+    discuss. Ask participants to finish all three before the session; budget twenty minutes at the start if
+    you would rather do it together.</p>
+
+    <p>Everything below comes from one download: the
+    <a href="skills.html#sets">SLS Writing Partner Set</a>. Unzip that set once. Inside are ten skill files,
+    each its own ZIP, and <strong>each of those stays zipped</strong> at every step that follows.</p>
+
+    <div class="steps">
+      <div class="step">
+        <h3>A &mdash; The ten skills in ChatGPT</h3>
+        <p>In ChatGPT: <strong>Plugins</strong>, switch from Plugins to <strong>Skills</strong>, click
+        <strong>+</strong>, and drop in each ZIP. Ten uploads, once. Full walkthrough with a recording:
+        <a href="install.html#chatgpt">install a skill in ChatGPT</a>.</p>
+      </div>
+      <div class="step">
+        <h3>B &mdash; The ten skills in Claude</h3>
+        <p>In Claude: <strong>Customize</strong>, then <strong>Add</strong> at the top right, and drag each
+        ZIP into the upload box. Same ten files, unchanged. Walkthrough:
+        <a href="install.html#claude">install a skill in Claude</a>.</p>
+      </div>
+      <div class="step">
+        <h3>C &mdash; One agent in ChatGPT holding all ten</h3>
+        <p>An agent is a named, reusable assistant that carries the skills, a standing set of instructions,
+        and any files you attach &mdash; so you stop re-uploading and re-explaining in every chat. Follow
+        <a href="writing-partner-agent.html">Build a Writing Partner agent</a>, which includes the
+        instructions to paste and a short recording of the upload.</p>
+      </div>
+    </div>
+
+    <div class="doneWhen">
+      <p class="doneWhenHead">Everyone is ready when</p>
+      <ul class="checkList">
+        <li>They are signed in to both tools through Stanford.</li>
+        <li>Ten skills are installed in ChatGPT, and ten in Claude &mdash; none of them unzipped first.</li>
+        <li>One ChatGPT agent exists, named, with the instructions pasted in.</li>
+        <li>At least one <a href="skills.html#writing-samples">practice draft</a> is downloaded and on the laptop.</li>
+      </ul>
+    </div>
+
+    <div class="quietCallout">
+      <p><strong>If you only have time for one:</strong> install the ten in whichever tool the group already
+      uses, and demonstrate the other two from the front. The comparison activity needs two tools in the
+      room, but it does not need two tools on every laptop &mdash; pairs work.</p>
+    </div>
+  </section>
+
+  <section class="module" id="drafts" aria-labelledby="drafts-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">3</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">The shared material</p>
+        <h2 id="drafts-h">The practice drafts are imperfect on purpose</h2>
+      </div>
+    </div>
+
+    <p>Five fictional student drafts sit on the skills page under
+    <a href="skills.html#writing-samples">Practice drafts</a>: a case brief, three memos of increasing
+    length and citation density, and a timed exam answer. They were written as teaching samples, and each
+    one has real weaknesses built into it &mdash; that is what makes them useful. Nobody has to volunteer
+    their own writing to have something worth reviewing in front of the room.</p>
+
+    <div class="caution">
+      <p><strong>Everything in them is invented</strong> &mdash; the parties, the facts, the drafting, and
+      the student authors. No authority cited in them should be relied on, and none of them is a model
+      answer. Say this out loud at the start; someone always asks whether <em>Patel v. Green</em> is real.</p>
+    </div>
+
+    <p>Which draft to hand out depends on what you want the room to find:</p>
+
+    <div class="tableScroll">
+      <table>
+        <thead>
+          <tr><th scope="col">Draft</th><th scope="col">What is weak in it</th><th scope="col">Pairs well with</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Case brief</strong><br /><span class="muted">Daniels, ~400 words</span></td>
+            <td>The rule statement claims more than the case decides, and the takeaway drifts past the holding.</td>
+            <td>Genre Fit, Argument and Structure</td>
+          </tr>
+          <tr>
+            <td><strong>Memo &mdash; false imprisonment</strong><br /><span class="muted">Patel, ~700 words</span></td>
+            <td>Conversational register, thin authority, and a brief answer more confident than the analysis under it.</td>
+            <td>Clarity and Precision, Audience and Reception</td>
+          </tr>
+          <tr>
+            <td><strong>Memo &mdash; emotional distress</strong><br /><span class="muted">Lee, ~1,000 words</span></td>
+            <td>Elements handled one at a time, with the contested one carrying weight the reasoning does not.</td>
+            <td>Counterargument, Flow and Organization</td>
+          </tr>
+          <tr>
+            <td><strong>Memo &mdash; private facts</strong><br /><span class="muted">Morgan, ~1,200 words</span></td>
+            <td>Six authorities and a quoted email &mdash; the richest target for source and citation work.</td>
+            <td>Claims and Source Traceability, Bluebook Audit</td>
+          </tr>
+          <tr>
+            <td><strong>Torts exam answer</strong><br /><span class="muted">The wet floor, ~500 words</span></td>
+            <td>Conclusions arriving ahead of the analysis, and elements marched through in order regardless of weight.</td>
+            <td>Argument and Structure, Audience and Reception</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quietCallout">
+      <p><strong>A word of warning worth passing on.</strong> A group that reviews the same draft with the
+      same skill will get five different reviews. That is not a malfunction, and noticing it is half the
+      lesson &mdash; see the discussion topics below.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Activities ===================== -->
+
+  <div class="docPart" id="activities">
+    <p class="eyebrow">Part two</p>
+    <h2>Five activities</h2>
+    <p class="muted" style="max-width: 70ch;">
+      Choose two for an hour, three for ninety minutes. They are independent: any order, any combination.
+      Each one names what it needs, what to do, what to watch for, and what to ask afterwards.
+    </p>
+  </div>
+
+  <section class="module" id="activity-a" aria-labelledby="activity-a-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">A</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">25&ndash;30 minutes &middot; no laptop needed</p>
+        <h2 id="activity-a-h">Take a skill apart</h2>
+      </div>
+    </div>
+
+    <p><strong>The question:</strong> what <em>is</em> a skill, and why does that matter to a lawyer?</p>
+
+    <p><strong>You need:</strong> the case study,
+    <a href="case-study-anthropic-legal-skills.html">Reverse-engineering Anthropic&rsquo;s AI governance
+    legal skills</a>. Sections 5 to 14 are the core; section 27 is the checklist the activity uses.</p>
+
+    <ol class="installSteps">
+      <li>Read sections 5&ndash;14 in advance, or read section 6 and 7 aloud together (five minutes).</li>
+      <li>In pairs, open any one of the ten writing skills you installed and answer four of the twelve
+      forensic questions from section 27: what triggers it, what single job it owns, what it is
+      <em>not</em> authorised to do, and who takes over next.</li>
+      <li>Each pair reports the boundary they found &mdash; the thing their skill refuses to do.</li>
+    </ol>
+
+    <p><strong>Watch for:</strong> the moment someone realises the file is just written instructions, not a
+    separate intelligence. That realisation is what makes the rest of the session possible.</p>
+
+    <p><strong>Debrief:</strong> If a skill is a written procedure, whose procedure should it be &mdash;
+    Anthropic&rsquo;s, a vendor&rsquo;s, the library&rsquo;s, or your professor&rsquo;s? What would a skill
+    written by your instructor for your course say that these ten do not?</p>
+  </section>
+
+  <section class="module" id="activity-b" aria-labelledby="activity-b-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">B</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">25 minutes &middot; both tools</p>
+        <h2 id="activity-b-h">Same draft, same skill, two assistants</h2>
+      </div>
+    </div>
+
+    <p><strong>The question:</strong> how much of what comes back is the skill, and how much is the model
+    running it?</p>
+
+    <p><strong>You need:</strong> one practice draft, the same skill installed in ChatGPT and in Claude, and
+    an identical opening message in both. The Morgan memo with
+    <em>Claims and Source Traceability</em> is the sharpest pairing; <em>Bluebook Audit</em> is a close
+    second.</p>
+
+    <ol class="installSteps">
+      <li>Send the same file and the same request to both tools. Do not help either one.</li>
+      <li>Put the two outputs side by side and mark, for each: what both found, what only one found, and
+      anything either asserted that the other contradicted.</li>
+      <li>Then check three of the findings against the draft itself. Which tool was right?</li>
+    </ol>
+
+    <p><strong>Watch for:</strong> confident disagreement. Two assistants running identical written
+    instructions on identical text will not produce identical findings, and neither output announces which
+    one is wrong. Watch also for the tempting conclusion &mdash; that the longer review is the better one.</p>
+
+    <p><strong>Debrief:</strong> If two runs of the same skill disagree, what does that tell you about a
+    single run you never compared? What would you have to do to know which is right, and how long would that
+    take? Is the answer &ldquo;use both every time&rdquo; realistic?</p>
+  </section>
+
+  <section class="module" id="activity-c" aria-labelledby="activity-c-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">C</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">30 minutes &middot; the agent</p>
+        <h2 id="activity-c-h">Run the agent, then audit it</h2>
+      </div>
+    </div>
+
+    <p><strong>The question:</strong> what does a full review actually give you, and what does accepting it
+    uncritically cost?</p>
+
+    <p><strong>You need:</strong> the <a href="writing-partner-agent.html">ChatGPT agent</a> from set-up C,
+    and the Morgan or Lee memo.</p>
+
+    <ol class="installSteps">
+      <li>Hand the agent the draft and ask for a full review, including the Word review copy.</li>
+      <li>Read the <strong>Human Review Required</strong> section it produces before reading anything else.
+      Does it name what you would have named?</li>
+      <li>Take three findings and rule on each: accept, decline, or revise differently &mdash; and write one
+      sentence of reasoning for each ruling. Declining is a legitimate outcome; make someone in the room
+      defend a decline.</li>
+      <li>Take one flagged authority and try to verify it properly. Notice how long it takes.</li>
+    </ol>
+
+    <p><strong>Watch for:</strong> the pull towards acceptance. An annotated Word file with tidy comments
+    reads as authoritative, and clicking accept is faster than thinking. The exercise is designed to make
+    that pull visible while the stakes are zero.</p>
+
+    <p><strong>Debrief:</strong> Whose writing is it after you accept twenty suggestions you did not
+    evaluate? Where is the line between a reviewer improving your judgment and a reviewer replacing it?</p>
+  </section>
+
+  <section class="module" id="activity-d" aria-labelledby="activity-d-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">D</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">15&ndash;20 minutes &middot; the short one</p>
+        <h2 id="activity-d-h">Try to make it write for you</h2>
+      </div>
+    </div>
+
+    <p><strong>The question:</strong> where is the boundary, and how firm is it?</p>
+
+    <p>Every one of these skills refuses the same thing: it will not draft, rewrite, or hand back replacement
+    prose. This activity tests that claim rather than trusting it.</p>
+
+    <ol class="installSteps">
+      <li>Give a draft to any focused check and try, in three or four turns, to get it to write the fix for
+      you. Ask for &ldquo;an example of how that sentence could read.&rdquo; Ask it to &ldquo;show, not
+      tell.&rdquo; Say you are out of time.</li>
+      <li>Record what it refused, what it conceded, and the exact wording that came closest to working.</li>
+      <li>Compare across the room. The same pressure will not produce the same result twice.</li>
+    </ol>
+
+    <p><strong>Watch for:</strong> the grey zone. A skill may legitimately offer a single word or a short
+    phrase and still be a reviewer; a replacement paragraph is something else. Where the group puts that
+    line is more interesting than where the tool puts it.</p>
+
+    <p><strong>Debrief:</strong> If you can talk a tool past its own boundary in four turns, what is the
+    boundary actually for &mdash; and what is left holding the line? (Answer: the Honor Code, the course
+    rule, and the person typing.) Would you disclose the turn that worked?</p>
+
+    <div class="quietCallout">
+      <p><strong>Facilitator note.</strong> Frame this as a stress test of a tool, not as instruction in
+      evasion. The finding you want is that a written boundary is a real constraint <em>and</em> a soft one,
+      which is exactly why the rules that govern the student are not written in the file.</p>
+    </div>
+  </section>
+
+  <section class="module" id="activity-e" aria-labelledby="activity-e-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">E</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">30 minutes &middot; the build</p>
+        <h2 id="activity-e-h">Write the skill your course is missing</h2>
+      </div>
+    </div>
+
+    <p><strong>The question:</strong> can you encode your own standard well enough that a machine could
+    follow it?</p>
+
+    <p><strong>You need:</strong> the case study&rsquo;s
+    <a href="case-study-anthropic-legal-skills.html#s22">teaching template</a> (there is a copy button on
+    it), and a real standard from a course, journal, or clinic &mdash; a rubric, a style rule, a citation
+    convention, a professor&rsquo;s standing complaint.</p>
+
+    <ol class="installSteps">
+      <li>Copy the template and fill in the trigger and the description first: when should this run, and how
+      would the assistant know?</li>
+      <li>Write the workflow as numbered steps, then the output contract, then the boundary &mdash; what it
+      must not do.</li>
+      <li>Trade drafts with another group and run the twelve-question checklist against theirs.</li>
+    </ol>
+
+    <p><strong>Watch for:</strong> how quickly &ldquo;write well&rdquo; turns out to be unwritable, and how
+    much of legal writing instruction is tacit. Groups usually discover their standard has no stop condition
+    and no boundary at all.</p>
+
+    <p><strong>Debrief:</strong> What part of your standard could not be written down? Is that because it is
+    judgment, or because nobody has ever had to articulate it? Which answer should worry a teacher more?</p>
+  </section>
+
+  <!-- ===================== Discussion ===================== -->
+
+  <div class="docPart" id="discussion">
+    <p class="eyebrow">Part three</p>
+    <h2>Discussion topics</h2>
+    <p class="muted" style="max-width: 70ch;">
+      Five sets. Each has questions to put to the room and a note on what is worth listening for in the
+      answers. None of them needs an activity to have been run first, though they land harder if one has.
+    </p>
+  </div>
+
+  <section class="module" id="topic-authorship" aria-labelledby="topic-authorship-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Set one</p>
+        <h2 id="topic-authorship-h">Authorship, and where it goes</h2>
+      </div>
+    </div>
+    <ul class="splitList">
+      <li>If a reviewer tells you a paragraph is unclear and you rewrite it, whose paragraph is it?</li>
+      <li>What if the reviewer names the exact problem and you make the obvious fix?</li>
+      <li>Is a human writing tutor doing something different in kind, or only in degree?</li>
+      <li>At what point would you disclose the help, and to whom?</li>
+      <li>Does it change if the reviewer is a classmate, a TA, a paid editor, or a skill?</li>
+      <li>Would your answer change if the work were a journal note rather than a memo?</li>
+    </ul>
+    <p><strong>Listen for:</strong> the slide from &ldquo;it only diagnosed&rdquo; to &ldquo;so the revision
+    is entirely mine.&rdquo; Both halves can be true and the conclusion can still be too comfortable. Push on
+    the case where the diagnosis <em>was</em> the insight.</p>
+  </section>
+
+  <section class="module" id="topic-verify" aria-labelledby="topic-verify-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Set two</p>
+        <h2 id="topic-verify-h">Verification, and the cost of doing it properly</h2>
+      </div>
+    </div>
+    <ul class="splitList">
+      <li>What is the difference between a source that exists and a source that supports the point?</li>
+      <li>How would you know if a quotation had been subtly altered?</li>
+      <li>When does a public-web check stop being enough?</li>
+      <li>What does a citator tell you that no assistant can?</li>
+      <li>How long did verifying one authority take in activity C?</li>
+      <li>What happens to that discipline at 2am the night before?</li>
+    </ul>
+    <p><strong>Listen for:</strong> people treating &ldquo;the assistant found the case&rdquo; as the end of
+    the process. The honest answer to the last question is the one worth having in the open: verification
+    fails under time pressure, which is an argument about when to start, not about whether to verify.</p>
+  </section>
+
+  <section class="module" id="topic-what" aria-labelledby="topic-what-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Set three</p>
+        <h2 id="topic-what-h">What a skill is, and what it is not</h2>
+      </div>
+    </div>
+    <ul class="splitList">
+      <li>Does installing a skill make the assistant smarter, or only more specific?</li>
+      <li>Why ten small skills instead of one large one?</li>
+      <li>What could a skill never fix about the underlying model?</li>
+      <li>If a firm encodes its house method as skills, what has it actually built?</li>
+      <li>Who should be allowed to write the skills a law school distributes?</li>
+      <li>What would you want to know before installing one from a stranger?</li>
+    </ul>
+    <p><strong>Listen for:</strong> the assumption that a skill is a guarantee. A written procedure changes
+    what the assistant attempts, not what it is capable of getting wrong.</p>
+  </section>
+
+  <section class="module" id="topic-tools" aria-labelledby="topic-tools-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Set four</p>
+        <h2 id="topic-tools-h">Choosing the tool, and the shape of the market</h2>
+      </div>
+    </div>
+    <ul class="splitList">
+      <li>Where did the two assistants differ in activity B, and did it matter?</li>
+      <li>What does a legal platform give you that a skill cannot?</li>
+      <li>What does an open skill give you that a platform cannot?</li>
+      <li>Which of these will you have access to after graduation?</li>
+      <li>Whose data governance applies to what you paste in?</li>
+      <li>What should a firm ask before buying either?</li>
+    </ul>
+    <p><strong>Listen for:</strong> winner-takes-all framing. The case study&rsquo;s stack diagram is the
+    corrective: the interesting question is which layer you are choosing at, not which company wins.</p>
+  </section>
+
+  <section class="module" id="topic-not" aria-labelledby="topic-not-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Set five</p>
+        <h2 id="topic-not-h">When not to use any of this</h2>
+      </div>
+    </div>
+    <ul class="splitList">
+      <li>Which assignments should get no AI review at all, even where permitted?</li>
+      <li>What are you practising when you find your own weak paragraph?</li>
+      <li>What does a first-year lose by outsourcing the diagnosis?</li>
+      <li>What would you never put into any of these tools, and why?</li>
+      <li>How would you word an AI-use disclosure you would be comfortable signing?</li>
+      <li>What would make you stop mid-review and close the window?</li>
+    </ul>
+    <p><strong>Listen for:</strong> the difference between prohibited and unwise. Both matter, and only one
+    of them is written down. <a href="pause-rule.html">The PAUSE Rule</a> is the site&rsquo;s workflow for
+    the second.</p>
+  </section>
+
+  <!-- ===================== Explainer notes ===================== -->
+
+  <div class="docPart" id="notes">
+    <p class="eyebrow">Part four</p>
+    <h2>Explainer notes</h2>
+    <p class="muted" style="max-width: 70ch;">
+      One note per skill: what it does, and the thing worth saying about it out loud. Use them as
+      facilitator crib notes, as a handout, or as your own reading order.
+    </p>
+  </div>
+
+  <section class="module" id="notes-skills" aria-labelledby="notes-skills-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">The ten</p>
+        <h2 id="notes-skills-h">The writing partner skills</h2>
+      </div>
+    </div>
+
+    <dl class="distinctionList">
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS AI Use Gate</span></dt>
+        <dd>Decides whether AI review of this draft is authorised at all, under the course rule or the SLS
+        default, and flags confidentiality and professional-responsibility problems before anything reads the
+        paper. <em>Say out loud:</em> this is the only skill in the set whose answer can be &ldquo;stop.&rdquo;
+        A group that skips it has already made a decision without noticing.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Writing Review</span></dt>
+        <dd>The umbrella workflow: the gate, then argument, organisation, clarity, audience, counterarguments,
+        sources, genre, and Bluebook, ending in an annotated Word copy. <em>Say out loud:</em> it hands work
+        to the nine others, so a set missing three of them quietly reviews less than it claims.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Argument and Structure</span></dt>
+        <dd>Tests the thesis, rule synthesis, evidence chain, and conclusion for gaps, then asks the revision
+        question rather than answering it. <em>Say out loud:</em> the questions it asks are the ones a
+        supervising attorney asks. Reading them is training even when the diagnosis is wrong.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Flow and Organization</span></dt>
+        <dd>Sequencing, headings, transitions, repetition, and the point buried where no reader will reach it.
+        <em>Say out loud:</em> the easiest skill to agree with and the easiest to over-apply &mdash; a
+        perfectly signposted argument can still be wrong.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Clarity and Precision</span></dt>
+        <dd>Ambiguity, jargon, dense sentences, inconsistent defined terms, flagged in place with revision
+        strategies rather than replacement sentences. <em>Say out loud:</em> this is where the
+        reviewer/ghostwriter line gets tested hardest, because a &ldquo;clearer version&rdquo; is one request
+        away. Activity D lives here.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Audience and Reception</span></dt>
+        <dd>How a professor, judge, supervising lawyer, client, editor, or employer is likely to receive the
+        draft: tone, credibility, framing, unstated assumptions. <em>Say out loud:</em> it is guessing at a
+        reader it has never met. Its value is in making you specify the reader, which most drafts never do.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Counterargument Stress Test</span></dt>
+        <dd>The strongest objections, missing adverse authority, doctrinal soft spots &mdash; issue-spotting
+        and questions, never a rebuttal. <em>Say out loud:</em> the most useful of the ten for a strong writer,
+        and the one whose output you are least able to check without doing the reading yourself.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Claims and Source Traceability</span></dt>
+        <dd>Traces each claim to its source and separates &ldquo;this source exists&rdquo; from &ldquo;this
+        source supports the point,&rdquo; ending in a claim&ndash;source matrix. <em>Say out loud:</em> the
+        distinction it draws is the one that ends careers when it collapses. Pair it with the Morgan memo and
+        make someone open an authority.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Bluebook Audit</span></dt>
+        <dd>Bluebook 22nd-edition issue-spotting: short forms, pincites, signals, order, typography. It names
+        the likely defect and the rule; it does not write the citation. <em>Say out loud:</em> it marks
+        <strong>HUMAN VERIFICATION REQUIRED</strong> where the rule is uncertain or the source was never
+        opened &mdash; and a confident citation correction from an assistant that never opened the source is
+        exactly the failure mode to fear.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">SLS Genre Fit</span></dt>
+        <dd>Whether the draft behaves like the form it claims to be &mdash; memo, brief, seminar paper, client
+        letter &mdash; on purpose, stance, sections, and conventions. <em>Say out loud:</em> the best opener
+        for a 1L room, because genre confusion is the most common and least-discussed failure in first-year
+        writing.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="module" id="notes-case" aria-labelledby="notes-case-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">The reading</p>
+        <h2 id="notes-case-h">The case study</h2>
+      </div>
+    </div>
+
+    <p><a href="case-study-anthropic-legal-skills.html">Reverse-engineering Anthropic&rsquo;s AI governance
+    legal skills</a> takes apart a real, public, Apache-2.0 project &mdash; Anthropic&rsquo;s Claude for
+    Legal &mdash; and asks what a skill is made of. It is the reading that turns &ldquo;I installed a
+    thing&rdquo; into &ldquo;I know what I installed.&rdquo;</p>
+
+    <p>There is also a <a href="skills.html#case-study-h">21-minute audio explainer</a> covering the same
+    ground. It makes good pre-session listening for a group that will not do the reading, and it is the
+    version to send anyone who would rather listen on a walk than sit with the diagrams.</p>
+
+    <dl class="distinctionList">
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">Sections 1&ndash;4 &middot; skill or platform</span></dt>
+        <dd>Why an open legal skill does not put Harvey or Legora out of business, and what the layers of the
+        legal AI stack actually are. <em>Use it for:</em> discussion set four.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">Sections 5&ndash;14 &middot; anatomy</span></dt>
+        <dd>What a <code>SKILL.md</code> file contains, what YAML frontmatter is, and why the description is
+        what routes work to the right skill. <em>Use it for:</em> activity A, and for anyone who thinks a
+        skill is code.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">Sections 15&ndash;23 &middot; design lessons</span></dt>
+        <dd>Small skills over one large one; the file as a control panel rather than a warehouse; what belongs
+        in references, scripts, and assets instead. <em>Use it for:</em> activity E.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">Sections 24&ndash;28 &middot; the checklist</span></dt>
+        <dd>Twelve questions to ask of any skill, ending with the one that matters most: what does this depend
+        on that the file itself does not contain? <em>Use it for:</em> evaluating anything anyone hands you.</dd>
+      </div>
+    </dl>
+
+    <div class="quietCallout">
+      <p><strong>Attribution to repeat.</strong> The case study is an independent educational reading of
+      someone else&rsquo;s open-source project. It is not affiliated with or endorsed by Anthropic, and its
+      code samples are teaching illustrations rather than reproductions.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Run plans ===================== -->
+
+  <div class="docPart" id="plans">
+    <p class="eyebrow">Part five</p>
+    <h2>Three ways to run it</h2>
+    <p class="muted" style="max-width: 70ch;">
+      Set-up happens before all three. If it cannot, add twenty minutes at the front and drop an activity.
+    </p>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <p class="eyebrow">Sixty minutes</p>
+      <h3>The short session</h3>
+      <ul class="checkList">
+        <li>5 min &mdash; what a skill is, and the practice drafts</li>
+        <li>25 min &mdash; activity B, two assistants</li>
+        <li>15 min &mdash; activity D, the boundary test</li>
+        <li>15 min &mdash; discussion sets one and two</li>
+      </ul>
+      <p class="muted" style="margin-top: 0.9rem; font-size: 0.9rem;">Leaves with: the tools disagree, and
+      the boundary is soft.</p>
+    </article>
+    <article class="card">
+      <p class="eyebrow">Ninety minutes</p>
+      <h3>The full workshop</h3>
+      <ul class="checkList">
+        <li>10 min &mdash; set-up check and the drafts</li>
+        <li>25 min &mdash; activity A, take a skill apart</li>
+        <li>30 min &mdash; activity C, run the agent and audit it</li>
+        <li>25 min &mdash; discussion sets one, two, and five</li>
+      </ul>
+      <p class="muted" style="margin-top: 0.9rem; font-size: 0.9rem;">Leaves with: what it is, what it
+      produces, and who is responsible.</p>
+    </article>
+    <article class="card">
+      <p class="eyebrow">On your own</p>
+      <h3>The DIY path</h3>
+      <ul class="checkList">
+        <li>Set up all three, then read the case study</li>
+        <li>Run activity B on the Morgan memo</li>
+        <li>Run activity C, and verify one authority end to end</li>
+        <li>Answer discussion set two in writing, for yourself</li>
+        <li>Then, and only then, use it on your own draft</li>
+      </ul>
+      <p class="muted" style="margin-top: 0.9rem; font-size: 0.9rem;">Spread over a week, an hour at a
+      time.</p>
+    </article>
+  </div>
+
+  <section class="module" id="adapt" aria-labelledby="adapt-h" style="margin-top: 2.4rem;">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">&bull;</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Make it yours</p>
+        <h2 id="adapt-h">Adapting the packet</h2>
+      </div>
+    </div>
+
+    <p>Nothing here is fixed. Faculty are welcome to take the parts that fit a class and leave the rest;
+    a study group can run one activity over lunch; a journal can use activity B and discussion set two
+    alone and call it training. Three ways it bends:</p>
+
+    <ul class="splitList">
+      <li><strong>Swap the material.</strong> Any practice draft works with any skill; the table above is a
+      suggestion, not a pairing rule.</li>
+      <li><strong>Swap the tool.</strong> Where a group has one platform, run everything there and
+      demonstrate the other.</li>
+      <li><strong>Add your standard.</strong> Attach your own rubric or style guide to the agent and the
+      review changes with it.</li>
+      <li><strong>Narrow it.</strong> A single skill, a single draft, and one discussion set is a legitimate
+      twenty-minute session.</li>
+      <li><strong>Print it.</strong> This page is written to print cleanly as a handout.</li>
+      <li><strong>Ask us.</strong> The library will run it with your class if you would rather not.</li>
+    </ul>
+
+    <div class="note">
+      <p><strong>One thing not to adapt away:</strong> the course-policy question. Whatever else you cut,
+      keep the point that permission comes first and that no session, packet, or tool grants it.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Glossary ===================== -->
+
+  <div class="docPart" id="glossary">
+    <p class="eyebrow">Part six</p>
+    <h2>Glossary</h2>
+    <p class="muted" style="max-width: 70ch;">
+      The words that come up in this packet, in plain English. Most of them sound more technical than they
+      are.
+    </p>
+  </div>
+
+  <dl class="distinctionList">
+    <div class="distinctionItem"><dt><span class="distinctionName">Skill</span></dt><dd>A set of written instructions an assistant loads and follows for a particular kind of work. Not a program and not a separate AI &mdash; a document that says what to ask, in what order, and what to refuse.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName"><code>SKILL.md</code></span></dt><dd>The file at the heart of a skill. <code>.md</code> means Markdown: ordinary text with a little formatting, readable in any text editor.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Markdown</span></dt><dd>A way of writing formatted text in plain characters &mdash; <code>#</code> for a heading, <code>-</code> for a bullet, <code>**bold**</code> for bold.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">YAML frontmatter</span></dt><dd>The small labelled block at the very top of a skill file, between two <code>---</code> lines, holding its name and description. The label card on the outside of the folder.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Metadata</span></dt><dd>Information <em>about</em> something rather than the thing itself: a book&rsquo;s author and year, a skill&rsquo;s name and description.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Description</span></dt><dd>The sentence in the frontmatter that tells the assistant when this skill applies. It is what routes your request to the right skill, which is why a vague one fails quietly.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">References, scripts, assets</span></dt><dd>The folders beside a skill file: knowledge it should consult, code for things that must be exact, and materials used in the final product (a Word template, say).</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Agent</span></dt><dd>A named, reusable assistant you configure once &mdash; skills, standing instructions, attached files &mdash; and then talk to. The difference between a tool you re-explain every time and one that already knows the job.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Instructions (or system instructions)</span></dt><dd>The standing brief an agent carries into every conversation, as opposed to what you type in a single message.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Prompt</span></dt><dd>What you type. Everything else on this page is an attempt to stop the quality of the work depending on how well you happened to type it.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Plugin</span></dt><dd>A bundle of related skills, agents, and configuration distributed together &mdash; a practice area in a box.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Connector</span></dt><dd>A link between an assistant and a source of data &mdash; a document store, a research service, a firm system. Access, as distinct from instructions.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Model</span></dt><dd>The underlying system that generates text &mdash; Claude, GPT, and their relatives. A skill changes what the model is asked to do; it does not change what the model is.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Large language model (LLM)</span></dt><dd>The kind of system these are: trained to predict likely continuations of text. It is why the output is fluent, and why fluency is not evidence of accuracy.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Context window</span></dt><dd>How much text the assistant can hold in view at once. Exceed it and earlier material stops informing the answer &mdash; without any announcement that it has.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Fabrication (&ldquo;hallucination&rdquo;)</span></dt><dd>Confident output that is not true &mdash; an invented case, a real case that says something else, a quotation that was never written. The reason source verification is a separate step rather than a courtesy.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Verification</span></dt><dd>Opening the original and checking it yourself. Distinct from the assistant reporting that it found a source, which is not the same claim.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Citator</span></dt><dd>The legal service that tells you whether an authority is still good law. No web search substitutes for it when currentness matters, and no assistant has used one unless it says which.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Claim&ndash;source matrix</span></dt><dd>A table pairing each claim in a draft with the source meant to support it, and the verification status of that pairing. The output of the traceability skill.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Tracked changes and comments</span></dt><dd>Word&rsquo;s markup. The review copy uses comments for diagnoses; every one of them is a proposal awaiting your decision, not an edit already made.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Human review checkpoint</span></dt><dd>A named place in a workflow where the machine stops and a person decides. The agent instructions define nine of them.</dd></div>
+    <div class="distinctionItem"><dt><span class="distinctionName">Disclosure</span></dt><dd>Telling the reader what AI assistance you used, in the form your course or journal requires. Required or not, it is the record that makes the rest defensible.</dd></div>
+  </dl>
+
+  <section class="card crossPromo" aria-labelledby="everything-h" style="margin-top: 2.4rem;">
+    <div class="crossPromoText">
+      <p class="eyebrow">Everything this packet uses</p>
+      <h2 id="everything-h">The materials, in one place</h2>
+      <p class="muted">
+        The ten skills and the practice drafts are on the skills page; the agent guide, the case study, and
+        the PAUSE Rule each have their own. Nothing in this packet needs anything you cannot download in the
+        next five minutes.
+      </p>
+    </div>
+    <div class="crossPromoActions">
+      <div class="actions" style="margin-top: 0;">
+        <a class="primary" href="skills.html#sets">The skills and the drafts</a>
+      </div>
+      <p class="crossPromoAside">Running this with a class? Email
+      <a href="mailto:library@law.stanford.edu">library@law.stanford.edu</a> and we will help.</p>
+    </div>
+  </section>
+
+  <div class="docNav">
+    <a class="textLink" href="skills.html">&larr; The AI skills</a>
+    <a class="textLink" href="case-study-anthropic-legal-skills.html">The case study &rarr;</a>
+  </div>
+
+  <p class="muted" style="font-size: 0.88rem;">Robert Crown Law Library &middot; last reviewed August 2026.</p>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footerNav" aria-label="Site footer">
+      <div class="footerGroup">
+        <h2 class="footerHeading" id="footer-elsewhere">Elsewhere at Stanford</h2>
+        <ul aria-labelledby="footer-elsewhere">
+          <li><a href="https://law.stanford.edu/ai-initiative/" target="_blank" rel="noopener noreferrer">SLS AI Initiative<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/robert-crown-law-library/" target="_blank" rel="noopener noreferrer">Robert Crown Law Library<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer">Responsible AI at Stanford<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/" target="_blank" rel="noopener noreferrer">Use of Generative AI at SLS<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/hub.js"></script>
+
+<!-- embed-map: generated by scripts/build-embed-map.py -->
+<script src="assets/embed-map.js"></script>
+<script src="assets/embed.js"></script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>AI Skills | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="AI Skills for Stanford Law students from the Robert Crown Law Library: one-click skill sets, a five-skill core pathway, a ten-skill writing partner set, and guided studios for Harvey, Legora, LexText, CICERO, and Gemini Notebook. Download a single skill or a whole set and install it in ChatGPT or Claude." />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="siteHeader">
+  <a class="headerLogo" href="index.html" aria-label="AI Learning Hub home">
+    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  </a>
+  <div class="headerNavigation">
+    <div class="headerTools">
+      <a class="homeButton" href="index.html">Home</a>
+      <form class="siteSearch" action="search.html" method="get" role="search">
+        <label class="srOnly" for="site-search">Search the AI Learning Hub</label>
+        <input id="site-search" name="q" type="search" placeholder="Search" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
+      <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
+    <a href="ai-upload.html">The AI Upload</a>
+    <a href="tutorials.html">Tutorials</a>
+    <a href="ai-resources.html">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="skills.html" aria-current="page">Skills</a>
+    <a href="faculty.html">Faulty Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <p class="crumb"><a href="index.html">AI Learning Hub</a> &rsaquo; AI Skills</p>
+
+  <p class="eyebrow">For Stanford Law students</p>
+  <h1>AI Skills</h1>
+  <p class="lede">
+    Twenty-one AI skills built for law study. Each one is problem-first, policy-aware, and organised around
+    verification. Take a whole set in one download or a single skill on its own, then install it in ChatGPT
+    or Claude &mdash; you add the ZIP once and it stays available across chats.
+  </p>
+  <div class="actions">
+    <a class="primary" href="#sets">Download a set</a>
+    <a class="secondary" href="install.html">How to install a skill</a>
+    <a class="textLink" href="pause-rule.html">Decide whether to use AI first &rarr;</a>
+  </div>
+
+  <!-- The case study sits above the download cards on purpose: it answers "what
+       am I actually installing, and how was it built?" before a reader takes ten
+       files they have not opened. -->
+
+  <section class="card crossPromo" aria-labelledby="case-study-h">
+    <div class="crossPromoText">
+      <p class="eyebrow">New &middot; case study</p>
+      <h2 id="case-study-h">Reverse-engineering Anthropic&rsquo;s AI governance legal skills</h2>
+      <p class="muted">
+        Before you install one, see how a skill is actually built. We take apart Anthropic&rsquo;s
+        open-source <em>Claude for Legal</em> project &mdash; what a <code>SKILL.md</code> file is, why the
+        work is split into small skills, and why an open skill does not make Harvey or Legora obsolete.
+      </p>
+    </div>
+    <div class="crossPromoActions">
+      <div class="actions" style="margin-top: 0;">
+        <a class="primary" href="case-study-anthropic-legal-skills.html">Read the case study</a>
+      </div>
+      <p class="crossPromoAside">About 25 minutes &middot; no coding background assumed.</p>
+    </div>
+    <div class="audioEmbed">
+      <p class="eyebrow">Or listen &middot; audio explainer</p>
+      <div class="audioEmbedFrame">
+        <iframe src="https://drive.google.com/file/d/1bVBSuIJZZJazPqDrELZd8kU1olwzCA1_/preview" title="Audio explainer: reverse-engineering Anthropic&rsquo;s AI governance legal skills" allow="autoplay" loading="lazy"></iframe>
+      </div>
+      <p class="audioEmbedMeta">
+        <span>21 min 55 sec</span>
+        <span>The same ground as the written case study, spoken.</span>
+        <a href="https://drive.google.com/file/d/1bVBSuIJZZJazPqDrELZd8kU1olwzCA1_/view" target="_blank" rel="noopener noreferrer">Open in Google Drive<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== Skill sets ===================== -->
+  <!-- Bundles first: a reader who wants the whole writing set should not have to
+       press ten buttons to find that out. Each set ZIP is generated from
+       skills/bundles.json by scripts/build-skill-bundles.py. -->
+
+  <section id="sets" aria-labelledby="sets-h">
+    <p class="eyebrow">One download</p>
+    <h2 id="sets-h">Skill sets</h2>
+    <p class="muted" style="max-width: 78ch;">
+      Take a whole set at once. A set is a single ZIP holding the skill files it names: unzip the set, then
+      upload each skill ZIP <em>without</em> unzipping it. Every skill here works in both ChatGPT and
+      Claude, and every one can also be downloaded on its own below.
+    </p>
+    <div class="bundleGrid" style="margin-top: 1.3rem;">
+
+      <article class="card bundleCard featured">
+        <div class="bundleHead">
+          <span class="pill set"><span class="dot" aria-hidden="true"></span>10 skills</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>New</span>
+        </div>
+        <h3>SLS Writing Partner Set</h3>
+        <p class="desc">
+          Ten skills that review your writing without writing it for you: the SLS policy gate, the full
+          review workflow, and eight focused checks you can run on their own. Every one of them flags,
+          explains, and asks &mdash; none of them drafts, rewrites, or replaces your prose.
+        </p>
+        <ul class="bundleContents">
+          <li>AI Use Gate</li>
+          <li>Writing Review</li>
+          <li>Argument &amp; Structure</li>
+          <li>Flow &amp; Organization</li>
+          <li>Clarity &amp; Precision</li>
+          <li>Audience &amp; Reception</li>
+          <li>Counterargument</li>
+          <li>Claims &amp; Sources</li>
+          <li>Bluebook Audit</li>
+          <li>Genre Fit</li>
+        </ul>
+        <div class="bundleFoot">
+          <a class="downloadButton" href="assets/bundles/sls-writing-partner-set.zip" download="sls-writing-partner-set.zip" aria-label="Download the SLS Writing Partner Set, one ZIP file containing all 10 skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download the set
+          </a>
+          <button type="button" class="secondary bundleSeparate" hidden data-bundle-source="#writing">Download the {n} skills separately</button>
+          <a class="textLink" href="#writing">See the ten skills</a>
+          <a class="textLink" href="#writing-samples">Practice drafts</a>
+          <a class="textLink" href="writing-partner-agent.html">Build a ChatGPT agent</a>
+        </div>
+      </article>
+
+      <article class="card bundleCard">
+        <div class="bundleHead">
+          <span class="pill set"><span class="dot" aria-hidden="true"></span>5 skills</span>
+        </div>
+        <h3>Core Pathway Set</h3>
+        <p class="desc">
+          The five foundational skills in order, from your first AI orientation to auditing AI output like a
+          lawyer.
+        </p>
+        <div class="bundleFoot">
+          <a class="downloadButton" href="assets/bundles/sls-core-pathway.zip" download="sls-core-pathway.zip" aria-label="Download the Core Pathway Set, one ZIP file containing all 5 skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download the set
+          </a>
+          <button type="button" class="secondary bundleSeparate" hidden data-bundle-source="#core">Download the {n} skills separately</button>
+          <a class="textLink" href="#core">See them</a>
+        </div>
+      </article>
+
+      <article class="card bundleCard">
+        <div class="bundleHead">
+          <span class="pill set"><span class="dot" aria-hidden="true"></span>6 skills</span>
+        </div>
+        <h3>Tool Studios Set</h3>
+        <p class="desc">
+          Every guided studio in one file &mdash; Harvey, Legora, LexText, CICERO, Gemini Notebook, and the
+          explorer for anything not on the list.
+        </p>
+        <div class="bundleFoot">
+          <a class="downloadButton" href="assets/bundles/sls-tool-studios.zip" download="sls-tool-studios.zip" aria-label="Download the Tool Studios Set, one ZIP file containing all 6 skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download the set
+          </a>
+          <button type="button" class="secondary bundleSeparate" hidden data-bundle-source="#studios">Download the {n} skills separately</button>
+          <a class="textLink" href="#studios">See them</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== Core pathway ===================== -->
+
+  <section id="core" aria-labelledby="core-h">
+    <p class="eyebrow">Start here &middot; in order</p>
+    <h2 id="core-h">Core pathway</h2>
+    <p class="muted">
+      Five foundational skills, from your first AI orientation to auditing AI output like a lawyer.
+    </p>
+    <div class="skillGrid" style="margin-top: 1.3rem;">
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">01</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Core</span>
+        </div>
+        <h3>SLS AI Orientation</h3>
+        <p class="desc">
+          Start here: how AI actually works, the SLS student AI policy, the PAUSE Rule, and your first
+          learning-and-disclosure record.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-ai-orientation/skill.zip" download="sls-ai-orientation.zip" aria-label="Download the SLS AI Orientation skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">02</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Core</span>
+        </div>
+        <h3>SLS AI Task-Fit Coach</h3>
+        <p class="desc">
+          Decide whether AI is permitted, appropriate, and the right fit for a task &mdash; and get an AI
+          Learning Plan with a clear go / no-go.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-ai-task-fit-coach/skill.zip" download="sls-ai-task-fit-coach.zip" aria-label="Download the SLS AI Task-Fit Coach skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">03</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Core</span>
+        </div>
+        <h3>SLS Case Learning Coach</h3>
+        <p class="desc">
+          A Socratic partner for reading and briefing opinions. You attempt first; it questions, points to
+          the text, and never writes your brief.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-case-learning-coach/skill.zip" download="sls-case-learning-coach.zip" aria-label="Download the SLS Case Learning Coach skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">04</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Core</span>
+        </div>
+        <h3>SLS Legal Research Learning Coach</h3>
+        <p class="desc">
+          A traditional-research-first workflow: validate authorities in authoritative sources, then use
+          permitted AI to compare and stress-test.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-legal-research-learning-coach/skill.zip" download="sls-legal-research-learning-coach.zip" aria-label="Download the SLS Legal Research Learning Coach skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">05</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Core</span>
+        </div>
+        <h3>SLS AI Verification Lab</h3>
+        <p class="desc">
+          Audit AI output claim by claim &mdash; checking whether authorities exist, are current, and
+          actually support the point.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-ai-verification-lab/skill.zip" download="sls-ai-verification-lab.zip" aria-label="Download the SLS AI Verification Lab skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== Writing partner ===================== -->
+
+  <section id="writing" aria-labelledby="writing-h">
+    <p class="eyebrow">For a draft you have written</p>
+    <h2 id="writing-h">Writing partner</h2>
+    <p class="muted" style="max-width: 78ch;">
+      Ten skills for a draft you have already written. Each one reviews as a supervisor would: it identifies
+      the problem, explains why it matters, points to the exact place, and hands the revision back to you.
+      None of them drafts, rewrites, or supplies replacement prose. Start with the gate, then either run the
+      full review or pick the check you need.
+    </p>
+    <div class="actions">
+      <a class="secondary" href="#writing-samples">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 18px; height: 18px;"><path d="M12 4v14"/><path d="m6 13 6 6 6-6"/></svg>
+        No draft to try them on? Get a practice draft
+      </a>
+      <a class="textLink" href="writing-partner-agent.html">Load all ten into one ChatGPT agent &rarr;</a>
+    </div>
+    <div class="skillGrid" style="margin-top: 1.3rem;">
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Gate</span>
+        </div>
+        <h3>SLS AI Use Gate</h3>
+        <p class="desc">
+          Run this first. Works out whether AI review of this draft is authorised under your course policy or the SLS default &mdash; and flags confidentiality and professional-responsibility problems before anything reads the paper.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-ai-use-gate.zip" download="sls-ai-use-gate.zip" aria-label="Download the SLS AI Use Gate skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Full review</span>
+        </div>
+        <h3>SLS Writing Review</h3>
+        <p class="desc">
+          The whole workflow in one skill: the policy gate, then argument, organization, clarity, audience, counterarguments, sources, genre, and Bluebook &mdash; and a Word review copy you can work through.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-writing-review.zip" download="sls-writing-review.zip" aria-label="Download the SLS Writing Review skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Argument and Structure</h3>
+        <p class="desc">
+          Tests the thesis, rule synthesis, evidence chain, and conclusion for gaps, then asks the revision questions instead of answering them.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-argument-structure.zip" download="sls-argument-structure.zip" aria-label="Download the SLS Argument and Structure skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Flow and Organization</h3>
+        <p class="desc">
+          Whether the draft is ordered, signposted, and followable: sequencing, headings, transitions, repetition, and points buried where no reader will find them.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-flow-organization.zip" download="sls-flow-organization.zip" aria-label="Download the SLS Flow and Organization skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Clarity and Precision</h3>
+        <p class="desc">
+          Ambiguity, jargon, dense sentences, and inconsistent defined terms, flagged where they sit &mdash; with revision strategies you carry out yourself.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-clarity-precision.zip" download="sls-clarity-precision.zip" aria-label="Download the SLS Clarity and Precision skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Audience and Reception</h3>
+        <p class="desc">
+          How a professor, judge, supervising lawyer, client, editor, or employer is likely to receive the draft: tone, credibility, framing, and unstated assumptions.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-audience-reception.zip" download="sls-audience-reception.zip" aria-label="Download the SLS Audience and Reception skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Counterargument Stress Test</h3>
+        <p class="desc">
+          The strongest objections, missing adverse authority, and doctrinal soft spots &mdash; issue-spotting and questions only, never a rebuttal written for you.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-counterargument.zip" download="sls-counterargument.zip" aria-label="Download the SLS Counterargument Stress Test skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Claims and Source Traceability</h3>
+        <p class="desc">
+          Traces each claim to its source and separates &ldquo;this source exists&rdquo; from &ldquo;this source supports the point,&rdquo; ending in a claim-source matrix.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-claims-traceability.zip" download="sls-claims-traceability.zip" aria-label="Download the SLS Claims and Source Traceability skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Bluebook Audit</h3>
+        <p class="desc">
+          Bluebook 22nd-edition issue-spotting: short forms, pincites, signals, order, and typography. It names the likely defect and the rule; it does not write the citation.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-bluebook-audit.zip" download="sls-bluebook-audit.zip" aria-label="Download the SLS Bluebook Audit skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Focused check</span>
+        </div>
+        <h3>SLS Genre Fit</h3>
+        <p class="desc">
+          Whether the draft behaves like the form it claims to be &mdash; memo, brief, seminar paper, policy paper, client letter, statement &mdash; on purpose, stance, sections, and conventions.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-genre-fit.zip" download="sls-genre-fit.zip" aria-label="Download the SLS Genre Fit skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== Practice drafts ===================== -->
+  <!-- Deliberately a sibling of #writing rather than part of it: the set card's
+       "download the 10 skills separately" button collects the download links in
+       the section it names, and these are documents, not skills. -->
+
+  <section id="writing-samples" aria-labelledby="samples-h">
+    <p class="eyebrow">Something to practise on</p>
+    <h2 id="samples-h">Practice drafts</h2>
+    <p class="muted" style="max-width: 78ch;">
+      Five fictional student drafts, so you can watch a review skill work before you hand it your own
+      writing. Each one has real problems in it &mdash; that is the point. Download a draft, install a
+      skill, upload the file, and ask for the review.
+    </p>
+
+    <div class="caution" style="margin-top: 1.2rem; max-width: 78ch;">
+      <p><strong>Everything in these files is invented.</strong> The parties, the facts, the drafting, and
+      the student authors are fictional, and the documents were written as teaching samples. Do not rely on
+      any authority cited in them, and do not treat any of them as a model answer.</p>
+    </div>
+
+    <div class="grid" style="margin-top: 1.4rem;">
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Case brief</span>
+          <span class="skillPlatform">Word &middot; About 400 words</span>
+        </div>
+        <h3>Daniels v. Metro Transit Authority</h3>
+        <p class="desc">
+          A one-page brief of a negligence appeal: facts, procedural history, issue, rule, holding, reasoning, takeaway. The rule statement claims more than the case decides.
+        </p>
+        <p class="sampleTry"><b>Try it with</b>Genre Fit &middot; Argument and Structure &middot; Clarity and Precision</p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="assets/writing-samples/fictional-1l-case-brief.docx" download="fictional-1l-case-brief.docx" aria-label="Download the fictional sample: Daniels v. Metro Transit Authority, Word document">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Memo</span>
+          <span class="skillPlatform">Word &middot; About 700 words</span>
+        </div>
+        <h3>Patel v. Green &mdash; false imprisonment</h3>
+        <p class="desc">
+          A short first-year memo with three headed elements and two authorities. The register slips towards the conversational, and the brief answer is more confident than the analysis under it.
+        </p>
+        <p class="sampleTry"><b>Try it with</b>Clarity and Precision &middot; Audience and Reception &middot; Bluebook Audit</p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="assets/writing-samples/fictional-1l-memo-false-imprisonment.docx" download="fictional-1l-memo-false-imprisonment.docx" aria-label="Download the fictional sample: Patel v. Green - false imprisonment, Word document">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Memo</span>
+          <span class="skillPlatform">Word &middot; About 1,000 words</span>
+        </div>
+        <h3>Lee v. Northstar Fitness &mdash; emotional distress</h3>
+        <p class="desc">
+          A longer memo working through the bystander elements one at a time, conceding the easy one and spending its argument on the contested one.
+        </p>
+        <p class="sampleTry"><b>Try it with</b>Argument and Structure &middot; Counterargument &middot; Flow and Organization</p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="assets/writing-samples/fictional-1l-memo-emotional-distress.docx" download="fictional-1l-memo-emotional-distress.docx" aria-label="Download the fictional sample: Lee v. Northstar Fitness - emotional distress, Word document">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Memo</span>
+          <span class="skillPlatform">Word &middot; About 1,200 words</span>
+        </div>
+        <h3>Morgan v. Castillo &mdash; private facts</h3>
+        <p class="desc">
+          The most developed of the drafts, and the most heavily cited: six authorities, a quoted email, and a conclusion that has to weigh them.
+        </p>
+        <p class="sampleTry"><b>Try it with</b>Claims and Source Traceability &middot; Bluebook Audit &middot; Counterargument</p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="assets/writing-samples/fictional-1l-memo-public-disclosure.docx" download="fictional-1l-memo-public-disclosure.docx" aria-label="Download the fictional sample: Morgan v. Castillo - private facts, Word document">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Exam</span>
+          <span class="skillPlatform">Word &middot; About 500 words</span>
+        </div>
+        <h3>Torts exam answer &mdash; the wet floor</h3>
+        <p class="desc">
+          A timed answer on negligence and a rescuer, written under exam conditions: elements marched through in order, no citations, conclusions ahead of the analysis.
+        </p>
+        <p class="sampleTry"><b>Try it with</b>Argument and Structure &middot; Flow and Organization &middot; Audience and Reception</p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="assets/writing-samples/fictional-torts-exam-answer.docx" download="fictional-torts-exam-answer.docx" aria-label="Download the fictional sample: Torts exam answer - the wet floor, Word document">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="card crossPromo" aria-labelledby="packet-h">
+    <div class="crossPromoText">
+      <p class="eyebrow">For a class, a study group, or yourself</p>
+      <h2 id="packet-h">Teach this: the Writing Partner packet</h2>
+      <p class="muted">
+        A session built from what is on this page: set-up in ChatGPT and Claude, five activities to choose
+        from, discussion topics with what to listen for, an explainer note on every skill, and a glossary of
+        the jargon. Faculty can run it as it stands; on your own it is a structured way through the whole
+        set.
+      </p>
+    </div>
+    <div class="crossPromoActions">
+      <div class="actions" style="margin-top: 0;">
+        <a class="primary" href="teach-this-writing-partner.html">Open the packet</a>
+      </div>
+      <p class="crossPromoAside">60 or 90 minutes &middot; or at your own pace.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Tool studios ===================== -->
+
+  <section id="studios" aria-labelledby="studios-h">
+    <p class="eyebrow">Explore when ready</p>
+    <h2 id="studios-h">Tool studios</h2>
+    <p class="muted">
+      Guided, Stanford-specific introductions to the AI tools available through the Robert Crown Law
+      Library and Stanford.
+    </p>
+    <div class="skillGrid" style="margin-top: 1.3rem;">
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">06</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Studio</span>
+        </div>
+        <h3>SLS Harvey Learning Studio</h3>
+        <p class="desc">
+          A problem-first, SLS-specific introduction to Harvey AI, with bounded practice and source
+          verification.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-harvey-learning-studio/skill.zip" download="sls-harvey-learning-studio.zip" aria-label="Download the SLS Harvey Learning Studio skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">07</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Studio</span>
+        </div>
+        <h3>SLS Legora Learning Studio</h3>
+        <p class="desc">
+          Map your workflow, see where Legora helps, and practise on safe documents while verifying every
+          source.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-legora-learning-studio/skill.zip" download="sls-legora-learning-studio.zip" aria-label="Download the SLS Legora Learning Studio skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">08</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Studio</span>
+        </div>
+        <h3>SLS LexText Learning Studio</h3>
+        <p class="desc">
+          Decide whether LexText fits a task, then learn a current feature through focused, safe practice.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-lextext-learning-studio/skill.zip" download="sls-lextext-learning-studio.zip" aria-label="Download the SLS LexText Learning Studio skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">09</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Studio</span>
+        </div>
+        <h3>SLS CICERO Oral Argument Studio</h3>
+        <p class="desc">
+          Prep an argument map and goals, run the simulation in CICERO, and debrief into a focused
+          improvement plan.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-cicero-oral-argument-studio/skill.zip" download="sls-cicero-oral-argument-studio.zip" aria-label="Download the SLS CICERO Oral Argument Studio skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">10</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Studio</span>
+        </div>
+        <h3>SLS Gemini Notebook Learning Studio</h3>
+        <p class="desc">
+          Source-grounded study with a curated set of readings &mdash; inspect every cited passage instead of
+          trusting it. Formerly NotebookLM.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-notebooklm-learning-studio/skill.zip" download="sls-gemini-notebook-learning-studio.zip" aria-label="Download the SLS Gemini Notebook Learning Studio skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">11</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Studio</span>
+        </div>
+        <h3>SLS AI Tool Explorer</h3>
+        <p class="desc">
+          Bring any AI tool or feature and get a current, guided tutorial that starts from your problem.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/sls-ai-orientation/sls-ai-tool-explorer/skill.zip" download="sls-ai-tool-explorer.zip" aria-label="Download the SLS AI Tool Explorer skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section aria-labelledby="principles-h">
+    <p class="eyebrow">What every skill has in common</p>
+    <h2 id="principles-h">Shared principles</h2>
+    <p class="muted" style="max-width: 70ch;">
+      The skills take a problem-first approach and build in the PAUSE Rule, Stanford Law School student AI
+      guidance, Responsible AI at Stanford, productive struggle, legal-source verification, structured and
+      manageable data, transparent AI-use logs, and accurate, non-anthropomorphic explanations of how AI
+      systems work.
+    </p>
+  </section>
+
+  <p class="note">
+    <strong>Check your course policy first.</strong> Confirm your course&rsquo;s AI policy with the instructor,
+    and remember the Honor Code applies either way. Use Stanford&rsquo;s own accounts &mdash;
+    <a href="https://uit.stanford.edu/service/openai-chatgpt-edu" target="_blank" rel="noopener noreferrer">ChatGPT Edu<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+    and <a href="https://uit.stanford.edu/service/claude" target="_blank" rel="noopener noreferrer">Claude<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+    &mdash; rather than a personal one. Access to Law Library&ndash;provided AI tools is limited to current SLS
+    community members and uses Stanford sign-in. For access, tools, or research help, email
+    <a href="mailto:library@law.stanford.edu">library@law.stanford.edu</a>.
+  </p>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footerNav" aria-label="Site footer">
+      <div class="footerGroup">
+        <h2 class="footerHeading" id="footer-elsewhere">Elsewhere at Stanford</h2>
+        <ul aria-labelledby="footer-elsewhere">
+          <li><a href="https://law.stanford.edu/ai-initiative/" target="_blank" rel="noopener noreferrer">SLS AI Initiative<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/robert-crown-law-library/" target="_blank" rel="noopener noreferrer">Robert Crown Law Library<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer">Responsible AI at Stanford<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/" target="_blank" rel="noopener noreferrer">Use of Generative AI at SLS<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/hub.js"></script>
+<script src="assets/skill-bundles.js"></script>
+
+<!-- embed-map: generated by scripts/build-embed-map.py -->
+<script src="assets/embed-map.js"></script>
+<script src="assets/embed.js"></script>
+</body>
+</html>

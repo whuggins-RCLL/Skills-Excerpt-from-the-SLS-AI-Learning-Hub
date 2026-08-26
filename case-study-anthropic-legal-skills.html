@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Case study: reverse-engineering Anthropic&rsquo;s AI governance legal skills | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="An independent educational case study of Anthropic's open-source Claude for Legal project and its AI Governance Legal plugin: what a SKILL.md file actually is, why the workflow is split into small skills, what belongs in references, scripts, and assets, and why an open skill does not make Harvey or Legora obsolete." />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="siteHeader">
+  <a class="headerLogo" href="index.html" aria-label="AI Learning Hub home">
+    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  </a>
+  <div class="headerNavigation">
+    <div class="headerTools">
+      <a class="homeButton" href="index.html">Home</a>
+      <form class="siteSearch" action="search.html" method="get" role="search">
+        <label class="srOnly" for="site-search">Search the AI Learning Hub</label>
+        <input id="site-search" name="q" type="search" placeholder="Search" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
+      <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
+    <a href="ai-upload.html">The AI Upload</a>
+    <a href="tutorials.html">Tutorials</a>
+    <a href="ai-resources.html">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="skills.html">Skills</a>
+    <a href="faculty.html">Faulty Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="docPage">
+
+  <p class="crumb"><a href="index.html">AI Learning Hub</a> &rsaquo; <a href="skills.html">AI Skills</a> &rsaquo; Case study</p>
+
+  <p class="eyebrow">Case study &middot; How skills are built</p>
+  <h1>Reverse-engineering Anthropic&rsquo;s AI governance legal skills</h1>
+  <p class="lede">
+    What Anthropic&rsquo;s open legal skills teach us about building AI workflows &mdash; and why this does
+    not make Harvey or Legora obsolete.
+  </p>
+
+  <div class="actions">
+    <a class="primary" href="#part-1">Start reading</a>
+    <a class="secondary" href="https://github.com/anthropics/claude-for-legal" target="_blank" rel="noopener noreferrer">The repository on GitHub<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+    <a class="textLink" href="skills.html">Back to the AI skills &rarr;</a>
+  </div>
+
+  <dl class="docMeta">
+    <div>
+      <dt>Subject</dt>
+      <dd>Anthropic&rsquo;s <a href="https://github.com/anthropics/claude-for-legal" target="_blank" rel="noopener noreferrer">Claude&nbsp;for&nbsp;Legal</a> project, and its <code>ai-governance-legal</code> plugin</dd>
+    </div>
+    <div>
+      <dt>Licence of the source</dt>
+      <dd>Apache License 2.0</dd>
+    </div>
+    <div>
+      <dt>Written for</dt>
+      <dd>Anyone building or evaluating an AI skill &mdash; no coding background assumed</dd>
+    </div>
+    <div>
+      <dt>Reading time</dt>
+      <dd>About 25 minutes</dd>
+    </div>
+  </dl>
+
+  <div class="caution" style="margin-top: 1.4rem;">
+    <p><strong>An independent case study.</strong> This is an educational case study of an open-source
+    project. It is not affiliated with, sponsored by, or endorsed by Anthropic, Harvey, or Legora. It
+    simplifies and adapts concepts for teaching: the code samples below are teaching illustrations, not
+    verbatim reproductions of Anthropic&rsquo;s files. Read the repository itself for the real thing.</p>
+  </div>
+
+  <p style="margin-top: 1.4rem;">
+    The objective is not to reproduce Anthropic&rsquo;s work line by line. Instead, we are going to take it
+    apart like engineers examining a machine:
+  </p>
+
+  <div class="pullQuote">
+    <p>What is a skill? What does the <code>.md</code> file actually do? Why was the workflow divided this
+    way? What belongs in the skill and what belongs elsewhere? And how is this different from buying a
+    legal AI platform such as Harvey or Legora?</p>
+  </div>
+
+  <section class="audioEmbed" aria-labelledby="audio-h" style="margin-top: 1.8rem;">
+    <p class="eyebrow" id="audio-h">Or listen &middot; audio explainer</p>
+    <p class="muted" style="max-width: 70ch; margin-bottom: 0;">
+      A spoken walkthrough of the same ground, if you would rather hear it than read it. The written
+      version below is the fuller one &mdash; it carries the diagrams, the file listings, and the
+      checklist.
+    </p>
+    <div class="audioEmbedFrame">
+      <iframe src="https://drive.google.com/file/d/1bVBSuIJZZJazPqDrELZd8kU1olwzCA1_/preview" title="Audio explainer: reverse-engineering Anthropic&rsquo;s AI governance legal skills" allow="autoplay" loading="lazy"></iframe>
+    </div>
+    <p class="audioEmbedMeta">
+      <span>21 min 55 sec</span>
+      <a href="https://drive.google.com/file/d/1bVBSuIJZZJazPqDrELZd8kU1olwzCA1_/view" target="_blank" rel="noopener noreferrer">Open in Google Drive<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+    </p>
+  </section>
+
+  <nav class="docToc" aria-labelledby="toc-h">
+    <p class="eyebrow" id="toc-h">Contents</p>
+    <ol>
+      <li><a href="#part-1">Skill or platform?</a><span class="docTocNote">sections 1&ndash;4</span></li>
+      <li><a href="#part-2">What a <code>SKILL.md</code> file actually is</a><span class="docTocNote">sections 5&ndash;14</span></li>
+      <li><a href="#part-3">Design lessons from the plugin</a><span class="docTocNote">sections 15&ndash;23</span></li>
+      <li><a href="#part-4">Back to the market, and a checklist</a><span class="docTocNote">sections 24&ndash;28</span></li>
+    </ol>
+  </nav>
+
+  <!-- ===================== Part 1 ===================== -->
+
+  <div class="docPart" id="part-1">
+    <p class="eyebrow">Part one</p>
+    <h2>Skill or platform?</h2>
+    <p class="muted" style="max-width: 70ch;">
+      The question every lawyer asks first, and why the answer is not a winner-takes-all one.
+    </p>
+  </div>
+
+  <section class="module" id="s1" aria-labelledby="s1-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">1</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section one</p>
+        <h2 id="s1-h">Start with the question everyone asks</h2>
+      </div>
+    </div>
+
+    <p>When lawyers see something like Anthropic&rsquo;s Claude for Legal project, an understandable reaction
+    is:</p>
+
+    <div class="pullQuote">
+      <p>&ldquo;If Claude can do legal work and Anthropic is giving away legal skills, why aren&rsquo;t
+      Harvey, Legora, and similar legal AI companies suddenly out of business?&rdquo;</p>
+    </div>
+
+    <p>The short answer: <strong>because a skill is not the same thing as a complete legal AI
+    platform.</strong> And even Claude itself is not merely a model any more. The boundaries are
+    converging. That is what makes this interesting.</p>
+
+    <p>Anthropic describes legal AI as an ecosystem that can include connectors to firm data, reusable
+    skills, subagents, plugins, APIs, and enterprise controls. In Anthropic&rsquo;s own explanation,
+    connectors provide access to data, skills teach Claude how to perform repeatable legal tasks, and
+    plugins bundle capabilities for particular practice areas.</p>
+
+    <p>Harvey and Legora are approaching much of the same problem from another direction: they provide
+    legal-specific environments that package many of these capabilities into a finished product. Harvey
+    currently combines purpose-built agents, legal research, document storage and bulk analysis through
+    Vault, collaboration, institutional knowledge, workflow orchestration, integrations, analytics, and
+    enterprise controls. Legora similarly combines agentic execution with workflows, drafting, review,
+    legal research, database search, firm knowledge, permissions, and legal-specific tools.</p>
+
+    <p>So this is <em>not</em> Claude Legal versus Harvey and Legora, winner takes all. A better picture is
+    a stack, and companies can participate at several layers at once &mdash; which, increasingly, they
+    do.</p>
+
+    <figure class="layerStack" role="group" aria-label="The legal AI stack, from the lawyer's experience at the top to foundation models at the bottom">
+      <div class="layerRow top">
+        <span class="layerName">Legal work experience</span>
+        <span class="layerGloss">matters &middot; collaboration &middot; Word &middot; review</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName">Legal applications</span>
+        <span class="layerGloss">research &middot; vaults &middot; diligence &middot; contracts</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName">Workflows, agents, and skills</span>
+        <span class="layerGloss">&ldquo;how should this legal task be done?&rdquo;</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName">Firm knowledge and external data</span>
+        <span class="layerGloss">precedents &middot; matters &middot; research sources</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName">Connectors, permissions, governance</span>
+        <span class="layerGloss">who may reach what, and on whose authority</span>
+      </div>
+      <div class="layerRow base">
+        <span class="layerName">Foundation models</span>
+        <span class="layerGloss">Claude &middot; GPT &middot; other models</span>
+      </div>
+    </figure>
+  </section>
+
+  <section class="module" id="s2" aria-labelledby="s2-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">2</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section two</p>
+        <h2 id="s2-h">So why aren&rsquo;t Harvey and Legora &ldquo;out of business&rdquo;?</h2>
+      </div>
+    </div>
+
+    <p>Because <strong>having an intelligent model plus a workflow definition is not the entire product
+    problem.</strong></p>
+
+    <p>Consider what Harvey currently provides. Its platform includes agents, research, Vault, knowledge
+    resources, Shared Spaces, workflows, contract intelligence, integrations, administrative capabilities,
+    and enterprise security features. Harvey&rsquo;s Vault can organise and analyse large document
+    collections and connect with document-management systems while maintaining permissions and governance
+    controls. Legora&rsquo;s Workflows similarly lets lawyers orchestrate legal tasks using drafting,
+    tabular review, legal research, database search, institutional standards, reference materials, and
+    access controls.</p>
+
+    <p>That productisation matters. Imagine that a law firm wants an AI system for due diligence. The AI
+    reasoning might be only one portion of the problem. You also need to answer:</p>
+
+    <ul class="splitList">
+      <li>Where are the 15,000 documents?</li>
+      <li>Who may access them?</li>
+      <li>What matter do they belong to?</li>
+      <li>Which precedents should be used?</li>
+      <li>What research sources are licensed?</li>
+      <li>Who can see the output?</li>
+      <li>Can the system analyse them in bulk?</li>
+      <li>How are citations checked?</li>
+      <li>Where does the final work product live?</li>
+      <li>Can lawyers collaborate on it?</li>
+      <li>Does it work inside Word?</li>
+      <li>Can administrators control access?</li>
+      <li>Can the firm audit usage?</li>
+      <li>How is the system rolled out to 3,000 lawyers?</li>
+      <li>Who supports it when something breaks?</li>
+    </ul>
+
+    <p>A <code>SKILL.md</code> file does not magically solve all of those problems.</p>
+  </section>
+
+  <section class="module" id="s3" aria-labelledby="s3-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">3</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section three</p>
+        <h2 id="s3-h">A useful mental model: capability versus product</h2>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <article class="card">
+        <p class="eyebrow">A skill</p>
+        <h3>gives the AI a playbook</h3>
+        <p class="muted">
+          &ldquo;When someone proposes a new AI use case, first determine what the system does. Check our
+          registry. Check prohibited uses. Determine the governance tier. Identify required reviews.
+          Produce the result in this format.&rdquo;
+        </p>
+        <p>That is enormously valuable. But it is primarily a <strong>behavioural specification</strong>.
+        It tells an AI system: here is how we want this particular job performed.</p>
+      </article>
+      <article class="card">
+        <p class="eyebrow">A platform</p>
+        <h3>packages the surrounding environment</h3>
+        <p class="muted">
+          Interfaces lawyers already understand, legal research sources, document repositories, matter
+          organisation, integrations, permissions, collaboration, institutional knowledge, workflow
+          builders, analytics, auditability, deployment support, security controls, vendor support, and
+          preconfigured legal experiences.
+        </p>
+        <p>Harvey&rsquo;s current platform demonstrates this broader product approach, and Legora likewise
+        describes its platform as connecting legal tools and workflows into a broader environment for legal
+        work.</p>
+      </article>
+    </div>
+
+    <div class="pullQuote">
+      <p><strong>Skill:</strong> here is how to perform this job.<br />
+      <strong>Platform:</strong> here is the environment in which thousands of people can actually perform
+      this work.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s4" aria-labelledby="s4-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">4</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section four</p>
+        <h2 id="s4-h">But the distinction is getting blurrier</h2>
+      </div>
+    </div>
+
+    <p>This is important. It would be misleading to teach that &ldquo;Claude is just the model and Harvey
+    is the application.&rdquo; That description is becoming outdated.</p>
+
+    <p>Anthropic now describes a legal ecosystem involving connectors, skills, plugins, subagents, APIs,
+    enterprise controls, and workplace integrations &mdash; not merely access to a foundation model. At the
+    same time, Harvey and Legora increasingly expose configurable agents and workflows rather than only
+    fixed software features. Harvey now describes purpose-built agents that can execute legal work, while
+    Legora explicitly offers both agentic Workflows and reusable Skills within its environment.</p>
+
+    <figure class="spectrumFig" role="group" aria-label="A spectrum from more packaged to more configurable">
+      <div class="spectrumBar" aria-hidden="true"></div>
+      <div class="spectrumEnds"><span>More packaged</span><span>More configurable</span></div>
+      <ul class="spectrumMarks">
+        <li>Harvey and Legora workflows</li>
+        <li>Claude plus skills and plugins</li>
+      </ul>
+    </figure>
+
+    <p>Except even that is oversimplified. Each company is moving in both directions. The more useful
+    competitive question is becoming:</p>
+
+    <div class="pullQuote">
+      <p>Who provides the best combination of intelligence, workflow design, legal data, institutional
+      knowledge, integration, user experience, governance, reliability, and deployment?</p>
+    </div>
+
+    <p>That is a much more interesting question than simply asking whose underlying model is smartest.</p>
+  </section>
+
+  <!-- ===================== Part 2 ===================== -->
+
+  <div class="docPart" id="part-2">
+    <p class="eyebrow">Part two</p>
+    <h2>What a <code>SKILL.md</code> file actually is</h2>
+    <p class="muted" style="max-width: 70ch;">
+      Open the machine. A skill file has exactly two parts, and neither of them is code.
+    </p>
+  </div>
+
+  <section class="module" id="s5" aria-labelledby="s5-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">5</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section five</p>
+        <h2 id="s5-h">Now examine Anthropic&rsquo;s AI governance legal plugin</h2>
+      </div>
+    </div>
+
+    <p>The repository itself provides an important clue about how Anthropic thinks about the architecture.
+    Its repository guidance describes the project as primarily involving prompt content &mdash; skills,
+    agents, hooks, plugin metadata, and configuration &mdash; rather than conventional application code.</p>
+
+    <p>The repository layout identifies individual skill entrypoints at a predictable path, alongside
+    plugin configuration, connectors, agents, and other components:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">the shape of a plugin</span></div>
+      <pre><code>ai-governance-legal/
+  .claude-plugin/        <span class="tok-com"># plugin metadata</span>
+  CLAUDE.md              <span class="tok-com"># the practice profile the skills read</span>
+  references/            <span class="tok-com"># knowledge the skills consult</span>
+  skills/
+    <span class="tok-key">&lt;name&gt;</span>/SKILL.md     <span class="tok-com"># one skill, one job</span></code></pre>
+    </div>
+
+    <p>And AI Governance Legal is not one enormous skill. It contains separate jobs, each with its own
+    folder and its own <code>SKILL.md</code>:</p>
+
+    <ul class="jobList">
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/cold-start-interview" target="_blank" rel="noopener noreferrer">cold-start-interview</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/customize" target="_blank" rel="noopener noreferrer">customize</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/ai-inventory" target="_blank" rel="noopener noreferrer">ai-inventory</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/use-case-triage" target="_blank" rel="noopener noreferrer">use-case-triage</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/aia-generation" target="_blank" rel="noopener noreferrer">aia-generation</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/vendor-ai-review" target="_blank" rel="noopener noreferrer">vendor-ai-review</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/reg-gap-analysis" target="_blank" rel="noopener noreferrer">reg-gap-analysis</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/policy-monitor" target="_blank" rel="noopener noreferrer">policy-monitor</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/policy-starter" target="_blank" rel="noopener noreferrer">policy-starter</a></li>
+      <li><a href="https://github.com/anthropics/claude-for-legal/tree/main/ai-governance-legal/skills/matter-workspace" target="_blank" rel="noopener noreferrer">matter-workspace</a></li>
+    </ul>
+
+    <div class="quietCallout">
+      <p><strong>A terminology note.</strong> <em>AIA</em> means AI impact assessment, so
+      <code>aia-generation</code> means, essentially, &ldquo;generate an AI impact assessment.&rdquo; That
+      unusual-looking name is intentional, not a typo: it is the actual skill and directory name in the
+      repository.</p>
+    </div>
+
+    <p>The <code>use-case-triage</code> skill handles one job: triaging a proposed AI use and determining
+    the governance path. The <code>aia-generation</code> skill owns another job: conducting a more
+    structured AI impact assessment, including intake, risk analysis, regulatory classification, policy
+    comparison, and recommendations.</p>
+
+    <p>That separation is intentional. And it teaches us our first major skill-design lesson:</p>
+
+    <div class="pullQuote">
+      <p>A sophisticated AI system is often better designed as several small skills than as one enormous
+      prompt.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s6" aria-labelledby="s6-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">6</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section six</p>
+        <h2 id="s6-h">What exactly is a <code>SKILL.md</code> file?</h2>
+      </div>
+    </div>
+
+    <p>Let&rsquo;s demystify the filename. <code>.md</code> simply means <strong>Markdown</strong>, a way of
+    writing formatted documents using ordinary text:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">markdown</span></div>
+      <pre><code><span class="tok-key"># Big heading</span>
+
+<span class="tok-key">## Smaller heading</span>
+
+- bullet
+- bullet
+
+**bold text**</code></pre>
+    </div>
+
+    <p>You do not need special software to understand a Markdown file. It opens in VS Code, Notepad,
+    TextEdit, GitHub, or almost any plain-text editor. There is no mysterious AI programming language
+    hidden inside it. Anthropic itself describes simple skills as Markdown-based workflows; more advanced
+    skills can also include executable scripts.</p>
+
+    <p>A simplified skill might look something like this:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">SKILL.md &mdash; teaching illustration</span></div>
+      <pre><code>---
+<span class="tok-key">name</span>: use-case-triage
+<span class="tok-key">description</span>: &gt;
+  Classify proposed AI use cases and identify
+  governance requirements and next steps.
+---
+
+# Purpose
+
+Determine the governance path for a proposed AI use.
+
+# Workflow
+
+1. Understand the proposed use.
+2. Check existing policy.
+3. Check prohibited uses.
+4. Determine the risk tier.
+5. Identify required reviews.
+6. Produce a structured result.
+
+# Output
+
+Include:
+- classification
+- rationale
+- required conditions
+- responsible owner
+- next action
+
+# Boundaries
+
+Do not treat the assessment as final organizational approval.</code></pre>
+      <p class="codeCaption">A teaching simplification, not a verbatim reproduction of Anthropic&rsquo;s
+      file &mdash; but it demonstrates the basic anatomy.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s7" aria-labelledby="s7-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">7</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section seven</p>
+        <h2 id="s7-h">Anatomy of the file</h2>
+      </div>
+    </div>
+
+    <p>A <code>SKILL.md</code> file contains two different kinds of information.</p>
+
+    <figure class="layerStack" role="group" aria-label="The two parts of a SKILL.md file">
+      <div class="layerRow top">
+        <span class="layerName">1. YAML frontmatter</span>
+        <span class="layerGloss">A small &ldquo;label card&rdquo; for the skill: what is this skill, and
+        when might the system need it?</span>
+      </div>
+      <div class="layerRow base">
+        <span class="layerName">2. Markdown body</span>
+        <span class="layerGloss">The instructions for doing the job: now that you have chosen this skill,
+        here is how to perform it.</span>
+      </div>
+    </figure>
+
+    <p>If those terms sound technical, don&rsquo;t worry. The easiest way to think about them is that
+    <strong>YAML tells the system what the skill is</strong>, and <strong>Markdown tells the system how the
+    skill works</strong>. Let&rsquo;s unpack that one piece at a time.</p>
+  </section>
+
+  <section class="module" id="s8" aria-labelledby="s8-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">8</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section eight</p>
+        <h2 id="s8-h">First: what is YAML?</h2>
+      </div>
+    </div>
+
+    <p><strong>YAML is a simple way of writing structured information in plain text.</strong> That sounds
+    much more technical than it really is. Imagine the label on a file folder: a name, and a purpose. YAML
+    lets us express that same kind of information in a predictable format that software can recognise:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">yaml</span></div>
+      <pre><code><span class="tok-key">name</span>: ai-project-triage
+<span class="tok-key">description</span>: Classify proposed AI projects and identify required governance steps.</code></pre>
+      <p class="codeCaption">The colon separates the name of the field from the information stored in
+      it &mdash; <code>label: value</code>.</p>
+    </div>
+
+    <p>For the simple YAML used in a skill, you do <em>not</em> need to learn a programming language.</p>
+  </section>
+
+  <section class="module" id="s9" aria-labelledby="s9-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">9</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section nine</p>
+        <h2 id="s9-h">So what is &ldquo;frontmatter&rdquo;?</h2>
+      </div>
+    </div>
+
+    <p><strong>Frontmatter is a small block of information placed at the very beginning of a
+    document.</strong> Think of it as the information printed on the outside of the folder before you open
+    it. In a skill, it might look like this:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">the frontmatter block</span></div>
+      <pre><code>---                          <span class="tok-com">&larr; start of frontmatter</span>
+<span class="tok-key">name</span>: ai-project-triage
+<span class="tok-key">description</span>: &gt;
+  Classify proposed organizational AI projects
+  and identify required governance steps. Use
+  when someone asks whether an AI use is permitted,
+  prohibited, or requires additional review.
+---                          <span class="tok-com">&larr; end of frontmatter</span></code></pre>
+    </div>
+
+    <p>After that comes the regular Markdown document containing the workflow.</p>
+  </section>
+
+  <section class="module" id="s10" aria-labelledby="s10-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">10</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section ten</p>
+        <h2 id="s10-h">And what does &ldquo;metadata&rdquo; mean?</h2>
+      </div>
+    </div>
+
+    <p>You may also hear the information in that top section described as <strong>metadata</strong>. That is
+    another technical-sounding word with a simple meaning: <strong>metadata is information about
+    something.</strong></p>
+
+    <p>A book contains the actual story. Information <em>about</em> the book is its title, author, and
+    publication year. A photograph has an image; information <em>about</em> the photograph might be the
+    date taken, the camera, the location, and the file size. Likewise, the YAML at the top of our skill
+    contains information about the skill. The actual instructions for performing the work come later.</p>
+  </section>
+
+  <section class="module" id="s11" aria-labelledby="s11-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">11</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section eleven</p>
+        <h2 id="s11-h">What does the <code>&gt;</code> mean?</h2>
+      </div>
+    </div>
+
+    <p>You may notice <code>description: &gt;</code> and wonder why that little <code>&gt;</code> is there.
+    It tells YAML that the description continues onto the indented lines below. So a description broken
+    across four lines is still one description &mdash; it is simply set out so that a human can read it more
+    comfortably.</p>
+
+    <p>You do not need to memorise YAML syntax to design a skill. The important point is understanding
+    <em>why this information exists</em>.</p>
+  </section>
+
+  <section class="module" id="s12" aria-labelledby="s12-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">12</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twelve</p>
+        <h2 id="s12-h">Why does that tiny description matter so much?</h2>
+      </div>
+    </div>
+
+    <p>Before the AI follows a skill&rsquo;s detailed instructions, the system first has to decide:
+    <strong>is this the right skill for this request?</strong> A skill&rsquo;s metadata &mdash; especially
+    its name and description &mdash; helps determine whether the skill should be selected. Once selected,
+    the detailed instructions in <code>SKILL.md</code> become available.</p>
+
+    <p>This is why a vague description creates problems. <code>description: Helps with AI governance.</code>
+    sounds reasonable to a human, but it gives the system very little help: almost anything could qualify as
+    &ldquo;AI governance.&rdquo; Compare:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">a description that can be matched</span></div>
+      <pre><code><span class="tok-key">description</span>: &gt;
+  Classify proposed organizational AI uses as
+  approved, conditional, prohibited, or requiring
+  further review. Use when a user asks whether
+  an AI system may be used, what approvals are
+  necessary, or what governance process applies.</code></pre>
+    </div>
+
+    <p>Now the system has recognisable signals:</p>
+
+    <ol class="flowChain">
+      <li>A user asks: &ldquo;Can we use this AI tool?&rdquo; &middot; &ldquo;Does this project need
+      approval?&rdquo; &middot; &ldquo;What review does this AI system need?&rdquo;</li>
+      <li>The description matches those words</li>
+      <li class="outcome">Consider the AI project triage skill</li>
+    </ol>
+
+    <div class="pullQuote">
+      <p>The YAML description is the sign on the specialist&rsquo;s door. It tells the system: this
+      specialist handles these kinds of problems.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s13" aria-labelledby="s13-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">13</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section thirteen</p>
+        <h2 id="s13-h">Think of the description as the receptionist</h2>
+      </div>
+    </div>
+
+    <p>Imagine an organisation with ten specialists. Someone walks through the door and says:
+    &ldquo;Marketing wants to upload customer interviews into an AI transcription service. Can we do
+    that?&rdquo;</p>
+
+    <p>Before anyone performs the work, somebody has to decide <em>where the question belongs</em>. AI
+    inventory? No. Policy drafting? No. Impact assessment? Maybe later. Vendor AI review? Possibly later.
+    Use-case triage? Yes. That routing decision happens before the detailed workflow begins.</p>
+
+    <div class="pullQuote">
+      <p>Descriptions are not merely marketing copy. They help route work to the correct skill.</p>
+    </div>
+
+    <p>Which gives us a useful distinction: the <strong>description</strong> answers &ldquo;what kinds of
+    problems belong here?&rdquo;, and the <strong>skill instructions</strong> answer &ldquo;now that the
+    problem is here, how should we solve it?&rdquo;</p>
+  </section>
+
+  <section class="module" id="s14" aria-labelledby="s14-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">14</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section fourteen</p>
+        <h2 id="s14-h">Part two of the file: the Markdown instructions</h2>
+      </div>
+    </div>
+
+    <p>Once the skill has been selected, the Markdown body tells the AI how to perform the job.</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">the body of a skill</span></div>
+      <pre><code><span class="tok-key"># Purpose</span>
+
+Provide fast, consistent governance triage.
+
+<span class="tok-key">## Step 1 — Understand the use case</span>
+
+Determine:
+- what the AI does
+- who is affected
+- what data is involved
+- whether human review exists
+
+<span class="tok-key">## Step 2 — Check policy</span>
+
+Read `references/governance-policy.md`.
+
+<span class="tok-key">## Step 3 — Check prohibitions</span>
+
+If a prohibited use applies, stop and explain why.
+
+<span class="tok-key">## Step 4 — Classify</span>
+
+Choose:
+- Approved
+- Conditional
+- Prohibited
+- Insufficient information
+
+<span class="tok-key">## Step 5 — Produce the output</span>
+
+Use the required output template.</code></pre>
+    </div>
+
+    <p>Now the file is behaving almost like a small program. Not computer code exactly &mdash; but it has an
+    input, a procedure, conditions, branches, and an output.</p>
+
+    <div class="pullQuote">
+      <p>A well-designed skill is a small program written partly in natural language.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Part 3 ===================== -->
+
+  <div class="docPart" id="part-3">
+    <p class="eyebrow">Part three</p>
+    <h2>Design lessons from the plugin</h2>
+    <p class="muted" style="max-width: 70ch;">
+      Where a job ends, what stays out of the file, and what changes from one organisation to the next.
+    </p>
+  </div>
+
+  <section class="module" id="s15" aria-labelledby="s15-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">15</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section fifteen</p>
+        <h2 id="s15-h">Forensics on Anthropic&rsquo;s triage skill</h2>
+      </div>
+    </div>
+
+    <p>The <code>use-case-triage</code> skill handles the kind of hallway question that organisations
+    constantly receive: <em>&ldquo;Can we just use AI for this?&rdquo;</em> Instead of answering that
+    question informally every time, the skill turns it into a repeatable governance workflow. Conceptually,
+    the process looks something like this:</p>
+
+    <ol class="flowChain">
+      <li>A request arrives</li>
+      <li>Understand the use case</li>
+      <li>Consult organisational context</li>
+      <li>Check the use-case registry</li>
+      <li>Check the red lines</li>
+      <li>Determine a classification
+        <ul class="flowBranch">
+          <li>approved</li>
+          <li>conditional</li>
+          <li>not approved</li>
+        </ul>
+      </li>
+      <li>Identify requirements</li>
+      <li class="outcome">Route the next action</li>
+    </ol>
+
+    <p>The skill does not try to own every possible step after triage. If deeper review is necessary,
+    another workflow can take over. That is excellent skill design, and it gives us another principle:</p>
+
+    <div class="pullQuote">
+      <p>A skill should know both what job it owns and where that job ends.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s16" aria-labelledby="s16-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">16</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section sixteen</p>
+        <h2 id="s16-h">Why not put everything into one <code>SKILL.md</code>?</h2>
+      </div>
+    </div>
+
+    <p>Because then you get the mega skill: AI governance and privacy and contract review and impact
+    assessments and vendor review and regulatory research and policy drafting and litigation and employment
+    and IP and research, all in one file.</p>
+
+    <p>At first this seems convenient &mdash; &ldquo;let&rsquo;s create one legal skill that knows
+    everything!&rdquo; But several problems appear at once. The instruction file becomes enormous. The AI
+    has more irrelevant instructions competing for attention. Routing becomes fuzzy. Testing becomes
+    difficult. Updates become risky. Responsibility between workflows becomes unclear.</p>
+
+    <p>Instead, a small router hands off to a triage skill, an assessment skill, a vendor skill, and a
+    policy skill &mdash; each with a recognisable job. That modularity is one of the strongest lessons from
+    this case.</p>
+  </section>
+
+  <section class="module" id="s17" aria-labelledby="s17-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">17</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section seventeen</p>
+        <h2 id="s17-h"><code>SKILL.md</code> should be a control plane, not a textbook</h2>
+      </div>
+    </div>
+
+    <p>A common beginner instinct is: &ldquo;I have a 70-page AI policy. I&rsquo;ll paste the entire thing
+    into <code>SKILL.md</code>.&rdquo; Don&rsquo;t.</p>
+
+    <p>The skill should contain the instructions necessary to run the workflow. Large bodies of information
+    that are needed only in particular situations can live in supporting resources:</p>
+
+    <div class="codeBlock">
+      <div class="codeHead"><span class="codeName">one skill folder</span></div>
+      <pre><code>ai-project-triage/
+│
+├── SKILL.md
+│
+├── references/
+│   ├── governance-policy.md
+│   ├── prohibited-uses.md
+│   └── escalation-rules.md
+│
+├── scripts/
+│   └── validate-output.py
+│
+└── assets/
+    └── assessment-template.docx</code></pre>
+    </div>
+
+    <p>The <code>SKILL.md</code> might simply say: <em>before classifying a use case, read
+    <code>references/prohibited-uses.md</code>; if the case requires escalation, consult
+    <code>references/escalation-rules.md</code>.</em></p>
+
+    <p>This progressive structure is intentional: metadata helps determine whether the skill applies,
+    <code>SKILL.md</code> provides the essential workflow, and supporting resources can be consulted when
+    they become relevant.</p>
+
+    <div class="pullQuote">
+      <p><code>SKILL.md</code> is the control panel, not the warehouse.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s18" aria-labelledby="s18-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">18</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section eighteen</p>
+        <h2 id="s18-h">Four different things beginners often mix together</h2>
+      </div>
+    </div>
+
+    <figure class="layerStack" role="group" aria-label="What belongs in each part of a skill folder">
+      <div class="layerRow top">
+        <span class="layerName"><code>SKILL.md</code> &mdash; procedure</span>
+        <span class="layerGloss"><em>How</em> to perform a job: check policy, identify risks, classify,
+        produce this output.</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName"><code>references/</code> &mdash; knowledge</span>
+        <span class="layerGloss">The <em>information</em> needed to perform the job: here is our actual
+        policy.</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName"><code>scripts/</code> &mdash; deterministic computation</span>
+        <span class="layerGloss"><em>Code</em> for operations that must be exact: validate these 5,000
+        records against the required schema.</span>
+      </div>
+      <div class="layerRow base">
+        <span class="layerName"><code>assets/</code> &mdash; reusable output material</span>
+        <span class="layerGloss"><em>Things</em> used in the final deliverable: use this Word template for
+        the report.</span>
+      </div>
+    </figure>
+
+    <p>Don&rsquo;t make <code>SKILL.md</code> carry all four jobs.</p>
+  </section>
+
+  <section class="module" id="s19" aria-labelledby="s19-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">19</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section nineteen</p>
+        <h2 id="s19-h">Another forensic clue: configuration is separated from workflow</h2>
+      </div>
+    </div>
+
+    <p>Anthropic&rsquo;s AI Governance Legal design also separates organisational configuration from the
+    generic workflow. This is particularly clear in the <code>aia-generation</code> skill &mdash; again,
+    <em>AIA</em> means AI impact assessment.</p>
+
+    <p>Anthropic describes this skill as conducting a structured AI impact assessment, including risk
+    analysis, regulatory classification, policy comparison, and recommendations. It also draws on an
+    organisation&rsquo;s configured &ldquo;house style&rdquo; rather than assuming every organisation
+    conducts an assessment identically.</p>
+
+    <div class="formulaFig">
+      <div class="formulaTerm"><b>Skill</b>I know how to conduct an AI impact assessment.</div>
+      <span class="formulaOp" aria-hidden="true">+</span>
+      <div class="formulaTerm"><b>Organisation profile</b>Here is how <em>our</em> organisation evaluates and documents risk.</div>
+      <span class="formulaOp" aria-hidden="true">+</span>
+      <div class="formulaTerm"><b>Current matter</b>Here is the AI system we are assessing.</div>
+      <span class="formulaOp" aria-hidden="true">=</span>
+      <div class="formulaTerm result"><b>Result</b>An organisation-specific AI impact assessment.</div>
+    </div>
+
+    <p>This is a reusable pattern worth stealing. The skill contains the <strong>method</strong>. The
+    organisation supplies the <strong>configuration</strong>. The current matter supplies the
+    <strong>facts</strong>.</p>
+  </section>
+
+  <section class="module" id="s20" aria-labelledby="s20-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">20</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty</p>
+        <h2 id="s20-h">Build an onboarding skill when configuration matters</h2>
+      </div>
+    </div>
+
+    <p>Anthropic includes a <code>cold-start-interview</code> capability for a reason. Before all of the
+    other workflows can consistently reflect an organisation, something has to establish the
+    organisation&rsquo;s working context: its risk posture, policies, jurisdictions, escalation contacts,
+    approved and prohibited uses, assessment format, vendor positions, and sign-off process.</p>
+
+    <p>Anthropic&rsquo;s quick-start materials describe these setup interviews as creating a practice
+    profile that other skills can then read:</p>
+
+    <ol class="flowChain">
+      <li>Setup interview</li>
+      <li>An organisational profile is written down</li>
+      <li class="outcome">Every other skill reads it
+        <ul class="flowBranch">
+          <li>triage</li>
+          <li>impact assessment</li>
+          <li>vendor review</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>That is much better than teaching every individual skill the organisation&rsquo;s entire history. And
+    it reveals another powerful design pattern:</p>
+
+    <div class="pullQuote">
+      <p>Sometimes the first skill you need is not a task skill. It is a configuration skill.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s21" aria-labelledby="s21-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">21</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-one</p>
+        <h2 id="s21-h">The three-layer rule for designing your own skill</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <h3>Layer 1 &mdash; Trigger</h3>
+        <p><strong>When should this skill run?</strong> Put that primarily in the description. A user says
+        &ldquo;Can we use AI to screen applicants?&rdquo; and the triage skill should be the one that
+        answers.</p>
+      </div>
+      <div class="step">
+        <h3>Layer 2 &mdash; Workflow</h3>
+        <p><strong>What sequence should the AI follow?</strong> Put that in <code>SKILL.md</code>:
+        understand the use, check policy, check red lines, classify, identify conditions, produce the
+        output.</p>
+      </div>
+      <div class="step">
+        <h3>Layer 3 &mdash; Resources</h3>
+        <p><strong>What does the AI need to consult or use?</strong> Put those in supporting files or
+        connected systems: policy, regulations, templates, schemas, scripts, examples.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 1.2rem;">Which gives us: trigger &rarr; skill &rarr; resources &rarr; output.</p>
+  </section>
+
+  <section class="module" id="s22" aria-labelledby="s22-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">22</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-two</p>
+        <h2 id="s22-h">A teaching template for a good skill</h2>
+      </div>
+    </div>
+
+    <p>Here is a simplified example you could use as a starting point.</p>
+
+    <div class="codeBlock">
+      <div class="codeHead">
+        <span class="codeName">ai-project-triage/SKILL.md</span>
+        <button class="copyBtn" type="button" data-copy-target="tmpl" hidden><span class="copyBtnLabel">Copy the template</span></button>
+      </div>
+      <pre id="tmpl"><code>---
+name: ai-project-triage
+description: &gt;
+  Classify proposed organizational AI projects
+  and identify required governance steps. Use
+  when a user asks whether an AI use is permitted,
+  what approvals are required, or whether an
+  additional privacy, security, legal, or impact
+  review is necessary.
+---
+
+# Objective
+
+Determine the appropriate governance path for
+a proposed AI use.
+
+# Required context
+
+Before classification, determine:
+
+- What will the AI do?
+- Who is affected?
+- What data will it process?
+- What happens because of its output?
+- Is there human review?
+- Which vendor or model is involved?
+
+# Workflow
+
+1. Understand the use case.
+2. Read `references/governance-policy.md`.
+3. Check prohibited uses first.
+4. Check previously approved use cases.
+5. Determine governance tier.
+6. Identify required reviews.
+7. Produce the required output.
+
+# Stop conditions
+
+If essential information is missing:
+- gather only the missing information.
+
+If a prohibited-use rule applies:
+- stop the ordinary workflow;
+- identify the controlling policy;
+- explain the escalation path.
+
+# Output
+
+## Use case
+
+[one-sentence summary]
+
+## Classification
+
+[Approved / Conditional / Prohibited /
+Insufficient Information]
+
+## Basis
+
+[short explanation]
+
+## Required actions
+
+| Action | Owner |
+|---|---|
+
+## Next step
+
+[recommended workflow]
+
+# Boundaries
+
+Do not represent the classification as final
+organizational approval when human sign-off is
+required.</code></pre>
+    </div>
+
+    <p>The interesting part isn&rsquo;t the prose. It&rsquo;s the architecture: trigger, context, procedure,
+    branching, stop condition, output contract, boundary. Those are the building blocks.</p>
+  </section>
+
+  <section class="module" id="s23" aria-labelledby="s23-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">23</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-three</p>
+        <h2 id="s23-h">Notice what we deliberately left out</h2>
+      </div>
+    </div>
+
+    <p>We did <em>not</em> put these into the skill: the complete EU AI Act, the entire company AI policy,
+    600 approved vendors, 50 historical impact assessments, the security architecture, all of privacy law,
+    or every output example.</p>
+
+    <p>Those things might still be useful. But they belong in the appropriate place &mdash; reference files,
+    connected data systems, research tools, databases, other skills, or external applications. Which leads
+    to one of the most useful rules in skill design:</p>
+
+    <div class="pullQuote">
+      <p>Put the procedure in the skill. Put the library in the library.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Part 4 ===================== -->
+
+  <div class="docPart" id="part-4">
+    <p class="eyebrow">Part four</p>
+    <h2>Back to the market, and a checklist</h2>
+    <p class="muted" style="max-width: 70ch;">
+      What an open skill proves, what it does not, and twelve questions to ask of any skill you meet.
+    </p>
+  </div>
+
+  <section class="module" id="s24" aria-labelledby="s24-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">24</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-four</p>
+        <h2 id="s24-h">And this brings us back to Harvey and Legora</h2>
+      </div>
+    </div>
+
+    <p>Now we can answer the original question more precisely. A sophisticated <code>SKILL.md</code> can
+    encode something valuable: <strong>institutional legal procedure</strong>. That is significant. It means
+    firms can increasingly express portions of their expertise as reusable AI workflows.</p>
+
+    <p>But legal AI platforms are selling considerably more than a prompt or a Markdown file. They are
+    packaging combinations of:</p>
+
+    <ul class="splitList">
+      <li>models</li>
+      <li>legal workflows</li>
+      <li>legal data</li>
+      <li>institutional knowledge</li>
+      <li>document infrastructure</li>
+      <li>matter context</li>
+      <li>research</li>
+      <li>collaboration</li>
+      <li>integrations</li>
+      <li>permissions</li>
+      <li>governance</li>
+      <li>administration</li>
+      <li>user experience</li>
+      <li>deployment</li>
+      <li>support</li>
+    </ul>
+
+    <p>Harvey&rsquo;s current offering demonstrates this kind of bundled approach, combining agents,
+    research, document infrastructure, knowledge resources, collaboration, workflows, integrations, and
+    enterprise controls. Legora similarly combines agents and workflows with research, drafting, review,
+    database search, institutional materials, permissions, and other legal tools. Meanwhile, Anthropic is
+    moving upward from the foundation-model layer through skills, plugins, connectors, subagents, workplace
+    integrations, APIs, and enterprise infrastructure.</p>
+
+    <p>So there is real competitive overlap. But:</p>
+
+    <div class="pullQuote">
+      <p>An open legal skill demonstrates that legal workflow knowledge can be encoded. It does not
+      demonstrate that every other layer of a legal technology platform has become unnecessary.</p>
+    </div>
+  </section>
+
+  <section class="module" id="s25" aria-labelledby="s25-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">25</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-five</p>
+        <h2 id="s25-h">In fact, skills may make legal platforms more interesting</h2>
+      </div>
+    </div>
+
+    <p>There is another possible outcome. Skills could increasingly become a kind of <strong>workflow
+    layer</strong> through which organisations express how they want AI-assisted work performed. Imagine a
+    firm develops its own <code>our-nda-playbook</code>, <code>our-due-diligence-method</code>,
+    <code>our-ai-governance-triage</code>, <code>our-privacy-review</code>, and
+    <code>our-client-alert-style</code>.</p>
+
+    <p>The strategically important asset may increasingly become <strong>the firm&rsquo;s encoded way of
+    working</strong> rather than simply the prompt box through which it accesses a model. Then the platform
+    question becomes: <em>where can our institutional workflows run best?</em> That might ultimately involve
+    Claude, ChatGPT, Harvey, Legora, an internal application, or some combination.</p>
+
+    <div class="note">
+      <p>This is an inference about where the architecture could lead, not a claim that today&rsquo;s
+      products already offer interchangeable or fully portable skills.</p>
+    </div>
+
+    <p>In fact, Legora now also uses the term <em>Skills</em> for reusable instructions that encode a
+    firm&rsquo;s processes and standards inside its own agent environment. That convergence makes the
+    underlying idea even more important. The terminology and file formats may differ; the architectural
+    question remains:</p>
+
+    <div class="pullQuote">
+      <p>How do we encode institutional expertise so that an AI can apply it consistently?</p>
+    </div>
+  </section>
+
+  <section class="module" id="s26" aria-labelledby="s26-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">26</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-six</p>
+        <h2 id="s26-h">The larger lesson for skill designers</h2>
+      </div>
+    </div>
+
+    <p>Anthropic&rsquo;s AI Governance Legal project is useful as a teaching example precisely because the
+    interesting part is <em>not the legal prose</em>. The interesting part is the decomposition.</p>
+
+    <figure class="layerStack" role="group" aria-label="From a domain, to jobs, to individual skills">
+      <div class="layerRow top">
+        <span class="layerName">Domain</span>
+        <span class="layerGloss">AI governance</span>
+      </div>
+      <div class="layerRow">
+        <span class="layerName">Jobs</span>
+        <span class="layerGloss">inventory &middot; triage &middot; assessment &middot; vendor review
+        &middot; policy analysis &middot; monitoring</span>
+      </div>
+      <div class="layerRow base">
+        <span class="layerName">Individual skills</span>
+        <span class="layerGloss">trigger &middot; workflow &middot; branches &middot; resources &middot;
+        outputs &middot; boundaries &middot; handoffs</span>
+      </div>
+    </figure>
+
+    <p>That is the transition from &ldquo;write a good prompt about AI governance&rdquo; to &ldquo;design a
+    reusable AI system for doing AI-governance work.&rdquo; And that is what skill design really is.</p>
+  </section>
+
+  <section class="module" id="s27" aria-labelledby="s27-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">27</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-seven</p>
+        <h2 id="s27-h">The forensic checklist</h2>
+      </div>
+    </div>
+
+    <p>When studying any skill &mdash; including the ones on this site &mdash; ask these questions.</p>
+
+    <dl class="distinctionList">
+      <div class="distinctionItem"><dt><span class="distinctionName">1. Trigger</span></dt><dd>What kinds of requests should activate it?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">2. Job</span></dt><dd>What single recognisable job does it own?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">3. Inputs</span></dt><dd>What information must exist before work begins?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">4. References</span></dt><dd>What knowledge should be consulted rather than baked into the skill?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">5. Workflow</span></dt><dd>What happens first, second, and third?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">6. Branches</span></dt><dd>Where can the workflow take different paths?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">7. Stop conditions</span></dt><dd>When should automatic processing stop?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">8. Output contract</span></dt><dd>What exactly should a successful result contain?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">9. Boundary</span></dt><dd>What is the skill specifically <em>not</em> authorised to do?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">10. Handoff</span></dt><dd>Which skill or human takes over next?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">11. Configuration</span></dt><dd>Which parts should change from organisation to organisation?</dd></div>
+      <div class="distinctionItem"><dt><span class="distinctionName">12. Platform dependencies</span></dt><dd>What requires tools, data, integrations, or infrastructure beyond the skill itself?</dd></div>
+    </dl>
+
+    <p>That last question is especially important. It prevents us from confusing <strong>a great
+    skill</strong> with <strong>a complete product</strong> &mdash; and that distinction explains a great
+    deal about the emerging legal AI market.</p>
+  </section>
+
+  <section class="module" id="s28" aria-labelledby="s28-h">
+    <div class="moduleHead">
+      <span class="moduleNum" aria-hidden="true">28</span>
+      <div class="moduleHeadText">
+        <p class="eyebrow">Section twenty-eight</p>
+        <h2 id="s28-h">The simplest way to remember all of this</h2>
+      </div>
+    </div>
+
+    <p>If the technical vocabulary starts to blur together, come back to this:</p>
+
+    <ol class="flowChain">
+      <li><strong>YAML</strong> &mdash; what is this?</li>
+      <li><strong>Description</strong> &mdash; when should I use it?</li>
+      <li><strong>The <code>SKILL.md</code> body</strong> &mdash; how do I do the job?</li>
+      <li><strong>References</strong> &mdash; what information do I need?</li>
+      <li><strong>Scripts</strong> &mdash; what should code do reliably?</li>
+      <li><strong>Assets</strong> &mdash; what materials do I use in the output?</li>
+      <li class="outcome"><strong>Platform</strong> &mdash; where does all of this operate at scale?</li>
+    </ol>
+
+    <div class="pullQuote">
+      <p>Find the right skill. Follow the right process. Consult the right information. Produce the right
+      result.</p>
+    </div>
+
+    <p>That is the core idea behind skill design.</p>
+  </section>
+
+  <section class="card crossPromo" aria-labelledby="repo-h">
+    <div class="crossPromoText">
+      <p class="eyebrow">The source</p>
+      <h2 id="repo-h">Read the repository yourself</h2>
+      <p class="muted">
+        Everything above is a reading of a public, Apache-2.0 licensed project: Anthropic&rsquo;s Claude for
+        Legal, and the <code>ai-governance-legal</code> plugin inside it. Every skill discussed here is a
+        plain Markdown file you can open in a browser. Go and look at one.
+      </p>
+    </div>
+    <div class="crossPromoActions">
+      <div class="actions" style="margin-top: 0;">
+        <a class="primary" href="https://github.com/anthropics/claude-for-legal" target="_blank" rel="noopener noreferrer">anthropics/claude-for-legal<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+      </div>
+      <p class="crossPromoAside">Independent case study. Not affiliated with or endorsed by Anthropic.</p>
+    </div>
+  </section>
+
+  <div class="docNav">
+    <a class="textLink" href="skills.html">&larr; The AI skills</a>
+    <a class="textLink" href="install.html">How to install a skill &rarr;</a>
+  </div>
+
+  <p class="muted" style="font-size: 0.88rem;">Robert Crown Law Library &middot; last reviewed August 2026.</p>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footerNav" aria-label="Site footer">
+      <div class="footerGroup">
+        <h2 class="footerHeading" id="footer-elsewhere">Elsewhere at Stanford</h2>
+        <ul aria-labelledby="footer-elsewhere">
+          <li><a href="https://law.stanford.edu/ai-initiative/" target="_blank" rel="noopener noreferrer">SLS AI Initiative<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/robert-crown-law-library/" target="_blank" rel="noopener noreferrer">Robert Crown Law Library<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer">Responsible AI at Stanford<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+          <li><a href="https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/" target="_blank" rel="noopener noreferrer">Use of Generative AI at SLS<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/hub.js"></script>
+<script src="assets/copy-code.js"></script>
+
+<!-- embed-map: generated by scripts/build-embed-map.py -->
+<script src="assets/embed-map.js"></script>
+<script src="assets/embed.js"></script>
+</body>
+</html>
