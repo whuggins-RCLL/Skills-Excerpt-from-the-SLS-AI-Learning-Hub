@@ -6,6 +6,10 @@ their own hand-typed copy of the navigation without drifting, so the copy lives
 here and this replaces the block in place. It is idempotent: the committed files
 stay plain HTML with no build step, and a future edit is an ordinary HTML edit.
 Run it again after changing the nav.
+
+The excerpt is deliberately a closed set of pages. It says what it is an excerpt
+of, but it does not link to the hub it came from and does not send readers there,
+so nothing here — banner, footer, or body copy — carries that address.
 """
 
 import re
@@ -14,10 +18,6 @@ import sys
 
 # The repository root, relative to this file, so the script runs from anywhere.
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-
-# The full hub, of which this site shows one section. The banner and footer both
-# point back to it so a reader who arrives here can find everything that is not.
-FULL_HUB = "https://ailearninghub.law.stanford.edu"
 
 # Every destination in the excerpt: the skills themselves, how to install one,
 # and the three pages that build on them.
@@ -40,20 +40,9 @@ def ext_link(href, label, note=None):
     )
 
 
-# The footer keeps the outbound Stanford links and says once more, at the end of
-# every page, that this is a section lifted out of a larger site.
+# The footer carries outbound Stanford links only. It does not link back to the
+# hub: this excerpt is meant to stand on its own rather than route readers there.
 FOOTER_GROUPS = [
-    (
-        "excerpt",
-        "About this site",
-        [
-            ext_link(
-                FULL_HUB,
-                "The full AI Learning Hub",
-                "Tutorials, AI tools, events, and the rest of the hub.",
-            ),
-        ],
-    ),
     (
         "elsewhere",
         "Elsewhere at Stanford",
@@ -81,14 +70,6 @@ def header_html(current):
     <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
   </a>
   <div class="headerNavigation">
-    <div class="headerTools">
-      <a class="homeButton" href="index.html">Home</a>
-      <form class="siteSearch" action="search.html" method="get" role="search">
-        <label class="srOnly" for="site-search">Search this excerpt</label>
-        <input id="site-search" name="q" type="search" placeholder="Search" required />
-        <button type="submit">Search</button>
-      </form>
-    </div>
     <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
       <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
@@ -101,13 +82,13 @@ def header_html(current):
 
 # Stated on every page, immediately under the bar, so a reader who lands deep in
 # the site still knows this is one section of a larger hub rather than the hub.
+# It names the source and stops there — no address, and nothing to click through.
 def banner_html():
-    return f"""<aside class="excerptBanner" aria-label="About this site">
+    return """<aside class="excerptBanner" aria-label="About this site">
   <p>
-    <strong>Excerpt.</strong> This is the AI Skills section of the SLS AI Learning Hub,
-    and the agent material that goes with it. Everything else on the hub &mdash; tutorials,
-    AI tools, events &mdash; lives at
-    <a href="{FULL_HUB}" target="_blank" rel="noopener noreferrer">ailearninghub.law.stanford.edu{EXT}</a>.
+    <strong>Excerpt.</strong> These pages are the AI Skills section of the Robert Crown Law
+    Library&rsquo;s AI Learning Hub, and the agent material that goes with it. The rest of
+    the hub is not included here.
   </p>
 </aside>"""
 
