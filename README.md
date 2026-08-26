@@ -129,6 +129,31 @@ python3 scripts/inject-agent-instructions.py --check
 `check-links.py` also fails on a link to a page that is not part of this excerpt,
 which is what catches a stray route back to the hub.
 
+### No institutional specifics in the pages
+
+The pages are written to be read by someone outside SLS, because that is who this
+copy is shown to. Four kinds of thing were taken out and should not come back:
+
+- **Contact routing.** No `library@law.stanford.edu`, no "email the library and we
+  will help", no Slack channel. A reader of this excerpt is not routed to a help
+  desk that is not theirs.
+- **Access and provisioning.** No "limited to current SLS community members", no
+  "uses Stanford sign-in", no links to Stanford's ChatGPT Edu or Claude services.
+  Where the advice is genuinely useful — use the institutional account, not a
+  personal one — it is phrased for whatever institution the reader has.
+- **Local policy as the rule.** The Honor Code and "your course policy" as the
+  governing authority are now "your institution's AI policy" and "your
+  institution's academic-integrity rules".
+- **Anything that assumes a Stanford login exists.**
+
+What deliberately stays: the Robert Crown Law Library logo, the page titles, the
+copyright line, the `SLS` skill names, and the skill descriptions. Those name who
+made this; they do not assume anything about who is reading it.
+
+The skill ZIPs are **not** scrubbed. They are the artefact, they are written for
+SLS students, and they say so — `scripts/license-skills.py` only adds files, and
+nothing else here rewrites their contents.
+
 ### Styling
 
 `assets/styles.css` is the faculty site's `website/app/globals.css`, copied
@@ -240,8 +265,9 @@ minutes, self-paced); and a glossary. It is written to be usable by faculty runn
 it for a class and by a student working alone, which is why every activity states
 its own materials and time rather than depending on the one before it.
 
-It is also the page that names Stanford's own ChatGPT Edu and Claude services, so
-nobody sets this up on a personal account.
+It opens by telling a room to sign in through their institution rather than on a
+personal account, which is the one set-up step that reliably costs a session its
+first fifteen minutes.
 
 ### The Writing Partner agent
 
