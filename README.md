@@ -70,10 +70,10 @@ things went with them that are worth naming:
   rewriting would send every click off to the full hub instead of to the next page
   here — the opposite of what this copy is for. All of it is gone; links are
   ordinary relative links.
-- **Every route back to the hub.** The four in-content mentions of the PAUSE Rule
-  are plain text rather than links, the banner names the hub without addressing
-  it, and the footer carries outbound Stanford links only. Driving traffic to the
-  main site is the thing this excerpt exists to avoid, so a link there is a bug.
+- **Every route off the site.** The four in-content mentions of the PAUSE Rule are
+  plain text rather than links, the banner names the hub without addressing it,
+  and the footer of outbound Stanford links is gone entirely. Driving traffic
+  elsewhere is the thing this excerpt exists to avoid, so a link out is a bug.
   `scripts/check-links.py` fails if any relative reference or in-page anchor stops
   resolving.
 - **The site search.** `search.html` and its index answered from these pages only,
@@ -90,15 +90,19 @@ no search box and no Home button — the logo is the link home.
 
 Under the bar, on every page, sits the excerpt banner: one line saying these pages
 are the AI Skills section of the library's AI Learning Hub rather than the hub
-itself. It names the source and stops there. The footer carries outbound Stanford
-links only.
+itself. It names the source and stops there.
 
-The bar, the banner, and the footer are the same markup on every page, which no one
-should be retyping seven times. They are written by `scripts/nav.py`: it replaces
-the `.siteHeader`, `.excerptBanner`, and `.footer` blocks in each file in place and
-is idempotent. The committed pages stay plain HTML with no build step, so an
-ordinary edit is still an ordinary edit; re-run the script after changing a nav
-entry or the banner text.
+**There is no footer.** The pages carried one holding outbound Stanford links —
+the AI Initiative, the library, Responsible AI, the SLS AI policy — which made the
+last thing on every page an invitation to leave it. With those gone there was
+nothing left for a footer to hold, so the element is gone rather than left empty.
+
+The bar and the banner are the same markup on every page, which no one should be
+retyping six times. They are written by `scripts/nav.py`: it replaces the
+`.siteHeader` and `.excerptBanner` blocks in each file in place, strips any
+`.footer` block it finds, and is idempotent. The committed pages stay plain HTML
+with no build step, so an ordinary edit is still an ordinary edit; re-run the
+script after changing a nav entry or the banner text.
 
 ```
 python3 scripts/nav.py
@@ -128,7 +132,7 @@ plus a look at the additions, not a merge.
 
 Rules for pages that are not in this excerpt are left in place rather than pruned,
 so the file stays a clean copy of the design system plus additions. That includes
-`.siteSearch` and `.homeButton`, which nothing uses now.
+`.siteSearch`, `.homeButton`, and the `.footer` rules, which nothing uses now.
 
 `vercel.json` and `customHttp.yml` each carry one header: a `frame-ancestors`
 policy permitting the hub domain and Google Sites to frame the site. They are kept
