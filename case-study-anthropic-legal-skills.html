@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="dark light" />
-<title>Case study: reverse-engineering Anthropic&rsquo;s AI governance legal skills | AI Learning Hub | Stanford Law School</title>
-<meta name="description" content="An independent educational case study of Anthropic's open-source Claude for Legal project and its AI Governance Legal plugin: what a SKILL.md file actually is, why the workflow is split into small skills, what belongs in references, scripts, and assets, and why an open skill does not make Harvey or Legora obsolete." />
+<title>Case study: how a skill is written | AI Learning Hub | Stanford Law School</title>
+<meta name="description" content="An independent educational case study of Anthropic&#39;s open-source Claude for Legal project and its AI Governance Legal plugin: what a SKILL.md file actually is, how it is put together, why the workflow is split into small skills, and what belongs in references, scripts, and assets." />
 <link rel="stylesheet" href="assets/styles.css" />
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
 </head>
@@ -45,8 +45,8 @@
   <p class="eyebrow">Case study &middot; How skills are built</p>
   <h1>Reverse-engineering Anthropic&rsquo;s AI governance legal skills</h1>
   <p class="lede">
-    What Anthropic&rsquo;s open legal skills teach us about building AI workflows &mdash; and why this does
-    not make Harvey or Legora obsolete.
+    A forensic reading of one open-source skill: what the file is, how it is put together, and why the
+    work was divided the way it was.
   </p>
 
   <div class="actions">
@@ -70,15 +70,15 @@
     </div>
     <div>
       <dt>Reading time</dt>
-      <dd>About 25 minutes</dd>
+      <dd>About 20 minutes</dd>
     </div>
   </dl>
 
   <div class="caution" style="margin-top: 1.4rem;">
     <p><strong>An independent case study.</strong> This is an educational case study of an open-source
-    project. It is not affiliated with, sponsored by, or endorsed by Anthropic, Harvey, or Legora. It
-    simplifies and adapts concepts for teaching: the code samples below are teaching illustrations, not
-    verbatim reproductions of Anthropic&rsquo;s files. Read the repository itself for the real thing.</p>
+    project. It is not affiliated with, sponsored by, or endorsed by Anthropic. It simplifies and adapts
+    concepts for teaching: the code samples below are teaching illustrations, not verbatim reproductions
+    of Anthropic&rsquo;s files. Read the repository itself for the real thing.</p>
   </div>
 
   <p style="margin-top: 1.4rem;">
@@ -88,33 +88,15 @@
 
   <div class="pullQuote">
     <p>What is a skill? What does the <code>.md</code> file actually do? Why was the workflow divided this
-    way? What belongs in the skill and what belongs elsewhere? And how is this different from buying a
-    legal AI platform such as Harvey or Legora?</p>
+    way? What belongs in the skill, and what belongs elsewhere?</p>
   </div>
-
-  <section class="audioEmbed" aria-labelledby="audio-h" style="margin-top: 1.8rem;">
-    <p class="eyebrow" id="audio-h">Or listen &middot; audio explainer</p>
-    <p class="muted" style="max-width: 70ch; margin-bottom: 0;">
-      A spoken walkthrough of the same ground, if you would rather hear it than read it. The written
-      version below is the fuller one &mdash; it carries the diagrams, the file listings, and the
-      checklist.
-    </p>
-    <div class="audioEmbedFrame">
-      <iframe src="https://drive.google.com/file/d/1bVBSuIJZZJazPqDrELZd8kU1olwzCA1_/preview" title="Audio explainer: reverse-engineering Anthropic&rsquo;s AI governance legal skills" allow="autoplay" loading="lazy"></iframe>
-    </div>
-    <p class="audioEmbedMeta">
-      <span>21 min 55 sec</span>
-      <a href="https://drive.google.com/file/d/1bVBSuIJZZJazPqDrELZd8kU1olwzCA1_/view" target="_blank" rel="noopener noreferrer">Open in Google Drive<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
-    </p>
-  </section>
 
   <nav class="docToc" aria-labelledby="toc-h">
     <p class="eyebrow" id="toc-h">Contents</p>
     <ol>
-      <li><a href="#part-1">Skill or platform?</a><span class="docTocNote">sections 1&ndash;4</span></li>
-      <li><a href="#part-2">What a <code>SKILL.md</code> file actually is</a><span class="docTocNote">sections 5&ndash;14</span></li>
-      <li><a href="#part-3">Design lessons from the plugin</a><span class="docTocNote">sections 15&ndash;23</span></li>
-      <li><a href="#part-4">Back to the market, and a checklist</a><span class="docTocNote">sections 24&ndash;28</span></li>
+      <li><a href="#part-1">What a <code>SKILL.md</code> file actually is</a><span class="docTocNote">sections 1&ndash;10</span></li>
+      <li><a href="#part-2">Design lessons from the plugin</a><span class="docTocNote">sections 11&ndash;19</span></li>
+      <li><a href="#part-3">What it all adds up to</a><span class="docTocNote">sections 20&ndash;22</span></li>
     </ol>
   </nav>
 
@@ -122,9 +104,9 @@
 
   <div class="docPart" id="part-1">
     <p class="eyebrow">Part one</p>
-    <h2>Skill or platform?</h2>
+    <h2>What a <code>SKILL.md</code> file actually is</h2>
     <p class="muted" style="max-width: 70ch;">
-      The question every lawyer asks first, and why the answer is not a winner-takes-all one.
+      Open the machine. A skill file has exactly two parts, and neither of them is code.
     </p>
   </div>
 
@@ -133,207 +115,7 @@
       <span class="moduleNum" aria-hidden="true">1</span>
       <div class="moduleHeadText">
         <p class="eyebrow">Section one</p>
-        <h2 id="s1-h">Start with the question everyone asks</h2>
-      </div>
-    </div>
-
-    <p>When lawyers see something like Anthropic&rsquo;s Claude for Legal project, an understandable reaction
-    is:</p>
-
-    <div class="pullQuote">
-      <p>&ldquo;If Claude can do legal work and Anthropic is giving away legal skills, why aren&rsquo;t
-      Harvey, Legora, and similar legal AI companies suddenly out of business?&rdquo;</p>
-    </div>
-
-    <p>The short answer: <strong>because a skill is not the same thing as a complete legal AI
-    platform.</strong> And even Claude itself is not merely a model any more. The boundaries are
-    converging. That is what makes this interesting.</p>
-
-    <p>Anthropic describes legal AI as an ecosystem that can include connectors to firm data, reusable
-    skills, subagents, plugins, APIs, and enterprise controls. In Anthropic&rsquo;s own explanation,
-    connectors provide access to data, skills teach Claude how to perform repeatable legal tasks, and
-    plugins bundle capabilities for particular practice areas.</p>
-
-    <p>Harvey and Legora are approaching much of the same problem from another direction: they provide
-    legal-specific environments that package many of these capabilities into a finished product. Harvey
-    currently combines purpose-built agents, legal research, document storage and bulk analysis through
-    Vault, collaboration, institutional knowledge, workflow orchestration, integrations, analytics, and
-    enterprise controls. Legora similarly combines agentic execution with workflows, drafting, review,
-    legal research, database search, firm knowledge, permissions, and legal-specific tools.</p>
-
-    <p>So this is <em>not</em> Claude Legal versus Harvey and Legora, winner takes all. A better picture is
-    a stack, and companies can participate at several layers at once &mdash; which, increasingly, they
-    do.</p>
-
-    <figure class="layerStack" role="group" aria-label="The legal AI stack, from the lawyer's experience at the top to foundation models at the bottom">
-      <div class="layerRow top">
-        <span class="layerName">Legal work experience</span>
-        <span class="layerGloss">matters &middot; collaboration &middot; Word &middot; review</span>
-      </div>
-      <div class="layerRow">
-        <span class="layerName">Legal applications</span>
-        <span class="layerGloss">research &middot; vaults &middot; diligence &middot; contracts</span>
-      </div>
-      <div class="layerRow">
-        <span class="layerName">Workflows, agents, and skills</span>
-        <span class="layerGloss">&ldquo;how should this legal task be done?&rdquo;</span>
-      </div>
-      <div class="layerRow">
-        <span class="layerName">Firm knowledge and external data</span>
-        <span class="layerGloss">precedents &middot; matters &middot; research sources</span>
-      </div>
-      <div class="layerRow">
-        <span class="layerName">Connectors, permissions, governance</span>
-        <span class="layerGloss">who may reach what, and on whose authority</span>
-      </div>
-      <div class="layerRow base">
-        <span class="layerName">Foundation models</span>
-        <span class="layerGloss">Claude &middot; GPT &middot; other models</span>
-      </div>
-    </figure>
-  </section>
-
-  <section class="module" id="s2" aria-labelledby="s2-h">
-    <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">2</span>
-      <div class="moduleHeadText">
-        <p class="eyebrow">Section two</p>
-        <h2 id="s2-h">So why aren&rsquo;t Harvey and Legora &ldquo;out of business&rdquo;?</h2>
-      </div>
-    </div>
-
-    <p>Because <strong>having an intelligent model plus a workflow definition is not the entire product
-    problem.</strong></p>
-
-    <p>Consider what Harvey currently provides. Its platform includes agents, research, Vault, knowledge
-    resources, Shared Spaces, workflows, contract intelligence, integrations, administrative capabilities,
-    and enterprise security features. Harvey&rsquo;s Vault can organise and analyse large document
-    collections and connect with document-management systems while maintaining permissions and governance
-    controls. Legora&rsquo;s Workflows similarly lets lawyers orchestrate legal tasks using drafting,
-    tabular review, legal research, database search, institutional standards, reference materials, and
-    access controls.</p>
-
-    <p>That productisation matters. Imagine that a law firm wants an AI system for due diligence. The AI
-    reasoning might be only one portion of the problem. You also need to answer:</p>
-
-    <ul class="splitList">
-      <li>Where are the 15,000 documents?</li>
-      <li>Who may access them?</li>
-      <li>What matter do they belong to?</li>
-      <li>Which precedents should be used?</li>
-      <li>What research sources are licensed?</li>
-      <li>Who can see the output?</li>
-      <li>Can the system analyse them in bulk?</li>
-      <li>How are citations checked?</li>
-      <li>Where does the final work product live?</li>
-      <li>Can lawyers collaborate on it?</li>
-      <li>Does it work inside Word?</li>
-      <li>Can administrators control access?</li>
-      <li>Can the firm audit usage?</li>
-      <li>How is the system rolled out to 3,000 lawyers?</li>
-      <li>Who supports it when something breaks?</li>
-    </ul>
-
-    <p>A <code>SKILL.md</code> file does not magically solve all of those problems.</p>
-  </section>
-
-  <section class="module" id="s3" aria-labelledby="s3-h">
-    <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">3</span>
-      <div class="moduleHeadText">
-        <p class="eyebrow">Section three</p>
-        <h2 id="s3-h">A useful mental model: capability versus product</h2>
-      </div>
-    </div>
-
-    <div class="grid two">
-      <article class="card">
-        <p class="eyebrow">A skill</p>
-        <h3>gives the AI a playbook</h3>
-        <p class="muted">
-          &ldquo;When someone proposes a new AI use case, first determine what the system does. Check our
-          registry. Check prohibited uses. Determine the governance tier. Identify required reviews.
-          Produce the result in this format.&rdquo;
-        </p>
-        <p>That is enormously valuable. But it is primarily a <strong>behavioural specification</strong>.
-        It tells an AI system: here is how we want this particular job performed.</p>
-      </article>
-      <article class="card">
-        <p class="eyebrow">A platform</p>
-        <h3>packages the surrounding environment</h3>
-        <p class="muted">
-          Interfaces lawyers already understand, legal research sources, document repositories, matter
-          organisation, integrations, permissions, collaboration, institutional knowledge, workflow
-          builders, analytics, auditability, deployment support, security controls, vendor support, and
-          preconfigured legal experiences.
-        </p>
-        <p>Harvey&rsquo;s current platform demonstrates this broader product approach, and Legora likewise
-        describes its platform as connecting legal tools and workflows into a broader environment for legal
-        work.</p>
-      </article>
-    </div>
-
-    <div class="pullQuote">
-      <p><strong>Skill:</strong> here is how to perform this job.<br />
-      <strong>Platform:</strong> here is the environment in which thousands of people can actually perform
-      this work.</p>
-    </div>
-  </section>
-
-  <section class="module" id="s4" aria-labelledby="s4-h">
-    <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">4</span>
-      <div class="moduleHeadText">
-        <p class="eyebrow">Section four</p>
-        <h2 id="s4-h">But the distinction is getting blurrier</h2>
-      </div>
-    </div>
-
-    <p>This is important. It would be misleading to teach that &ldquo;Claude is just the model and Harvey
-    is the application.&rdquo; That description is becoming outdated.</p>
-
-    <p>Anthropic now describes a legal ecosystem involving connectors, skills, plugins, subagents, APIs,
-    enterprise controls, and workplace integrations &mdash; not merely access to a foundation model. At the
-    same time, Harvey and Legora increasingly expose configurable agents and workflows rather than only
-    fixed software features. Harvey now describes purpose-built agents that can execute legal work, while
-    Legora explicitly offers both agentic Workflows and reusable Skills within its environment.</p>
-
-    <figure class="spectrumFig" role="group" aria-label="A spectrum from more packaged to more configurable">
-      <div class="spectrumBar" aria-hidden="true"></div>
-      <div class="spectrumEnds"><span>More packaged</span><span>More configurable</span></div>
-      <ul class="spectrumMarks">
-        <li>Harvey and Legora workflows</li>
-        <li>Claude plus skills and plugins</li>
-      </ul>
-    </figure>
-
-    <p>Except even that is oversimplified. Each company is moving in both directions. The more useful
-    competitive question is becoming:</p>
-
-    <div class="pullQuote">
-      <p>Who provides the best combination of intelligence, workflow design, legal data, institutional
-      knowledge, integration, user experience, governance, reliability, and deployment?</p>
-    </div>
-
-    <p>That is a much more interesting question than simply asking whose underlying model is smartest.</p>
-  </section>
-
-  <!-- ===================== Part 2 ===================== -->
-
-  <div class="docPart" id="part-2">
-    <p class="eyebrow">Part two</p>
-    <h2>What a <code>SKILL.md</code> file actually is</h2>
-    <p class="muted" style="max-width: 70ch;">
-      Open the machine. A skill file has exactly two parts, and neither of them is code.
-    </p>
-  </div>
-
-  <section class="module" id="s5" aria-labelledby="s5-h">
-    <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">5</span>
-      <div class="moduleHeadText">
-        <p class="eyebrow">Section five</p>
-        <h2 id="s5-h">Now examine Anthropic&rsquo;s AI governance legal plugin</h2>
+        <h2 id="s1-h">Start with Anthropic&rsquo;s AI governance legal plugin</h2>
       </div>
     </div>
 
@@ -390,12 +172,12 @@
     </div>
   </section>
 
-  <section class="module" id="s6" aria-labelledby="s6-h">
+  <section class="module" id="s2" aria-labelledby="s2-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">6</span>
+      <span class="moduleNum" aria-hidden="true">2</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section six</p>
-        <h2 id="s6-h">What exactly is a <code>SKILL.md</code> file?</h2>
+        <p class="eyebrow">Section two</p>
+        <h2 id="s2-h">What exactly is a <code>SKILL.md</code> file?</h2>
       </div>
     </div>
 
@@ -460,12 +242,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     </div>
   </section>
 
-  <section class="module" id="s7" aria-labelledby="s7-h">
+  <section class="module" id="s3" aria-labelledby="s3-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">7</span>
+      <span class="moduleNum" aria-hidden="true">3</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section seven</p>
-        <h2 id="s7-h">Anatomy of the file</h2>
+        <p class="eyebrow">Section three</p>
+        <h2 id="s3-h">Anatomy of the file</h2>
       </div>
     </div>
 
@@ -489,12 +271,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     skill works</strong>. Let&rsquo;s unpack that one piece at a time.</p>
   </section>
 
-  <section class="module" id="s8" aria-labelledby="s8-h">
+  <section class="module" id="s4" aria-labelledby="s4-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">8</span>
+      <span class="moduleNum" aria-hidden="true">4</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section eight</p>
-        <h2 id="s8-h">First: what is YAML?</h2>
+        <p class="eyebrow">Section four</p>
+        <h2 id="s4-h">First: what is YAML?</h2>
       </div>
     </div>
 
@@ -513,12 +295,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     <p>For the simple YAML used in a skill, you do <em>not</em> need to learn a programming language.</p>
   </section>
 
-  <section class="module" id="s9" aria-labelledby="s9-h">
+  <section class="module" id="s5" aria-labelledby="s5-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">9</span>
+      <span class="moduleNum" aria-hidden="true">5</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section nine</p>
-        <h2 id="s9-h">So what is &ldquo;frontmatter&rdquo;?</h2>
+        <p class="eyebrow">Section five</p>
+        <h2 id="s5-h">So what is &ldquo;frontmatter&rdquo;?</h2>
       </div>
     </div>
 
@@ -541,12 +323,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     <p>After that comes the regular Markdown document containing the workflow.</p>
   </section>
 
-  <section class="module" id="s10" aria-labelledby="s10-h">
+  <section class="module" id="s6" aria-labelledby="s6-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">10</span>
+      <span class="moduleNum" aria-hidden="true">6</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section ten</p>
-        <h2 id="s10-h">And what does &ldquo;metadata&rdquo; mean?</h2>
+        <p class="eyebrow">Section six</p>
+        <h2 id="s6-h">And what does &ldquo;metadata&rdquo; mean?</h2>
       </div>
     </div>
 
@@ -560,12 +342,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     contains information about the skill. The actual instructions for performing the work come later.</p>
   </section>
 
-  <section class="module" id="s11" aria-labelledby="s11-h">
+  <section class="module" id="s7" aria-labelledby="s7-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">11</span>
+      <span class="moduleNum" aria-hidden="true">7</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section eleven</p>
-        <h2 id="s11-h">What does the <code>&gt;</code> mean?</h2>
+        <p class="eyebrow">Section seven</p>
+        <h2 id="s7-h">What does the <code>&gt;</code> mean?</h2>
       </div>
     </div>
 
@@ -578,12 +360,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     <em>why this information exists</em>.</p>
   </section>
 
-  <section class="module" id="s12" aria-labelledby="s12-h">
+  <section class="module" id="s8" aria-labelledby="s8-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">12</span>
+      <span class="moduleNum" aria-hidden="true">8</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twelve</p>
-        <h2 id="s12-h">Why does that tiny description matter so much?</h2>
+        <p class="eyebrow">Section eight</p>
+        <h2 id="s8-h">Why does that tiny description matter so much?</h2>
       </div>
     </div>
 
@@ -621,12 +403,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     </div>
   </section>
 
-  <section class="module" id="s13" aria-labelledby="s13-h">
+  <section class="module" id="s9" aria-labelledby="s9-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">13</span>
+      <span class="moduleNum" aria-hidden="true">9</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section thirteen</p>
-        <h2 id="s13-h">Think of the description as the receptionist</h2>
+        <p class="eyebrow">Section nine</p>
+        <h2 id="s9-h">Think of the description as the receptionist</h2>
       </div>
     </div>
 
@@ -647,12 +429,12 @@ Do not treat the assessment as final organizational approval.</code></pre>
     problem is here, how should we solve it?&rdquo;</p>
   </section>
 
-  <section class="module" id="s14" aria-labelledby="s14-h">
+  <section class="module" id="s10" aria-labelledby="s10-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">14</span>
+      <span class="moduleNum" aria-hidden="true">10</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section fourteen</p>
-        <h2 id="s14-h">Part two of the file: the Markdown instructions</h2>
+        <p class="eyebrow">Section ten</p>
+        <h2 id="s10-h">Part two of the file: the Markdown instructions</h2>
       </div>
     </div>
 
@@ -701,22 +483,22 @@ Use the required output template.</code></pre>
     </div>
   </section>
 
-  <!-- ===================== Part 3 ===================== -->
+  <!-- ===================== Part 2 ===================== -->
 
-  <div class="docPart" id="part-3">
-    <p class="eyebrow">Part three</p>
+  <div class="docPart" id="part-2">
+    <p class="eyebrow">Part two</p>
     <h2>Design lessons from the plugin</h2>
     <p class="muted" style="max-width: 70ch;">
       Where a job ends, what stays out of the file, and what changes from one organisation to the next.
     </p>
   </div>
 
-  <section class="module" id="s15" aria-labelledby="s15-h">
+  <section class="module" id="s11" aria-labelledby="s11-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">15</span>
+      <span class="moduleNum" aria-hidden="true">11</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section fifteen</p>
-        <h2 id="s15-h">Forensics on Anthropic&rsquo;s triage skill</h2>
+        <p class="eyebrow">Section eleven</p>
+        <h2 id="s11-h">Forensics on Anthropic&rsquo;s triage skill</h2>
       </div>
     </div>
 
@@ -750,12 +532,12 @@ Use the required output template.</code></pre>
     </div>
   </section>
 
-  <section class="module" id="s16" aria-labelledby="s16-h">
+  <section class="module" id="s12" aria-labelledby="s12-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">16</span>
+      <span class="moduleNum" aria-hidden="true">12</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section sixteen</p>
-        <h2 id="s16-h">Why not put everything into one <code>SKILL.md</code>?</h2>
+        <p class="eyebrow">Section twelve</p>
+        <h2 id="s12-h">Why not put everything into one <code>SKILL.md</code>?</h2>
       </div>
     </div>
 
@@ -773,12 +555,12 @@ Use the required output template.</code></pre>
     this case.</p>
   </section>
 
-  <section class="module" id="s17" aria-labelledby="s17-h">
+  <section class="module" id="s13" aria-labelledby="s13-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">17</span>
+      <span class="moduleNum" aria-hidden="true">13</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section seventeen</p>
-        <h2 id="s17-h"><code>SKILL.md</code> should be a control plane, not a textbook</h2>
+        <p class="eyebrow">Section thirteen</p>
+        <h2 id="s13-h"><code>SKILL.md</code> should be a control plane, not a textbook</h2>
       </div>
     </div>
 
@@ -819,12 +601,12 @@ Use the required output template.</code></pre>
     </div>
   </section>
 
-  <section class="module" id="s18" aria-labelledby="s18-h">
+  <section class="module" id="s14" aria-labelledby="s14-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">18</span>
+      <span class="moduleNum" aria-hidden="true">14</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section eighteen</p>
-        <h2 id="s18-h">Four different things beginners often mix together</h2>
+        <p class="eyebrow">Section fourteen</p>
+        <h2 id="s14-h">Four different things beginners often mix together</h2>
       </div>
     </div>
 
@@ -854,12 +636,12 @@ Use the required output template.</code></pre>
     <p>Don&rsquo;t make <code>SKILL.md</code> carry all four jobs.</p>
   </section>
 
-  <section class="module" id="s19" aria-labelledby="s19-h">
+  <section class="module" id="s15" aria-labelledby="s15-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">19</span>
+      <span class="moduleNum" aria-hidden="true">15</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section nineteen</p>
-        <h2 id="s19-h">Another forensic clue: configuration is separated from workflow</h2>
+        <p class="eyebrow">Section fifteen</p>
+        <h2 id="s15-h">Another forensic clue: configuration is separated from workflow</h2>
       </div>
     </div>
 
@@ -887,12 +669,12 @@ Use the required output template.</code></pre>
     <strong>facts</strong>.</p>
   </section>
 
-  <section class="module" id="s20" aria-labelledby="s20-h">
+  <section class="module" id="s16" aria-labelledby="s16-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">20</span>
+      <span class="moduleNum" aria-hidden="true">16</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty</p>
-        <h2 id="s20-h">Build an onboarding skill when configuration matters</h2>
+        <p class="eyebrow">Section sixteen</p>
+        <h2 id="s16-h">Build an onboarding skill when configuration matters</h2>
       </div>
     </div>
 
@@ -924,12 +706,12 @@ Use the required output template.</code></pre>
     </div>
   </section>
 
-  <section class="module" id="s21" aria-labelledby="s21-h">
+  <section class="module" id="s17" aria-labelledby="s17-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">21</span>
+      <span class="moduleNum" aria-hidden="true">17</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-one</p>
-        <h2 id="s21-h">The three-layer rule for designing your own skill</h2>
+        <p class="eyebrow">Section seventeen</p>
+        <h2 id="s17-h">The three-layer rule for designing your own skill</h2>
       </div>
     </div>
 
@@ -956,12 +738,12 @@ Use the required output template.</code></pre>
     <p style="margin-top: 1.2rem;">Which gives us: trigger &rarr; skill &rarr; resources &rarr; output.</p>
   </section>
 
-  <section class="module" id="s22" aria-labelledby="s22-h">
+  <section class="module" id="s18" aria-labelledby="s18-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">22</span>
+      <span class="moduleNum" aria-hidden="true">18</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-two</p>
-        <h2 id="s22-h">A teaching template for a good skill</h2>
+        <p class="eyebrow">Section eighteen</p>
+        <h2 id="s18-h">A teaching template for a good skill</h2>
       </div>
     </div>
 
@@ -1054,12 +836,12 @@ required.</code></pre>
     branching, stop condition, output contract, boundary. Those are the building blocks.</p>
   </section>
 
-  <section class="module" id="s23" aria-labelledby="s23-h">
+  <section class="module" id="s19" aria-labelledby="s19-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">23</span>
+      <span class="moduleNum" aria-hidden="true">19</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-three</p>
-        <h2 id="s23-h">Notice what we deliberately left out</h2>
+        <p class="eyebrow">Section nineteen</p>
+        <h2 id="s19-h">Notice what we deliberately left out</h2>
       </div>
     </div>
 
@@ -1076,106 +858,22 @@ required.</code></pre>
     </div>
   </section>
 
-  <!-- ===================== Part 4 ===================== -->
+  <!-- ===================== Part 3 ===================== -->
 
-  <div class="docPart" id="part-4">
-    <p class="eyebrow">Part four</p>
-    <h2>Back to the market, and a checklist</h2>
+  <div class="docPart" id="part-3">
+    <p class="eyebrow">Part three</p>
+    <h2>What it all adds up to</h2>
     <p class="muted" style="max-width: 70ch;">
-      What an open skill proves, what it does not, and twelve questions to ask of any skill you meet.
+      What the decomposition is really teaching, and twelve questions to ask of any skill you meet.
     </p>
   </div>
 
-  <section class="module" id="s24" aria-labelledby="s24-h">
+  <section class="module" id="s20" aria-labelledby="s20-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">24</span>
+      <span class="moduleNum" aria-hidden="true">20</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-four</p>
-        <h2 id="s24-h">And this brings us back to Harvey and Legora</h2>
-      </div>
-    </div>
-
-    <p>Now we can answer the original question more precisely. A sophisticated <code>SKILL.md</code> can
-    encode something valuable: <strong>institutional legal procedure</strong>. That is significant. It means
-    firms can increasingly express portions of their expertise as reusable AI workflows.</p>
-
-    <p>But legal AI platforms are selling considerably more than a prompt or a Markdown file. They are
-    packaging combinations of:</p>
-
-    <ul class="splitList">
-      <li>models</li>
-      <li>legal workflows</li>
-      <li>legal data</li>
-      <li>institutional knowledge</li>
-      <li>document infrastructure</li>
-      <li>matter context</li>
-      <li>research</li>
-      <li>collaboration</li>
-      <li>integrations</li>
-      <li>permissions</li>
-      <li>governance</li>
-      <li>administration</li>
-      <li>user experience</li>
-      <li>deployment</li>
-      <li>support</li>
-    </ul>
-
-    <p>Harvey&rsquo;s current offering demonstrates this kind of bundled approach, combining agents,
-    research, document infrastructure, knowledge resources, collaboration, workflows, integrations, and
-    enterprise controls. Legora similarly combines agents and workflows with research, drafting, review,
-    database search, institutional materials, permissions, and other legal tools. Meanwhile, Anthropic is
-    moving upward from the foundation-model layer through skills, plugins, connectors, subagents, workplace
-    integrations, APIs, and enterprise infrastructure.</p>
-
-    <p>So there is real competitive overlap. But:</p>
-
-    <div class="pullQuote">
-      <p>An open legal skill demonstrates that legal workflow knowledge can be encoded. It does not
-      demonstrate that every other layer of a legal technology platform has become unnecessary.</p>
-    </div>
-  </section>
-
-  <section class="module" id="s25" aria-labelledby="s25-h">
-    <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">25</span>
-      <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-five</p>
-        <h2 id="s25-h">In fact, skills may make legal platforms more interesting</h2>
-      </div>
-    </div>
-
-    <p>There is another possible outcome. Skills could increasingly become a kind of <strong>workflow
-    layer</strong> through which organisations express how they want AI-assisted work performed. Imagine a
-    firm develops its own <code>our-nda-playbook</code>, <code>our-due-diligence-method</code>,
-    <code>our-ai-governance-triage</code>, <code>our-privacy-review</code>, and
-    <code>our-client-alert-style</code>.</p>
-
-    <p>The strategically important asset may increasingly become <strong>the firm&rsquo;s encoded way of
-    working</strong> rather than simply the prompt box through which it accesses a model. Then the platform
-    question becomes: <em>where can our institutional workflows run best?</em> That might ultimately involve
-    Claude, ChatGPT, Harvey, Legora, an internal application, or some combination.</p>
-
-    <div class="note">
-      <p>This is an inference about where the architecture could lead, not a claim that today&rsquo;s
-      products already offer interchangeable or fully portable skills.</p>
-    </div>
-
-    <p>In fact, Legora now also uses the term <em>Skills</em> for reusable instructions that encode a
-    firm&rsquo;s processes and standards inside its own agent environment. That convergence makes the
-    underlying idea even more important. The terminology and file formats may differ; the architectural
-    question remains:</p>
-
-    <div class="pullQuote">
-      <p>How do we encode institutional expertise so that an AI can apply it consistently?</p>
-    </div>
-  </section>
-
-  <section class="module" id="s26" aria-labelledby="s26-h">
-    <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">26</span>
-      <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-six</p>
-        <h2 id="s26-h">The larger lesson for skill designers</h2>
+        <p class="eyebrow">Section twenty</p>
+        <h2 id="s20-h">The larger lesson for skill designers</h2>
       </div>
     </div>
 
@@ -1203,12 +901,12 @@ required.</code></pre>
     reusable AI system for doing AI-governance work.&rdquo; And that is what skill design really is.</p>
   </section>
 
-  <section class="module" id="s27" aria-labelledby="s27-h">
+  <section class="module" id="s21" aria-labelledby="s21-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">27</span>
+      <span class="moduleNum" aria-hidden="true">21</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-seven</p>
-        <h2 id="s27-h">The forensic checklist</h2>
+        <p class="eyebrow">Section twenty-one</p>
+        <h2 id="s21-h">The forensic checklist</h2>
       </div>
     </div>
 
@@ -1234,12 +932,12 @@ required.</code></pre>
     deal about the emerging legal AI market.</p>
   </section>
 
-  <section class="module" id="s28" aria-labelledby="s28-h">
+  <section class="module" id="s22" aria-labelledby="s22-h">
     <div class="moduleHead">
-      <span class="moduleNum" aria-hidden="true">28</span>
+      <span class="moduleNum" aria-hidden="true">22</span>
       <div class="moduleHeadText">
-        <p class="eyebrow">Section twenty-eight</p>
-        <h2 id="s28-h">The simplest way to remember all of this</h2>
+        <p class="eyebrow">Section twenty-two</p>
+        <h2 id="s22-h">The simplest way to remember all of this</h2>
       </div>
     </div>
 
@@ -1252,7 +950,6 @@ required.</code></pre>
       <li><strong>References</strong> &mdash; what information do I need?</li>
       <li><strong>Scripts</strong> &mdash; what should code do reliably?</li>
       <li><strong>Assets</strong> &mdash; what materials do I use in the output?</li>
-      <li class="outcome"><strong>Platform</strong> &mdash; where does all of this operate at scale?</li>
     </ol>
 
     <div class="pullQuote">

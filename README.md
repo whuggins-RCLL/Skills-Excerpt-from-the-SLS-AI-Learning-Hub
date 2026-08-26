@@ -314,19 +314,25 @@ this one is ours to host.
 `case-study-anthropic-legal-skills.html` is a long-form reading of Anthropic's
 open-source [Claude for Legal](https://github.com/anthropics/claude-for-legal)
 project (Apache-2.0) and its `ai-governance-legal` plugin: what a `SKILL.md` file
-is, why the plugin is ten small skills rather than one large one, what belongs in
-`references/`, `scripts/`, and `assets/`, and why an open skill is not the same
-thing as a legal AI platform. It is an independent educational case study, not
-affiliated with or endorsed by Anthropic, and it says so at the top and the
-bottom.
+is, how it is put together, why the plugin is ten small skills rather than one
+large one, and what belongs in `references/`, `scripts/`, and `assets/` instead.
+It is an independent educational case study, not affiliated with or endorsed by
+Anthropic, and it says so at the top and the bottom.
 
-A 22-minute audio explainer of the same material is embedded beside the case
-study on `skills.html` and again near the top of the case study itself, framed
-from Google Drive rather than hosted here (the file is large, and the video on
-`writing-partner-agent.html` is the size of thing worth committing). The frame
-carries its duration and an "open in Google Drive" link beside it, because a
-third-party frame is the one element on a page that can fail silently — a
-sharing setting or a blocked frame leaves nothing behind.
+**It is forensics only.** The hub's version opens with a market argument — why an
+open skill does not put Harvey or Legora out of business — carried by Part one
+(four sections on the legal AI stack) and two more sections near the end. All six
+are cut here, along with the 22-minute audio explainer that narrated them, which
+would otherwise have handed a listener the material the page no longer carries.
+What remains is 22 sections in three parts: the anatomy of the file, the design
+lessons, and the checklist.
+
+Cutting six sections out of the middle of a numbered document means renumbering
+the rest. Each section carries its number in five places — `id`, `aria-labelledby`,
+the `.moduleNum` badge, the "Section fourteen" eyebrow, and the heading's own `id`
+— so they are rewritten as one block rather than patched individually, and the
+cross-page links from the workshop packet (`#s18`, the teaching template) move
+with them. If you re-sync against the hub, expect to redo both.
 
 It uses the document look already in the design system — `.docPage`, `.docMeta`,
 `.docToc`, `.docPart`, `.module` — which the hub had inherited from the faculty
