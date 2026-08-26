@@ -144,11 +144,22 @@ copy is shown to. Four kinds of thing were taken out and should not come back:
 - **Local policy as the rule.** The Honor Code and "your course policy" as the
   governing authority are now "your institution's AI policy" and "your
   institution's academic-integrity rules".
-- **Anything that assumes a Stanford login exists.**
+- **Anything that assumes a Stanford login exists**, including who the reader is:
+  the audience eyebrow is "For law students", and the agent instructions open
+  "You are a writing review partner for a law student".
+
+The agent instructions count as interface, not artefact, even though they are a
+file: `assets/writing-partner-agent-instructions.md` is the source of truth for
+the copy box on `writing-partner-agent.html` and is offered as a download beside
+it, so a reader meets that text on the page. Edit the Markdown and re-run
+`scripts/inject-agent-instructions.py`; the `--check` mode catches the two drifting
+apart.
 
 What deliberately stays: the Robert Crown Law Library logo, the page titles, the
-copyright line, the `SLS` skill names, and the skill descriptions. Those name who
-made this; they do not assume anything about who is reading it.
+copyright line, the `SLS` skill names, and the skill descriptions — including the
+ones that say a skill is SLS-specific or applies the SLS default, because that is
+true of the skill and worth knowing before adapting it. Those name who made this;
+they do not assume anything about who is reading it.
 
 The skill ZIPs are **not** scrubbed. They are the artefact, they are written for
 SLS students, and they say so — `scripts/license-skills.py` only adds files, and
