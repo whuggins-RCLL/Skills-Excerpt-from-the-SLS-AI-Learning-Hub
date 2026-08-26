@@ -1,4 +1,4 @@
-"""Write the canonical header, excerpt banner, and footer into every page.
+"""Write the canonical header, excerpt banner, and credit line into every page.
 
 This repository is an *excerpt* of the AI Learning Hub: only the AI Skills
 section and the agent material that accompanies it. The pages cannot each carry
@@ -9,7 +9,16 @@ Run it again after changing the nav.
 
 The excerpt is deliberately a closed set of pages. It says what it is an excerpt
 of, but it does not link to the hub it came from and does not send readers there,
-so nothing here — banner, footer, or body copy — carries that address.
+so nothing here — banner or body copy — carries that address.
+
+The site footer of outbound Stanford links is gone -- it made the last thing on
+every page an invitation to leave it. This still strips any `.footer` block it
+finds, so one pasted back into a page does not survive the next run.
+
+What ends a page instead is one quiet line naming the copyright holder and the
+licence, with nothing to click. It is a <footer> element because that is what
+holds a copyright notice, and it carries its own class so the stripping above
+cannot reach it.
 """
 
 import re
@@ -27,35 +36,6 @@ NAV = [
     ("writing-partner-agent.html", "Writing Partner agent"),
     ("teach-this-writing-partner.html", "Workshop packet"),
     ("case-study-anthropic-legal-skills.html", "Case study"),
-]
-
-EXT = '<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span>'
-
-
-def ext_link(href, label, note=None):
-    note_html = f'<span class="footerNote">{note}</span>' if note else ""
-    return (
-        f'<li><a href="{href}" target="_blank" rel="noopener noreferrer">{label}{EXT}</a>'
-        f"{note_html}</li>"
-    )
-
-
-# The footer carries outbound Stanford links only. It does not link back to the
-# hub: this excerpt is meant to stand on its own rather than route readers there.
-FOOTER_GROUPS = [
-    (
-        "elsewhere",
-        "Elsewhere at Stanford",
-        [
-            ext_link("https://law.stanford.edu/ai-initiative/", "SLS AI Initiative"),
-            ext_link("https://law.stanford.edu/robert-crown-law-library/", "Robert Crown Law Library"),
-            ext_link("https://uit.stanford.edu/security/responsibleai", "Responsible AI at Stanford"),
-            ext_link(
-                "https://law.stanford.edu/office-of-student-affairs/use-of-generative-ai-technology/",
-                "Use of Generative AI at SLS",
-            ),
-        ],
-    ),
 ]
 
 
@@ -93,31 +73,21 @@ def banner_html():
 </aside>"""
 
 
-def footer_html():
-    groups = []
-    for gid, heading, items in FOOTER_GROUPS:
-        lis = "\n".join(f"          {i}" for i in items)
-        groups.append(
-            f"""      <div class="footerGroup">
-        <h2 class="footerHeading" id="footer-{gid}">{heading}</h2>
-        <ul aria-labelledby="footer-{gid}">
-{lis}
-        </ul>
-      </div>"""
-        )
-    joined = "\n".join(groups)
-    return f"""<footer class="footer">
-  <div class="footer-inner">
-    <nav class="footerNav" aria-label="Site footer">
-{joined}
-    </nav>
-  </div>
+# Copyright and licence, in one line, as the last thing on the page. Deliberately
+# not a link: the terms are set out in full on skills.html and inside every skill
+# ZIP, and a link here would be one more way off a site built not to have any.
+def credit_html():
+    return """<footer class="pageCredit">
+  <p>Copyright 2026 Stanford Law School &middot; Skills licensed under Apache 2.0</p>
 </footer>"""
 
 
 HEADER_RE = re.compile(r'<header class="siteHeader">.*?</header>', re.S)
 BANNER_RE = re.compile(r'<aside class="excerptBanner".*?</aside>', re.S)
-FOOTER_RE = re.compile(r'<footer class="footer">.*?</footer>', re.S)
+CREDIT_RE = re.compile(r'\n*<footer class="pageCredit">.*?</footer>', re.S)
+MAIN_END_RE = re.compile(r'\n</main>')
+# Matched only so it can be removed, along with the blank lines around it.
+FOOTER_RE = re.compile(r'\n*<footer class="footer">.*?</footer>\n*', re.S)
 
 
 def main():
@@ -138,9 +108,16 @@ def main():
         else:
             text = HEADER_RE.sub(lambda m: m.group(0) + "\n\n" + banner_html(), text, count=1)
 
-        if not FOOTER_RE.search(text):
-            sys.exit(f"{page.name}: no .footer block to replace")
-        text = FOOTER_RE.sub(lambda _: footer_html(), text, count=1)
+        text = FOOTER_RE.sub("\n\n", text, count=1)
+
+        # First run appends the credit after </main>; later runs replace it.
+        if CREDIT_RE.search(text):
+            text = CREDIT_RE.sub(lambda _: "\n\n" + credit_html(), text, count=1)
+        else:
+            if not MAIN_END_RE.search(text):
+                sys.exit(f"{page.name}: no </main> to put the credit after")
+            text = MAIN_END_RE.sub(
+                lambda m: m.group(0) + "\n\n" + credit_html(), text, count=1)
 
         if text != original:
             page.write_text(text)

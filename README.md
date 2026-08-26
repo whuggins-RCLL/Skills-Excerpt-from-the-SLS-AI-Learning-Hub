@@ -14,9 +14,9 @@ sending an audience to the main site. If you add a page, keep it that way.
 Content is maintained in the hub repository, not here. This copy is a snapshot
 for presentation, so a change made here does not reach the site readers use.
 
-Everything the skills need is included — all twenty-one skill ZIPs, the three set
+Everything the skills need is included — all fifteen skill ZIPs, the two set
 downloads, and the five practice drafts — so the downloads on `skills.html` work
-exactly as they do on the hub.
+as they do on the hub.
 
 The skills are licensed under Apache 2.0; see [Licence](#licence).
 
@@ -32,7 +32,7 @@ python3 -m http.server 8000
 | File | What it is |
 | --- | --- |
 | `index.html` | The excerpt's landing page |
-| `skills.html` | The twenty-one downloadable AI skills, the three one-click sets, and the practice drafts |
+| `skills.html` | The fifteen downloadable AI skills, the two one-click sets, and the practice drafts |
 | `skills/` | The skill ZIPs themselves |
 | `skills/bundles.json` | Which skills each set holds, and in what order |
 | `scripts/build-skill-bundles.py` | Builds `assets/bundles/*.zip` from that manifest |
@@ -70,10 +70,11 @@ things went with them that are worth naming:
   rewriting would send every click off to the full hub instead of to the next page
   here — the opposite of what this copy is for. All of it is gone; links are
   ordinary relative links.
-- **Every route back to the hub.** The four in-content mentions of the PAUSE Rule
-  are plain text rather than links, the banner names the hub without addressing
-  it, and the footer carries outbound Stanford links only. Driving traffic to the
-  main site is the thing this excerpt exists to avoid, so a link there is a bug.
+- **Every route off the site.** The four in-content mentions of the PAUSE Rule are
+  plain text rather than links, the banner names the hub without addressing it,
+  and the footer of outbound Stanford links is gone entirely — what closes a page
+  now is an unlinked copyright and licence line. Driving traffic elsewhere is the
+  thing this excerpt exists to avoid, so a link out is a bug.
   `scripts/check-links.py` fails if any relative reference or in-page anchor stops
   resolving.
 - **The site search.** `search.html` and its index answered from these pages only,
@@ -90,15 +91,25 @@ no search box and no Home button — the logo is the link home.
 
 Under the bar, on every page, sits the excerpt banner: one line saying these pages
 are the AI Skills section of the library's AI Learning Hub rather than the hub
-itself. It names the source and stops there. The footer carries outbound Stanford
-links only.
+itself. It names the source and stops there.
 
-The bar, the banner, and the footer are the same markup on every page, which no one
-should be retyping seven times. They are written by `scripts/nav.py`: it replaces
-the `.siteHeader`, `.excerptBanner`, and `.footer` blocks in each file in place and
-is idempotent. The committed pages stay plain HTML with no build step, so an
-ordinary edit is still an ordinary edit; re-run the script after changing a nav
-entry or the banner text.
+**The site footer is gone.** The pages carried one holding outbound Stanford links
+— the AI Initiative, the library, Responsible AI, the SLS AI policy — which made
+the last thing on every page an invitation to leave it.
+
+What closes a page instead is `.pageCredit`: one quiet line, *Copyright 2026
+Stanford Law School · Skills licensed under Apache 2.0*, with nothing to click.
+The licence terms are set out in full at the foot of `skills.html` and inside
+every skill ZIP, so a link here would only be one more way off a site built not to
+have any. It is a `<footer>` element because that is what holds a copyright
+notice, and it carries its own class so the `.footer` stripping cannot reach it.
+
+The bar, the banner, and the credit line are the same markup on every page, which
+no one should be retyping six times. They are written by `scripts/nav.py`: it
+replaces the `.siteHeader`, `.excerptBanner`, and `.pageCredit` blocks in each file
+in place, strips any old `.footer` block it finds, and is idempotent. The committed
+pages stay plain HTML with no build step, so an ordinary edit is still an ordinary
+edit; re-run the script after changing a nav entry, the banner, or the credit.
 
 ```
 python3 scripts/nav.py
@@ -118,6 +129,42 @@ python3 scripts/inject-agent-instructions.py --check
 `check-links.py` also fails on a link to a page that is not part of this excerpt,
 which is what catches a stray route back to the hub.
 
+### No institutional specifics in the pages
+
+The pages are written to be read by someone outside SLS, because that is who this
+copy is shown to. Four kinds of thing were taken out and should not come back:
+
+- **Contact routing.** No `library@law.stanford.edu`, no "email the library and we
+  will help", no Slack channel. A reader of this excerpt is not routed to a help
+  desk that is not theirs.
+- **Access and provisioning.** No "limited to current SLS community members", no
+  "uses Stanford sign-in", no links to Stanford's ChatGPT Edu or Claude services.
+  Where the advice is genuinely useful — use the institutional account, not a
+  personal one — it is phrased for whatever institution the reader has.
+- **Local policy as the rule.** The Honor Code and "your course policy" as the
+  governing authority are now "your institution's AI policy" and "your
+  institution's academic-integrity rules".
+- **Anything that assumes a Stanford login exists**, including who the reader is:
+  the audience eyebrow is "For law students", and the agent instructions open
+  "You are a writing review partner for a law student".
+
+The agent instructions count as interface, not artefact, even though they are a
+file: `assets/writing-partner-agent-instructions.md` is the source of truth for
+the copy box on `writing-partner-agent.html` and is offered as a download beside
+it, so a reader meets that text on the page. Edit the Markdown and re-run
+`scripts/inject-agent-instructions.py`; the `--check` mode catches the two drifting
+apart.
+
+What deliberately stays: the Robert Crown Law Library logo, the page titles, the
+copyright line, the `SLS` skill names, and the skill descriptions — including the
+ones that say a skill is SLS-specific or applies the SLS default, because that is
+true of the skill and worth knowing before adapting it. Those name who made this;
+they do not assume anything about who is reading it.
+
+The skill ZIPs are **not** scrubbed. They are the artefact, they are written for
+SLS students, and they say so — `scripts/license-skills.py` only adds files, and
+nothing else here rewrites their contents.
+
 ### Styling
 
 `assets/styles.css` is the faculty site's `website/app/globals.css`, copied
@@ -128,7 +175,7 @@ plus a look at the additions, not a merge.
 
 Rules for pages that are not in this excerpt are left in place rather than pruned,
 so the file stays a clean copy of the design system plus additions. That includes
-`.siteSearch` and `.homeButton`, which nothing uses now.
+`.siteSearch`, `.homeButton`, and the `.footer` rules, which nothing uses now.
 
 `vercel.json` and `customHttp.yml` each carry one header: a `frame-ancestors`
 policy permitting the hub domain and Google Sites to frame the site. They are kept
@@ -149,14 +196,17 @@ one and upload it to ChatGPT or Claude; you never unzip it.
 4. SLS Legal Research Learning Coach
 5. SLS AI Verification Lab
 
-### Optional tool studios
+### The tool studios are not in this copy
 
-- SLS Harvey Learning Studio
-- SLS Legora Learning Studio
-- SLS LexText Learning Studio
-- SLS CICERO Oral Argument Studio
-- SLS Gemini Notebook Learning Studio (formerly NotebookLM)
-- SLS AI Tool Explorer
+The hub also carries six guided studios — Harvey, Legora, LexText, CICERO, Gemini
+Notebook, and the AI Tool Explorer — as a third set. They are **deliberately not
+distributed here.** They walk through licensed products a particular school has
+access to, and this copy is shown to people outside it.
+
+Removing them meant deleting six skill ZIPs, the Tool Studios set ZIP, its entry
+in `skills/bundles.json`, its card in **Skill sets**, and the whole **Tool
+studios** section of `skills.html`. If you re-sync this copy against the hub, do
+not bring them back.
 
 ### Writing partner
 
@@ -193,8 +243,8 @@ swept into a set either.
 
 ### Skill sets
 
-The top of `skills.html` offers three sets as one-click downloads: the Writing Partner
-Set (10), the Core Pathway Set (5), and the Tool Studios Set (6). A set is a single ZIP
+The top of `skills.html` offers two sets as one-click downloads: the Writing Partner
+Set (10) and the Core Pathway Set (5). A set is a single ZIP
 holding the member skill ZIPs **byte for byte**, plus a README naming what is inside and
 how to install it — so a set and the individual buttons below it hand out the same
 files, and there is no second copy of a skill to keep in step.
@@ -229,8 +279,9 @@ minutes, self-paced); and a glossary. It is written to be usable by faculty runn
 it for a class and by a student working alone, which is why every activity states
 its own materials and time rather than depending on the one before it.
 
-It is also the page that names Stanford's own ChatGPT Edu and Claude services, so
-nobody sets this up on a personal account.
+It opens by telling a room to sign in through their institution rather than on a
+personal account, which is the one set-up step that reliably costs a session its
+first fifteen minutes.
 
 ### The Writing Partner agent
 
@@ -263,19 +314,25 @@ this one is ours to host.
 `case-study-anthropic-legal-skills.html` is a long-form reading of Anthropic's
 open-source [Claude for Legal](https://github.com/anthropics/claude-for-legal)
 project (Apache-2.0) and its `ai-governance-legal` plugin: what a `SKILL.md` file
-is, why the plugin is ten small skills rather than one large one, what belongs in
-`references/`, `scripts/`, and `assets/`, and why an open skill is not the same
-thing as a legal AI platform. It is an independent educational case study, not
-affiliated with or endorsed by Anthropic, and it says so at the top and the
-bottom.
+is, how it is put together, why the plugin is ten small skills rather than one
+large one, and what belongs in `references/`, `scripts/`, and `assets/` instead.
+It is an independent educational case study, not affiliated with or endorsed by
+Anthropic, and it says so at the top and the bottom.
 
-A 22-minute audio explainer of the same material is embedded beside the case
-study on `skills.html` and again near the top of the case study itself, framed
-from Google Drive rather than hosted here (the file is large, and the video on
-`writing-partner-agent.html` is the size of thing worth committing). The frame
-carries its duration and an "open in Google Drive" link beside it, because a
-third-party frame is the one element on a page that can fail silently — a
-sharing setting or a blocked frame leaves nothing behind.
+**It is forensics only.** The hub's version opens with a market argument — why an
+open skill does not put Harvey or Legora out of business — carried by Part one
+(four sections on the legal AI stack) and two more sections near the end. All six
+are cut here, along with the 22-minute audio explainer that narrated them, which
+would otherwise have handed a listener the material the page no longer carries.
+What remains is 22 sections in three parts: the anatomy of the file, the design
+lessons, and the checklist.
+
+Cutting six sections out of the middle of a numbered document means renumbering
+the rest. Each section carries its number in five places — `id`, `aria-labelledby`,
+the `.moduleNum` badge, the "Section fourteen" eyebrow, and the heading's own `id`
+— so they are rewritten as one block rather than patched individually, and the
+cross-page links from the workshop packet (`#s18`, the teaching template) move
+with them. If you re-sync against the hub, expect to redo both.
 
 It uses the document look already in the design system — `.docPage`, `.docMeta`,
 `.docToc`, `.docPart`, `.module` — which the hub had inherited from the faculty
@@ -320,9 +377,9 @@ or `NOTICE` produces no git diff. Re-run `build-skill-bundles.py` afterwards: th
 set ZIPs hold the member ZIPs byte for byte, so relicensing a skill changes them
 too.
 
-The terms are stated for readers in two places on the site — a **Licence** section
-at the foot of `skills.html`, where the downloads are, and a troubleshooting entry
-on `install.html`.
+The terms are stated for readers in three places on the site — a **Licence**
+section at the foot of `skills.html`, where the downloads are, a troubleshooting
+entry on `install.html`, and the credit line closing every page.
 
 Two things the Apache licence does not cover, and which the site says plainly: the
 Stanford name and marks are not licensed by it, and adapting a skill carries over
