@@ -11,6 +11,14 @@ Each archive gets LICENSE (the licence text, verbatim) and NOTICE (who holds the
 copyright), placed beside SKILL.md -- at the root for the flat archives, inside
 the top-level folder for the ones that have one.
 
+Not every skill here is under the same licence, so which pair a ZIP gets depends
+on where it sits. The skills written for this project are Apache 2.0 and take the
+repository root's LICENSE and NOTICE. The Faculty Research & Scholarship set is
+redistributed from the SLS Faculty AI Skills project under the MIT License, and
+takes that project's pair from licenses/. Stamping Apache over MIT work would
+misstate someone else's terms, so the mapping below is the thing to update when a
+set arrives from somewhere new -- never the default.
+
     python3 scripts/license-skills.py          # add or refresh both files
     python3 scripts/license-skills.py --check  # non-zero if any ZIP is missing them
 
@@ -36,13 +44,28 @@ FIXED_TIME = (2026, 1, 1, 0, 0, 0)
 
 ADDED = ("LICENSE", "NOTICE")
 
+# Longest matching prefix wins, so a set with its own licence is listed above the
+# fallback. Paths are relative to the repository root.
+LICENCES = (
+    ("skills/sls-faculty-research/", ROOT / "licenses" / "sls-faculty-ai-skills"),
+    ("", ROOT),  # this project's own work: Apache 2.0
+)
 
-def payloads() -> dict[str, bytes]:
+
+def licence_dir_for(relative: Path) -> Path:
+    text = relative.as_posix()
+    for prefix, source in LICENCES:
+        if text.startswith(prefix):
+            return source
+    raise SystemExit(f"no licence mapped for {text}")
+
+
+def payloads(directory: Path) -> dict[str, bytes]:
     files = {}
     for name in ADDED:
-        source = ROOT / name
+        source = directory / name
         if not source.is_file():
-            raise SystemExit(f"missing {name} at the repository root")
+            raise SystemExit(f"missing {name} in {directory}")
         files[name] = source.read_bytes()
     return files
 
@@ -88,12 +111,15 @@ def main() -> int:
     if not archives:
         sys.exit("no skill ZIPs found")
 
-    files = payloads()
+    cache: dict[Path, dict[str, bytes]] = {}
     stale = []
 
     for path in archives:
-        rebuilt = relicensed(path, files)
         relative = path.relative_to(ROOT)
+        directory = licence_dir_for(relative)
+        if directory not in cache:
+            cache[directory] = payloads(directory)
+        rebuilt = relicensed(path, cache[directory])
         if rebuilt == path.read_bytes():
             continue
         stale.append(relative)

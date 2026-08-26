@@ -1,5 +1,5 @@
 {
-  "_comment": "Skill sets offered as one-click downloads on skills.html. Each bundle is one ZIP holding the member skill ZIPs unchanged, built by scripts/build-skill-bundles.py into assets/bundles/. Add a bundle here, run the script, add a card to the Skill sets section of skills.html.",
+  "_comment": "Skill sets offered as one-click downloads on skills.html. Each bundle is one ZIP holding the member skill ZIPs unchanged, built by scripts/build-skill-bundles.py into assets/bundles/. Add a bundle here, run the script, add a card to the Skill sets section of skills.html. Each bundle names the licence its members carry: \"licence\" is the sentence printed in the set README, and \"licenceDir\" is the directory holding the LICENSE and NOTICE packed beside it. A set redistributed from another project keeps that project's pair.",
   "bundles": [
     {
       "slug": "sls-writing-partner-set",
@@ -56,7 +56,9 @@
           "file": "skills/sls-ai-orientation/sls-genre-fit.zip",
           "as": "sls-genre-fit.zip"
         }
-      ]
+      ],
+      "licence": "These skills are licensed under the Apache License, Version 2.0. You may use, modify, and redistribute them on those terms.",
+      "licenceDir": "."
     },
     {
       "slug": "sls-core-pathway",
@@ -87,6 +89,67 @@
           "title": "SLS AI Verification Lab",
           "file": "skills/sls-ai-orientation/sls-ai-verification-lab/skill.zip",
           "as": "sls-ai-verification-lab.zip"
+        }
+      ],
+      "licence": "These skills are licensed under the Apache License, Version 2.0. You may use, modify, and redistribute them on those terms.",
+      "licenceDir": "."
+    },
+    {
+      "slug": "sls-faculty-research",
+      "title": "Faculty Research & Scholarship Set",
+      "summary": "Ten conversational partners for the arc of scholarship: scope a project, review the literature, plan authoritative legal research, build and pressure-test an argument, revise structure, check every citation, edit the prose, plan publication, and adapt finished work for a wider audience. Start at the guide and take only the helper your stage needs.",
+      "licence": "These skills come from the SLS Faculty AI Skills project and are redistributed unchanged under the MIT License. They are not covered by the Apache License that governs the rest of the collection.",
+      "licenceDir": "licenses/sls-faculty-ai-skills",
+      "members": [
+        {
+          "title": "Research Support Guide",
+          "file": "skills/sls-faculty-research/research-support-guide.zip",
+          "as": "research-support-guide.zip"
+        },
+        {
+          "title": "Research Project Planner",
+          "file": "skills/sls-faculty-research/research-project-planner.zip",
+          "as": "research-project-planner.zip"
+        },
+        {
+          "title": "Literature Review Helper",
+          "file": "skills/sls-faculty-research/literature-review-helper.zip",
+          "as": "literature-review-helper.zip"
+        },
+        {
+          "title": "Legal Research Planner",
+          "file": "skills/sls-faculty-research/legal-research-planner.zip",
+          "as": "legal-research-planner.zip"
+        },
+        {
+          "title": "Argument Builder",
+          "file": "skills/sls-faculty-research/argument-builder.zip",
+          "as": "argument-builder.zip"
+        },
+        {
+          "title": "Draft Revision Coach",
+          "file": "skills/sls-faculty-research/draft-revision-coach.zip",
+          "as": "draft-revision-coach.zip"
+        },
+        {
+          "title": "Citation Checker",
+          "file": "skills/sls-faculty-research/citation-checker.zip",
+          "as": "citation-checker.zip"
+        },
+        {
+          "title": "Scholarly Writing Editor",
+          "file": "skills/sls-faculty-research/scholarly-writing-editor.zip",
+          "as": "scholarly-writing-editor.zip"
+        },
+        {
+          "title": "Publication Planner",
+          "file": "skills/sls-faculty-research/publication-planner.zip",
+          "as": "publication-planner.zip"
+        },
+        {
+          "title": "Public Writing Adapter",
+          "file": "skills/sls-faculty-research/public-writing-adapter.zip",
+          "as": "public-writing-adapter.zip"
         }
       ]
     }

@@ -14,9 +14,9 @@ sending an audience to the main site. If you add a page, keep it that way.
 Content is maintained in the hub repository, not here. This copy is a snapshot
 for presentation, so a change made here does not reach the site readers use.
 
-Everything the skills need is included — all fifteen skill ZIPs, the two set
-downloads, and the five practice drafts — so the downloads on `skills.html` work
-as they do on the hub.
+Everything the skills need is included — all twenty-five skill ZIPs, the three
+set downloads, and the five practice drafts — so the downloads on `skills.html`
+work as they do on the hub.
 
 The skills are licensed under Apache 2.0; see [Licence](#licence).
 
@@ -32,7 +32,7 @@ python3 -m http.server 8000
 | File | What it is |
 | --- | --- |
 | `index.html` | The excerpt's landing page |
-| `skills.html` | The fifteen downloadable AI skills, the two one-click sets, and the practice drafts |
+| `skills.html` | The twenty-five downloadable AI skills, the three one-click sets, and the practice drafts |
 | `skills/` | The skill ZIPs themselves |
 | `skills/bundles.json` | Which skills each set holds, and in what order |
 | `scripts/build-skill-bundles.py` | Builds `assets/bundles/*.zip` from that manifest |
@@ -53,6 +53,7 @@ python3 -m http.server 8000
 | `scripts/nav.py` | Writes the header, the excerpt banner, and the footer into every page |
 | `vercel.json`, `customHttp.yml` | Who is allowed to frame the site |
 | `LICENSE`, `NOTICE` | Apache 2.0, and the copyright notice that goes with it |
+| `licenses/sls-faculty-ai-skills/` | The MIT licence and notice the faculty set carries instead |
 | `scripts/license-skills.py` | Puts both inside every skill ZIP |
 | `scripts/check-links.py` | Fails if a link or anchor stops resolving |
 
@@ -243,8 +244,9 @@ swept into a set either.
 
 ### Skill sets
 
-The top of `skills.html` offers two sets as one-click downloads: the Writing Partner
-Set (10) and the Core Pathway Set (5). A set is a single ZIP
+The top of `skills.html` offers three sets as one-click downloads: the Writing Partner
+Set (10), the Core Pathway Set (5), and the Faculty Research & Scholarship Set (10).
+A set is a single ZIP
 holding the member skill ZIPs **byte for byte**, plus a README naming what is inside and
 how to install it — so a set and the individual buttons below it hand out the same
 files, and there is no second copy of a skill to keep in step.
@@ -268,6 +270,54 @@ browser prompts before saving several files at once and some refuse outright, so
 reliable one-click path has to be the single file. The button reads its file list from
 the download links already in the section it names (`data-bundle-source="#writing"`),
 which means a skill added to the page is in that set download as soon as its card is.
+
+
+### The Faculty Research & Scholarship set
+
+Ten skills under `skills/sls-faculty-research/`, copied from
+[`whuggins-RCLL/sls-faculty-ai-skills`](https://github.com/whuggins-RCLL/sls-faculty-ai-skills)
+— its `research` collection, front door first: Research Support Guide, Research
+Project Planner, Literature Review Helper, Legal Research Planner, Argument
+Builder, Draft Revision Coach, Citation Checker, Scholarly Writing Editor,
+Publication Planner, Public Writing Adapter.
+
+They are **redistributed unchanged and are not ours**. Two consequences:
+
+- **They are MIT, not Apache 2.0.** Copyright (c) 2026 SLS Faculty AI Skills
+  contributors. MIT asks that its copyright and permission notice travel with
+  every copy, so `licenses/sls-faculty-ai-skills/{LICENSE,NOTICE}` are packed
+  inside each of the ten ZIPs and beside the set download. Stamping this project's
+  Apache pair over them would misstate someone else's terms.
+- **Edits belong upstream.** Change them in the faculty repository, re-package,
+  and re-copy. A fix made here is lost the next time they are refreshed.
+
+To refresh them, run the faculty repo's own packager rather than zipping by hand
+— it enforces the one-top-level-directory layout and strips macOS metadata:
+
+```
+cd ../sls-faculty-ai-skills
+for s in $(python3 -c "import re,pathlib;print(' '.join(re.findall(r'\"([a-z-]+)\"', re.search(r'RESEARCH_SLUGS = \[(.*?)\]', pathlib.Path('website/app/lib/collections.ts').read_text(), re.S).group(1))))"); do
+  python3 scripts/validate_skill_package.py skills/$s
+  python3 scripts/package_skill.py skills/$s --output /tmp/faculty/$s.zip
+done
+cp /tmp/faculty/*.zip ../<this repo>/skills/sls-faculty-research/
+```
+
+Then `python3 scripts/license-skills.py` and
+`python3 scripts/build-skill-bundles.py` here.
+
+Because two licences now live in one repository, both scripts are licence-aware
+rather than hardcoded to Apache. `license-skills.py` maps a path prefix to the
+directory holding the pair to insert (longest prefix wins; the fallback is the
+repository root). `build-skill-bundles.py` reads `licence` and `licenceDir` from
+each entry in `skills/bundles.json` — the sentence printed in the set README, and
+where its `LICENSE`/`NOTICE` come from. **When a set arrives from somewhere new,
+add a mapping; never change the fallback.**
+
+The section on `skills.html` says on its face that the set is MIT and from another
+project, and the page's **Licence** section carries the same in full. The set is
+for faculty rather than students, which is why the hero eyebrow reads "For law
+students and faculty" and the section header says "For faculty".
 
 ### The teaching packet
 
