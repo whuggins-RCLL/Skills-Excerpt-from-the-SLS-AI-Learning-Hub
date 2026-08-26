@@ -62,10 +62,9 @@ walkthrough, including a short screen recording for each platform.
 
 LICENCE
 -------
-These skills are licensed under the Apache License, Version 2.0. The full text
-is in LICENSE beside this file, and again inside each skill ZIP, along with the
-copyright notice in NOTICE. You may use, modify, and redistribute them on those
-terms.
+{licence}The full text is in LICENSE beside this file, and again inside each
+skill ZIP, along with the copyright notice in NOTICE. Keep both with the files
+if you pass them on.
 
 BEFORE YOU USE THESE
 --------------------
@@ -91,6 +90,7 @@ def readme_for(bundle: dict) -> bytes:
         summary="\n".join(textwrap.wrap(bundle["summary"], 76)),
         contents=contents,
         count=len(members),
+        licence="\n".join(textwrap.wrap(bundle["licence"], 76)) + "\n",
     )
     return text.encode("utf-8")
 
@@ -108,10 +108,12 @@ def build(bundle: dict) -> bytes:
 
         # Every member ZIP carries these too, but a reader who unzips the set
         # and looks at the folder should not have to open one to find them.
+        # "licenceDir" points at whichever pair governs this set.
+        source = ROOT / bundle.get("licenceDir", ".")
         for name in ("LICENSE", "NOTICE"):
             info = zipfile.ZipInfo(f"{folder}/{name}", FIXED_TIME)
             info.external_attr = 0o644 << 16
-            archive.writestr(info, (ROOT / name).read_bytes())
+            archive.writestr(info, (source / name).read_bytes())
 
         for index, member in enumerate(bundle["members"], 1):
             source = ROOT / member["file"]
