@@ -1,4 +1,4 @@
-"""Write the canonical header and excerpt banner into every page.
+"""Write the canonical header, excerpt banner, and credit line into every page.
 
 This repository is an *excerpt* of the AI Learning Hub: only the AI Skills
 section and the agent material that accompanies it. The pages cannot each carry
@@ -11,10 +11,14 @@ The excerpt is deliberately a closed set of pages. It says what it is an excerpt
 of, but it does not link to the hub it came from and does not send readers there,
 so nothing here — banner or body copy — carries that address.
 
-There is no footer. The pages carried one holding outbound Stanford links, which
-was the last thing on every page inviting a reader off it; with those gone there
-was nothing left for a footer to hold. This still strips any footer it finds, so
-a block pasted back into a page does not survive the next run.
+The site footer of outbound Stanford links is gone -- it made the last thing on
+every page an invitation to leave it. This still strips any `.footer` block it
+finds, so one pasted back into a page does not survive the next run.
+
+What ends a page instead is one quiet line naming the copyright holder and the
+licence, with nothing to click. It is a <footer> element because that is what
+holds a copyright notice, and it carries its own class so the stripping above
+cannot reach it.
 """
 
 import re
@@ -69,8 +73,19 @@ def banner_html():
 </aside>"""
 
 
+# Copyright and licence, in one line, as the last thing on the page. Deliberately
+# not a link: the terms are set out in full on skills.html and inside every skill
+# ZIP, and a link here would be one more way off a site built not to have any.
+def credit_html():
+    return """<footer class="pageCredit">
+  <p>Copyright 2026 Stanford Law School &middot; Skills licensed under Apache 2.0</p>
+</footer>"""
+
+
 HEADER_RE = re.compile(r'<header class="siteHeader">.*?</header>', re.S)
 BANNER_RE = re.compile(r'<aside class="excerptBanner".*?</aside>', re.S)
+CREDIT_RE = re.compile(r'\n*<footer class="pageCredit">.*?</footer>', re.S)
+MAIN_END_RE = re.compile(r'\n</main>')
 # Matched only so it can be removed, along with the blank lines around it.
 FOOTER_RE = re.compile(r'\n*<footer class="footer">.*?</footer>\n*', re.S)
 
@@ -94,6 +109,15 @@ def main():
             text = HEADER_RE.sub(lambda m: m.group(0) + "\n\n" + banner_html(), text, count=1)
 
         text = FOOTER_RE.sub("\n\n", text, count=1)
+
+        # First run appends the credit after </main>; later runs replace it.
+        if CREDIT_RE.search(text):
+            text = CREDIT_RE.sub(lambda _: "\n\n" + credit_html(), text, count=1)
+        else:
+            if not MAIN_END_RE.search(text):
+                sys.exit(f"{page.name}: no </main> to put the credit after")
+            text = MAIN_END_RE.sub(
+                lambda m: m.group(0) + "\n\n" + credit_html(), text, count=1)
 
         if text != original:
             page.write_text(text)

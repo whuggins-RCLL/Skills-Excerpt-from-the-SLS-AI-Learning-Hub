@@ -437,6 +437,25 @@ a.card:hover, .card.interactive:hover {
   border-radius: 6px 14px 14px 6px;
 }
 .excerptBanner strong { color: var(--ink); }
+
+/* ---- Page credit -----------------------------------------------------------
+   One quiet line closing every page: copyright and licence, no links. It aligns
+   with the content column and takes over the space `main` would otherwise leave
+   below its last element, so the page ends in about the same place it did with
+   no credit at all. */
+.pageCredit {
+  max-width: var(--maxw);
+  margin: auto;
+  padding: 0 clamp(1.1rem, 4vw, 3rem) 2.6rem;
+}
+main:has(+ .pageCredit) { padding-bottom: 2.2rem; }
+.pageCredit p {
+  margin: 0;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--glass-hairline);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
 table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; }
 th, td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--glass-hairline); vertical-align: top; }
 th { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }

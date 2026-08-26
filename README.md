@@ -72,8 +72,9 @@ things went with them that are worth naming:
   ordinary relative links.
 - **Every route off the site.** The four in-content mentions of the PAUSE Rule are
   plain text rather than links, the banner names the hub without addressing it,
-  and the footer of outbound Stanford links is gone entirely. Driving traffic
-  elsewhere is the thing this excerpt exists to avoid, so a link out is a bug.
+  and the footer of outbound Stanford links is gone entirely — what closes a page
+  now is an unlinked copyright and licence line. Driving traffic elsewhere is the
+  thing this excerpt exists to avoid, so a link out is a bug.
   `scripts/check-links.py` fails if any relative reference or in-page anchor stops
   resolving.
 - **The site search.** `search.html` and its index answered from these pages only,
@@ -92,17 +93,23 @@ Under the bar, on every page, sits the excerpt banner: one line saying these pag
 are the AI Skills section of the library's AI Learning Hub rather than the hub
 itself. It names the source and stops there.
 
-**There is no footer.** The pages carried one holding outbound Stanford links —
-the AI Initiative, the library, Responsible AI, the SLS AI policy — which made the
-last thing on every page an invitation to leave it. With those gone there was
-nothing left for a footer to hold, so the element is gone rather than left empty.
+**The site footer is gone.** The pages carried one holding outbound Stanford links
+— the AI Initiative, the library, Responsible AI, the SLS AI policy — which made
+the last thing on every page an invitation to leave it.
 
-The bar and the banner are the same markup on every page, which no one should be
-retyping six times. They are written by `scripts/nav.py`: it replaces the
-`.siteHeader` and `.excerptBanner` blocks in each file in place, strips any
-`.footer` block it finds, and is idempotent. The committed pages stay plain HTML
-with no build step, so an ordinary edit is still an ordinary edit; re-run the
-script after changing a nav entry or the banner text.
+What closes a page instead is `.pageCredit`: one quiet line, *Copyright 2026
+Stanford Law School · Skills licensed under Apache 2.0*, with nothing to click.
+The licence terms are set out in full at the foot of `skills.html` and inside
+every skill ZIP, so a link here would only be one more way off a site built not to
+have any. It is a `<footer>` element because that is what holds a copyright
+notice, and it carries its own class so the `.footer` stripping cannot reach it.
+
+The bar, the banner, and the credit line are the same markup on every page, which
+no one should be retyping six times. They are written by `scripts/nav.py`: it
+replaces the `.siteHeader`, `.excerptBanner`, and `.pageCredit` blocks in each file
+in place, strips any old `.footer` block it finds, and is idempotent. The committed
+pages stay plain HTML with no build step, so an ordinary edit is still an ordinary
+edit; re-run the script after changing a nav entry, the banner, or the credit.
 
 ```
 python3 scripts/nav.py
@@ -324,9 +331,9 @@ or `NOTICE` produces no git diff. Re-run `build-skill-bundles.py` afterwards: th
 set ZIPs hold the member ZIPs byte for byte, so relicensing a skill changes them
 too.
 
-The terms are stated for readers in two places on the site — a **Licence** section
-at the foot of `skills.html`, where the downloads are, and a troubleshooting entry
-on `install.html`.
+The terms are stated for readers in three places on the site — a **Licence**
+section at the foot of `skills.html`, where the downloads are, a troubleshooting
+entry on `install.html`, and the credit line closing every page.
 
 Two things the Apache licence does not cover, and which the site says plainly: the
 Stanford name and marks are not licensed by it, and adapting a skill carries over
