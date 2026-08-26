@@ -1,21 +1,24 @@
 # AI Skills and agents — an excerpt of the SLS AI Learning Hub
 
 **This repository is an excerpt.** It holds the AI Skills section of the Robert
-Crown Law Library's [AI Learning Hub](https://ailearninghub.law.stanford.edu) and
-the agent material that accompanies it, pulled out so it can be presented and
-shared on its own. The rest of the hub — tutorials, AI tools, events, the reading
-lists, The AI Upload, and faculty support — is not here and is not reachable from
-here; every page says so in a banner under the navigation, and links out to the
-full hub for the parts that are missing.
+Crown Law Library's AI Learning Hub and the agent material that accompanies it,
+pulled out so it can be presented and shared on its own. The rest of the hub —
+tutorials, AI tools, events, the reading lists, The AI Upload, and faculty
+support — is not here.
 
-The full hub lives in
-[`whuggins-RCLL/AI-Learning-Hub`](https://github.com/whuggins-RCLL/AI-Learning-Hub).
-Edit content there, not here: this copy is a snapshot for presentation, so a change
-made here does not reach the site readers use.
+**It is a closed set of pages, deliberately.** Every page names what it is an
+excerpt of, in a banner under the navigation, but nothing here links to the hub
+or carries its address: this site exists so the skills can be shown without
+sending an audience to the main site. If you add a page, keep it that way.
+
+Content is maintained in the hub repository, not here. This copy is a snapshot
+for presentation, so a change made here does not reach the site readers use.
 
 Everything the skills need is included — all twenty-one skill ZIPs, the three set
 downloads, and the five practice drafts — so the downloads on `skills.html` work
 exactly as they do on the hub.
+
+The skills are licensed under Apache 2.0; see [Licence](#licence).
 
 ## The site
 
@@ -45,42 +48,50 @@ python3 -m http.server 8000
 | `teach-this-writing-partner.html` | Workshop packet: set-up, activities, discussion, notes, glossary |
 | `case-study-anthropic-legal-skills.html` | Case study: reverse-engineering Anthropic's AI governance legal skills |
 | `assets/copy-code.js` | The copy button on the case study's skill template |
-| `search.html` | Search across this excerpt, answered in the browser |
-| `assets/search.js` | The matching and drawing behind it |
-| `assets/search-index.js` | The index it searches (generated) |
-| `scripts/build-search-index.mjs` | Builds that index from the rendered pages |
 | `assets/styles.css` | The design system |
 | `assets/hub.js` | The theme toggle and the collapsing navigation |
 | `scripts/nav.py` | Writes the header, the excerpt banner, and the footer into every page |
 | `vercel.json`, `customHttp.yml` | Who is allowed to frame the site |
+| `LICENSE`, `NOTICE` | Apache 2.0, and the copyright notice that goes with it |
+| `scripts/license-skills.py` | Puts both inside every skill ZIP |
+| `scripts/check-links.py` | Fails if a link or anchor stops resolving |
 
 ### What was removed, and why
 
 Paring the hub down to this section meant deleting fifteen pages and the assets
 that only they used — the tutorial library, the tool directory, the reading lists,
-events, the PAUSE Rule, the two full-page embeds, and the maintenance pages. Two
+events, the PAUSE Rule, the two full-page embeds, and the maintenance pages. Three
 things went with them that are worth naming:
 
 - **The Google Sites embed layer** (`assets/embed.js`, `assets/embed-map.js`,
   `embed-codes.html`, `scripts/build-embed-map.py`). On the hub it rewrites every
-  in-site link to the matching `ailearninghub.law.stanford.edu` page whenever the
-  hub is read inside a Google Sites frame. This excerpt is a standalone site, so
-  that rewriting would send a reader off to the full hub instead of to the next
-  page here. All of it is gone; links are ordinary relative links.
-- **Links to pages that are no longer here.** The four places that pointed at the
-  PAUSE Rule now point at it on the full hub, marked as external, rather than at a
-  page this site does not have. `scripts/check-links.py` fails if any relative
-  reference or in-page anchor stops resolving.
+  in-site link to the matching page on the hub's own domain whenever the hub is
+  read inside a Google Sites frame. This excerpt is a standalone site, so that
+  rewriting would send every click off to the full hub instead of to the next page
+  here — the opposite of what this copy is for. All of it is gone; links are
+  ordinary relative links.
+- **Every route back to the hub.** The four in-content mentions of the PAUSE Rule
+  are plain text rather than links, the banner names the hub without addressing
+  it, and the footer carries outbound Stanford links only. Driving traffic to the
+  main site is the thing this excerpt exists to avoid, so a link there is a bug.
+  `scripts/check-links.py` fails if any relative reference or in-page anchor stops
+  resolving.
+- **The site search.** `search.html` and its index answered from these pages only,
+  and the header no longer carries a search box or a Home button — the logo is the
+  way home. With no entry point the page was dead weight, so it and
+  `scripts/build-search-index.mjs` went with it. Restoring it means restoring
+  those files and the `.headerTools` block in `nav.py`.
 
 ### Navigation
 
-The header's primary row holds the five destinations of the excerpt: Skills,
-Install a skill, Writing Partner agent, Workshop packet, and Case study. A utility
-row above it places a Home button and a site-scoped search at the top right.
+The header holds the five destinations of the excerpt and nothing else: Skills,
+Install a skill, Writing Partner agent, Workshop packet, and Case study. There is
+no search box and no Home button — the logo is the link home.
 
-Under the bar, on every page, sits the excerpt banner — one line saying this is a
-section of the AI Learning Hub rather than the hub, with a link to the full site.
-The footer repeats that link and otherwise keeps only outbound Stanford links.
+Under the bar, on every page, sits the excerpt banner: one line saying these pages
+are the AI Skills section of the library's AI Learning Hub rather than the hub
+itself. It names the source and stops there. The footer carries outbound Stanford
+links only.
 
 The bar, the banner, and the footer are the same markup on every page, which no one
 should be retyping seven times. They are written by `scripts/nav.py`: it replaces
@@ -93,44 +104,19 @@ entry or the banner text.
 python3 scripts/nav.py
 ```
 
-### Search
-
-`search.html` answers from an index of **this excerpt and nothing else**. It does
-not reach the rest of the hub: a reader searching here for "tutorials" gets
-nothing, which is honest about what this site holds.
-
-The index is generated from the **rendered** pages rather than from the HTML, so it
-holds what a reader actually sees and keeps working if a page changes how it is
-built. Entries are per card where a page is built from cards and per id'd section
-otherwise, so a result links to the place it was found rather than the top of a long
-page.
-
-```
-node scripts/build-search-index.mjs            # write assets/search-index.js
-node scripts/build-search-index.mjs --check    # non-zero if it is out of date
-```
-
-Re-run it after editing page content and commit the result. It is the one script
-here that needs Playwright, so it is a maintainer step rather than a build step —
-`PLAYWRIGHT_PATH=/path/to/playwright/index.js` points it at a global install if you
-do not want a local dependency. The index is currently 119 entries and about 100 kB,
-loaded on `search.html` alone and nowhere else.
-
-Matching is prefix-per-word ("cita" finds "citation", "ation" does not), all terms
-must appear, and a heading hit outweighs a passing mention. Snippets are built as
-text nodes and `<mark>` elements rather than markup, so a query can never become
-HTML.
-
 ### Checks
 
 Three scripts verify the site rather than build it. Run all three before pushing:
 
 ```
 python3 scripts/check-links.py                  # every relative link and anchor resolves
+python3 scripts/license-skills.py --check       # every skill ZIP carries LICENSE and NOTICE
 python3 scripts/build-skill-bundles.py --check  # the set ZIPs match the manifest
 python3 scripts/inject-agent-instructions.py --check
-node scripts/build-search-index.mjs --check     # needs Playwright
 ```
+
+`check-links.py` also fails on a link to a page that is not part of this excerpt,
+which is what catches a stray route back to the hub.
 
 ### Styling
 
@@ -141,7 +127,8 @@ part an unmodified copy is deliberate: a change to the design system is a re-cop
 plus a look at the additions, not a merge.
 
 Rules for pages that are not in this excerpt are left in place rather than pruned,
-so the file stays a clean copy of the design system plus additions.
+so the file stays a clean copy of the design system plus additions. That includes
+`.siteSearch` and `.homeButton`, which nothing uses now.
 
 `vercel.json` and `customHttp.yml` each carry one header: a `frame-ancestors`
 policy permitting the hub domain and Google Sites to frame the site. They are kept
@@ -306,6 +293,44 @@ The skills use a problem-first approach and incorporate the PAUSE Rule, Stanford
 School student AI guidance, Responsible AI at Stanford, productive struggle,
 legal-source verification, structured and manageable data, transparent AI-use logs,
 and accurate non-anthropomorphic explanations of AI systems.
+
+## Licence
+
+The skills are released under the **Apache License, Version 2.0** — `LICENSE`
+holds the text verbatim and `NOTICE` holds the copyright line, both at the
+repository root.
+
+The licence has to travel with the file, not just sit in the repository. A skill
+is distributed as a ZIP a student downloads and uploads to ChatGPT or Claude, and
+that ZIP usually goes on without the site it came from; section 4(a) asks a
+redistributor to hand on a copy of the License with the work, and someone holding
+only the ZIP should be able to see what they may do with it. So every skill ZIP
+carries `LICENSE` and `NOTICE` beside its `SKILL.md` — at the archive root for the
+flat ones, inside the top-level folder for the ones that have one — and each set
+ZIP carries both again next to its `README.txt`.
+
+```
+python3 scripts/license-skills.py          # add or refresh both files in every skill ZIP
+python3 scripts/license-skills.py --check  # non-zero if any ZIP is missing them
+```
+
+Existing entries are copied across with their own metadata untouched and the two
+added entries carry a fixed timestamp, so re-running without a change to `LICENSE`
+or `NOTICE` produces no git diff. Re-run `build-skill-bundles.py` afterwards: the
+set ZIPs hold the member ZIPs byte for byte, so relicensing a skill changes them
+too.
+
+The terms are stated for readers in two places on the site — a **Licence** section
+at the foot of `skills.html`, where the downloads are, and a troubleshooting entry
+on `install.html`.
+
+Two things the Apache licence does not cover, and which the site says plainly: the
+Stanford name and marks are not licensed by it, and adapting a skill carries over
+no endorsement by Stanford Law School or the Robert Crown Law Library.
+
+The case study discusses Anthropic's [Claude for Legal](https://github.com/anthropics/claude-for-legal),
+which is separately licensed Apache-2.0 by Anthropic. That is a different work and
+a different copyright holder; nothing here is derived from it.
 
 ---
 

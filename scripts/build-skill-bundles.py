@@ -57,8 +57,15 @@ skill file.
 You add a skill once and it stays available across chats. Start a fresh chat
 after installing, and name the skill in your first message.
 
-The "Install a skill" page on the AI Learning Hub has the full walkthrough,
-including a short screen recording for each platform.
+The "Install a skill" page that came with these skills has the full
+walkthrough, including a short screen recording for each platform.
+
+LICENCE
+-------
+These skills are licensed under the Apache License, Version 2.0. The full text
+is in LICENSE beside this file, and again inside each skill ZIP, along with the
+copyright notice in NOTICE. You may use, modify, and redistribute them on those
+terms.
 
 BEFORE YOU USE THESE
 --------------------
@@ -98,6 +105,13 @@ def build(bundle: dict) -> bytes:
         info = zipfile.ZipInfo(f"{folder}/README.txt", FIXED_TIME)
         info.external_attr = 0o644 << 16
         archive.writestr(info, readme_for(bundle))
+
+        # Every member ZIP carries these too, but a reader who unzips the set
+        # and looks at the folder should not have to open one to find them.
+        for name in ("LICENSE", "NOTICE"):
+            info = zipfile.ZipInfo(f"{folder}/{name}", FIXED_TIME)
+            info.external_attr = 0o644 << 16
+            archive.writestr(info, (ROOT / name).read_bytes())
 
         for index, member in enumerate(bundle["members"], 1):
             source = ROOT / member["file"]
