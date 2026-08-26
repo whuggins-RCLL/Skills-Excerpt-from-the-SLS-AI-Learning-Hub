@@ -14,9 +14,9 @@ sending an audience to the main site. If you add a page, keep it that way.
 Content is maintained in the hub repository, not here. This copy is a snapshot
 for presentation, so a change made here does not reach the site readers use.
 
-Everything the skills need is included — all twenty-one skill ZIPs, the three set
+Everything the skills need is included — all fifteen skill ZIPs, the two set
 downloads, and the five practice drafts — so the downloads on `skills.html` work
-exactly as they do on the hub.
+as they do on the hub.
 
 The skills are licensed under Apache 2.0; see [Licence](#licence).
 
@@ -32,7 +32,7 @@ python3 -m http.server 8000
 | File | What it is |
 | --- | --- |
 | `index.html` | The excerpt's landing page |
-| `skills.html` | The twenty-one downloadable AI skills, the three one-click sets, and the practice drafts |
+| `skills.html` | The fifteen downloadable AI skills, the two one-click sets, and the practice drafts |
 | `skills/` | The skill ZIPs themselves |
 | `skills/bundles.json` | Which skills each set holds, and in what order |
 | `scripts/build-skill-bundles.py` | Builds `assets/bundles/*.zip` from that manifest |
@@ -196,14 +196,17 @@ one and upload it to ChatGPT or Claude; you never unzip it.
 4. SLS Legal Research Learning Coach
 5. SLS AI Verification Lab
 
-### Optional tool studios
+### The tool studios are not in this copy
 
-- SLS Harvey Learning Studio
-- SLS Legora Learning Studio
-- SLS LexText Learning Studio
-- SLS CICERO Oral Argument Studio
-- SLS Gemini Notebook Learning Studio (formerly NotebookLM)
-- SLS AI Tool Explorer
+The hub also carries six guided studios — Harvey, Legora, LexText, CICERO, Gemini
+Notebook, and the AI Tool Explorer — as a third set. They are **deliberately not
+distributed here.** They walk through licensed products a particular school has
+access to, and this copy is shown to people outside it.
+
+Removing them meant deleting six skill ZIPs, the Tool Studios set ZIP, its entry
+in `skills/bundles.json`, its card in **Skill sets**, and the whole **Tool
+studios** section of `skills.html`. If you re-sync this copy against the hub, do
+not bring them back.
 
 ### Writing partner
 
@@ -240,8 +243,8 @@ swept into a set either.
 
 ### Skill sets
 
-The top of `skills.html` offers three sets as one-click downloads: the Writing Partner
-Set (10), the Core Pathway Set (5), and the Tool Studios Set (6). A set is a single ZIP
+The top of `skills.html` offers two sets as one-click downloads: the Writing Partner
+Set (10) and the Core Pathway Set (5). A set is a single ZIP
 holding the member skill ZIPs **byte for byte**, plus a README naming what is inside and
 how to install it — so a set and the individual buttons below it hand out the same
 files, and there is no second copy of a skill to keep in step.
