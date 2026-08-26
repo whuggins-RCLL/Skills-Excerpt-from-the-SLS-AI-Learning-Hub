@@ -410,6 +410,33 @@ a.card:hover, .card.interactive:hover {
   border-left: 4px solid var(--gold);
   padding: 1rem 1.15rem; border-radius: 8px 16px 16px 8px;
 }
+
+/* ---- Excerpt banner --------------------------------------------------------
+   This site is one section of the AI Learning Hub, so every page says so once,
+   directly under the bar. The bar is fixed, and `main` normally carries the top
+   padding that clears it; when the banner is present it clears the bar instead
+   and `main` follows on immediately, so the two do not both leave a gap. */
+.excerptBanner {
+  max-width: var(--maxw);
+  margin: auto;
+  padding: clamp(6rem, 10vw, 7.5rem) clamp(1.1rem, 4vw, 3rem) 0;
+}
+.excerptBanner + main { padding-top: 1.5rem; }
+/* The banner already separates the bar from the page, so the first section
+   does not need its own leading margin on top of that. */
+.excerptBanner + main > :first-child { margin-top: 0; }
+.excerptBanner p {
+  margin: 0;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-left: 4px solid var(--gold);
+  border-radius: 6px 14px 14px 6px;
+}
+.excerptBanner strong { color: var(--ink); }
 table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; }
 th, td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--glass-hairline); vertical-align: top; }
 th { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }

@@ -7,13 +7,12 @@
 // The header search used to hand the query to Google with a site: filter, which
 // only ever worked if Google had crawled the deployment. It had not, so the
 // search box returned nothing on a site whose pages plainly contain the words.
-// The hub is small enough — about 136 kB of text across sixteen pages — to carry
-// its own index and answer from it, with no third party and nothing to crawl.
+// This excerpt is small enough — six pages — to carry its own index and answer
+// from it, with no third party and nothing to crawl. It covers this site only:
+// the rest of the hub is not in the index and is not searched from here.
 //
-// The pages are read from a rendered browser rather than from the HTML, because
-// three of them build their content from arrays at the bottom of the file
-// (tutorials, the library display, Your AI Stack). Reading the DOM after render
-// indexes what a reader actually sees, and keeps working when a page changes
+// The pages are read from a rendered browser rather than from the HTML, so the
+// index holds what a reader actually sees, and keeps working if a page changes
 // how it is built.
 //
 // Needs Playwright, like nothing else in this repository, so it is a maintainer
@@ -29,10 +28,8 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "assets", "search-index.js");
 
-// The two full-page frames carry someone else's site and nothing of ours, the
-// search page itself would only ever match its own furniture, and the embed-code
-// list is a maintenance page no reader is looking for.
-const SKIP = new Set(["faculty.html", "ai-upload.html", "search.html", "embed-codes.html"]);
+// The search page itself would only ever match its own furniture.
+const SKIP = new Set(["search.html"]);
 
 const TYPES = {
   ".html": "text/html", ".css": "text/css", ".js": "text/javascript",
