@@ -1,5 +1,10 @@
 """Write the canonical header, excerpt banner, and credit line into every page.
 
+It also owns the <html> tag and the inline theme script, because both differ by
+zone and both have to agree with DEMO_PAGES: the demo carries data-zone="demo",
+which is what swaps the palette to WolfCon blue, and both zones open in light
+mode unless a reader has chosen otherwise.
+
 The site has two zones and the furniture differs between them.
 
 `index.html` is the demo home for a conference talk, and `agent-instructions.html`
@@ -92,10 +97,20 @@ def header_html(current):
             cur = ' aria-current="page"' if href == current else ""
             links.append(f'    <a href="{href}"{cur}>{label}</a>')
     joined = "\n".join(links)
+    # The Stanford logo belongs to the excerpt. The demo is WolfCon's, so it gets
+    # a wordmark in the same slot rather than someone else's mark.
+    if current in DEMO_PAGES:
+        mark = ('  <a class="headerWordmark" href="index.html" aria-label="Demo home">\n'
+                '    WolfCon 2026\n'
+                '    <span class="headerWordmarkSub">Agentic AI demos</span>\n'
+                '  </a>')
+    else:
+        mark = ('  <a class="headerLogo" href="index.html" aria-label="Home">\n'
+                '    <img src="assets/images/robert-crown-law-library-logo.svg" '
+                'alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />\n'
+                '  </a>')
     return f"""<header class="siteHeader">
-  <a class="headerLogo" href="index.html" aria-label="Home">
-    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
-  </a>
+{mark}
   <div class="headerNavigation">
     <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
       <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -130,6 +145,14 @@ def credit_html():
 
 
 HEADER_RE = re.compile(r'<header class="siteHeader">.*?</header>', re.S)
+HTML_RE = re.compile(r'<html\b[^>]*>')
+SCHEME_RE = re.compile(r'<meta name="color-scheme" content="[^"]*" />')
+# The inline script runs before first paint so a reader who chose a theme never
+# sees the other one flash. Light is the default on both sides now.
+THEME_RE = re.compile(r'<script>try\{document\.documentElement\.setAttribute\(.data-theme.,.*?</script>', re.S)
+THEME_SCRIPT = ("<script>try{document.documentElement.setAttribute('data-theme',"
+                "localStorage.getItem('theme')==='dark'?'dark':'light')}"
+                "catch(e){document.documentElement.setAttribute('data-theme','light')}</script>")
 BANNER_RE = re.compile(r'\n*<aside class="excerptBanner".*?</aside>\n*', re.S)
 CREDIT_RE = re.compile(r'\n*<footer class="pageCredit">.*?</footer>', re.S)
 MAIN_END_RE = re.compile(r'\n</main>')
@@ -144,6 +167,15 @@ def main():
     for page in pages:
         text = page.read_text()
         original = text
+
+        zone = ' data-zone="demo"' if page.name in DEMO_PAGES else ""
+        if not HTML_RE.search(text):
+            sys.exit(f"{page.name}: no <html> tag")
+        text = HTML_RE.sub(f'<html lang="en" data-theme="light"{zone}>', text, count=1)
+        text = SCHEME_RE.sub('<meta name="color-scheme" content="light dark" />', text, count=1)
+        if not THEME_RE.search(text):
+            sys.exit(f"{page.name}: no inline theme script")
+        text = THEME_RE.sub(lambda _: THEME_SCRIPT, text, count=1)
 
         if not HEADER_RE.search(text):
             sys.exit(f"{page.name}: no .siteHeader block to replace")

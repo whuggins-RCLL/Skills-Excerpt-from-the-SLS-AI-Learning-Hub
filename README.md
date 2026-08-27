@@ -142,6 +142,39 @@ in that set; anything else is treated as part of the excerpt and gets the banner
 The logo links to `index.html` from everywhere, because that is the site root now;
 inside the excerpt, "up" is `excerpt.html`, which is what the breadcrumbs say.
 
+### Two palettes
+
+The excerpt keeps Stanford cardinal on warm paper. The demo carries WolfCon blue
+on cool paper, and shows a **WolfCon 2026** wordmark where the excerpt shows the
+Robert Crown Law Library logo — the demo is not Stanford's, so it does not fly
+Stanford's mark.
+
+All of it is token swaps on `<html data-zone="demo">`, which `nav.py` writes from
+`DEMO_PAGES`, plus a short block for the handful of rules where a brand colour was
+written literally instead of tokenised. The excerpt renders exactly as it did.
+
+Two colours were given: dark azure `#063654` and azure `#2a98cb`. Neither works as
+a button fill in both themes — azure carries white text at only 3.3:1, and dark
+azure vanishes into a dark background — so each is the fill in the theme it suits,
+with one mid-tone (`#12678f`, derived between them) where dark mode needs a fill
+that still carries white.
+
+**Both zones default to light**, with dark still one click away and remembered.
+`nav.py` owns the `<html>` tag and the inline pre-paint theme script for that
+reason: the default has to agree across eight pages.
+
+Contrast is measured rather than assumed. `scripts/check-contrast.mjs` renders each
+zone in each theme, reads the computed colours, and fails on anything under WCAG AA
+for its size and weight. Two failures it caught are fixed in the same change:
+
+- **The light theme's gold** was 3.4:1 as eyebrow text — small bold caps need 4.5.
+  Darkened from `#a9791f` to `#8a6015`, 4.8:1. This is the one visible change to
+  the excerpt, and it only mattered once light became the default.
+- **The zone toggle's selected side** was 1.3:1 in light mode: the themed
+  `a[aria-current="page"]` rule is more specific and later in the file, so it won
+  the background and left white text on a near-white fill. The toggle now settles
+  its colours last.
+
 Every page opens its nav with the **zone toggle** — a two-button group, Demo and
 Excerpt, with the current zone filled in. It is one segmented control rather than
 two more links, because choosing a zone is a different kind of move from choosing a
@@ -192,7 +225,11 @@ python3 scripts/check-links.py                  # every relative link and anchor
 python3 scripts/license-skills.py --check       # every skill ZIP carries LICENSE and NOTICE
 python3 scripts/build-skill-bundles.py --check  # the set ZIPs match the manifest
 python3 scripts/inject-agent-instructions.py --check
+node   scripts/check-contrast.mjs               # text clears WCAG AA in both zones, both themes
 ```
+
+`check-contrast.mjs` needs Playwright; `PLAYWRIGHT_PATH=/path/to/playwright/index.js`
+points it at a global install.
 
 `check-links.py` also fails on a link to a page that is not part of this excerpt,
 which is what catches a stray route back to the hub.
