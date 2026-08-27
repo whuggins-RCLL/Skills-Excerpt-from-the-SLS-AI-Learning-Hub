@@ -3,8 +3,15 @@
 The site has two zones and the furniture differs between them.
 
 `index.html` is the demo home for a conference talk, and `agent-instructions.html`
-sits with it. Their nav is one link, to the card that holds everything else, so the
-demo stays what it is: a video, a set of downloads, and a way in.
+sits with it. The demo stays what it is -- a video, a set of downloads, and a way
+in -- so its nav is only the zone toggle.
+
+Both zones open with that toggle: a two-button group, Demo and Excerpt, marking
+which side you are on. It is one control rather than two more nav links, because
+the choice between the zones is not the same kind of choice as the one between
+pages within a zone. Being *on* excerpt.html makes the Excerpt button the current
+page; being on a page behind it makes the button the current section, which is the
+difference between aria-current="page" and aria-current="true".
 
 `excerpt.html` and the five pages behind it are the *excerpt* of the AI Learning
 Hub — the AI Skills section and the agent material with it. They carry the full
@@ -36,30 +43,54 @@ import sys
 # The repository root, relative to this file, so the script runs from anywhere.
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# The demo home. Everything else sits behind the one card it links to, so its
-# nav says exactly that and nothing more.
+# The demo home and the instructions that go with it.
 DEMO_PAGES = {"index.html", "agent-instructions.html"}
-HOME_NAV = [
-    ("excerpt.html", "Excerpt from the SLS AI Learning Hub"),
+
+# The zone toggle, on every page. Each entry is the landing page of a zone and
+# the label on its button.
+ZONES = [
+    ("index.html", "Demo"),
+    ("excerpt.html", "Excerpt"),
 ]
 
-# Inside the excerpt: its own landing page, the skills, how to install one, and
-# the three pages that build on them.
+# Inside the excerpt, after the toggle: the skills, how to install one, and the
+# three pages that build on them. The toggle's Excerpt button is the way to the
+# excerpt's own landing page, so it is not repeated here.
+# Labels are short because the toggle now sits in front of them and the row has
+# to stay one line on a laptop. Each page's own <h1> carries the full name.
 NAV = [
-    ("excerpt.html", "Excerpt home"),
     ("skills.html", "Skills"),
-    ("install.html", "Install a skill"),
-    ("writing-partner-agent.html", "Writing Partner agent"),
-    ("teach-this-writing-partner.html", "Workshop packet"),
+    ("install.html", "Install"),
+    ("writing-partner-agent.html", "Agent"),
+    ("teach-this-writing-partner.html", "Workshop"),
     ("case-study-anthropic-legal-skills.html", "Case study"),
 ]
 
 
+def zone_toggle(current):
+    """The Demo / Excerpt switch that opens the nav on every page."""
+    here = "index.html" if current in DEMO_PAGES else "excerpt.html"
+    buttons = []
+    for href, label in ZONES:
+        if href == current:
+            cur = ' aria-current="page"'      # this very page
+        elif href == here:
+            cur = ' aria-current="true"'      # the zone this page belongs to
+        else:
+            cur = ""
+        buttons.append(f'        <a href="{href}"{cur}>{label}</a>')
+    joined = "\n".join(buttons)
+    return (f'      <span class="zoneToggle" role="group" aria-label="Switch between the demo and the excerpt">\n'
+            f'{joined}\n'
+            f'      </span>')
+
+
 def header_html(current):
-    links = []
-    for href, label in (HOME_NAV if current in DEMO_PAGES else NAV):
-        cur = ' aria-current="page"' if href == current else ""
-        links.append(f'    <a href="{href}"{cur}>{label}</a>')
+    links = [zone_toggle(current)]
+    if current not in DEMO_PAGES:
+        for href, label in NAV:
+            cur = ' aria-current="page"' if href == current else ""
+            links.append(f'    <a href="{href}"{cur}>{label}</a>')
     joined = "\n".join(links)
     return f"""<header class="siteHeader">
   <a class="headerLogo" href="index.html" aria-label="Home">

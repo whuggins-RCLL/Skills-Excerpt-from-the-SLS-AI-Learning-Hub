@@ -134,13 +134,30 @@ every page, and it now distinguishes two zones:
 
 | | Pages | Nav | Banner |
 | --- | --- | --- | --- |
-| Demo | `index.html`, `agent-instructions.html` | One link, to the excerpt card | No |
-| Excerpt | `excerpt.html` and the five pages under it | Six links across the section | Yes |
+| Demo | `index.html`, `agent-instructions.html` | The zone toggle, alone | No |
+| Excerpt | `excerpt.html` and the five pages under it | The toggle, then five section links | Yes |
 
 `DEMO_PAGES` in that script is the whole switch. A page added to the demo zone goes
 in that set; anything else is treated as part of the excerpt and gets the banner.
 The logo links to `index.html` from everywhere, because that is the site root now;
 inside the excerpt, "up" is `excerpt.html`, which is what the breadcrumbs say.
+
+Every page opens its nav with the **zone toggle** — a two-button group, Demo and
+Excerpt, with the current zone filled in. It is one segmented control rather than
+two more links, because choosing a zone is a different kind of move from choosing a
+page inside one, and a reader in the middle of the excerpt needs one obvious way
+back to the demo.
+
+Which side is lit is the *zone* the page belongs to, not always the page itself: on
+`skills.html` the Excerpt button is the current section. Both look the same, and the
+difference is carried in `aria-current` — `"page"` on a zone's own landing page,
+`"true"` on the pages behind it.
+
+The section labels are short (Install, Agent, Workshop) because the toggle now sits
+in front of them and the row has to survive a laptop. It holds one line down to
+about 1100px, wraps to two below that, and becomes the collapsed menu at 860px where
+the toggle stretches to a full-width row. Each page's own `<h1>` carries the full
+name, so nothing is lost by the short label.
 
 ### The demo recording
 

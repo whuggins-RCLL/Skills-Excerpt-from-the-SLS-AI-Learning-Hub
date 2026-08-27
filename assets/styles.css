@@ -215,6 +215,48 @@ p { margin: 0 0 0.9rem; }
   display: inline-flex; align-items: center; gap: 0.3rem;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
 }
+
+/* ---- Zone toggle -----------------------------------------------------------
+   The site is two zones -- the conference demo, and the excerpt behind it --
+   and this switches between them. It is one segmented control rather than two
+   more nav links, because choosing a zone is a different kind of move from
+   choosing a page inside one. The whole group gets the pill border; the buttons
+   inside share it, so it reads as a switch with a side selected.
+
+   The selected side is whichever zone the current page belongs to, which is not
+   always the page itself: on skills.html the Excerpt button is the current
+   section, not the current page. Both states look the same, and the difference
+   is carried in aria-current for anyone listening. */
+.zoneToggle {
+  display: inline-flex; align-items: center;
+  padding: 2px; margin-right: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(10, 8, 7, 0.28);
+}
+:root[data-theme="light"] .zoneToggle {
+  border-color: rgba(28, 26, 23, 0.22);
+  background: rgba(28, 26, 23, 0.05);
+}
+.siteHeader nav .zoneToggle a {
+  padding: 0.38rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 650;
+  border-radius: 999px;
+}
+.siteHeader nav .zoneToggle a[aria-current] {
+  background: var(--cardinal);
+  color: #fff;
+  box-shadow: none;
+}
+.siteHeader nav .zoneToggle a[aria-current]:hover { background: var(--cardinal-bright); color: #fff; }
+
+/* In the collapsed menu the nav is a stretched column, so the toggle becomes a
+   full-width row with the two sides splitting it evenly. */
+@media (max-width: 860px) {
+  .zoneToggle { margin: 0 0 0.4rem; }
+  .siteHeader nav .zoneToggle a { flex: 1; text-align: center; padding: 0.55rem 0.9rem; }
+}
 .externalLinkIcon { font-size: 0.78em; line-height: 1; opacity: 0.85; }
 .siteHeader nav a.navCta {
   background: var(--cardinal); color: #fff;
