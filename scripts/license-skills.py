@@ -47,6 +47,7 @@ ADDED = ("LICENSE", "NOTICE")
 # Longest matching prefix wins, so a set with its own licence is listed above the
 # fallback. Paths are relative to the repository root.
 LICENCES = (
+    ("skills/academic-research/", ROOT / "licenses" / "academic-research"),
     ("skills/sls-faculty-research/", ROOT / "licenses" / "sls-faculty-ai-skills"),
     ("", ROOT),  # this project's own work: Apache 2.0
 )

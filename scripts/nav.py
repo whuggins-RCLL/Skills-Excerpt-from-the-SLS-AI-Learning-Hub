@@ -1,11 +1,19 @@
 """Write the canonical header, excerpt banner, and credit line into every page.
 
-This repository is an *excerpt* of the AI Learning Hub: only the AI Skills
-section and the agent material that accompanies it. The pages cannot each carry
-their own hand-typed copy of the navigation without drifting, so the copy lives
-here and this replaces the block in place. It is idempotent: the committed files
-stay plain HTML with no build step, and a future edit is an ordinary HTML edit.
-Run it again after changing the nav.
+The site has two zones and the furniture differs between them.
+
+`index.html` is the demo home for a conference talk, and `agent-instructions.html`
+sits with it. Their nav is one link, to the card that holds everything else, so the
+demo stays what it is: a video, a set of downloads, and a way in.
+
+`excerpt.html` and the five pages behind it are the *excerpt* of the AI Learning
+Hub — the AI Skills section and the agent material with it. They carry the full
+section nav and the banner saying what they are an excerpt of.
+
+The pages cannot each carry their own hand-typed copy of this without drifting,
+so the copy lives here and this replaces the block in place. It is idempotent:
+the committed files stay plain HTML with no build step, and a future edit is an
+ordinary HTML edit. Run it again after changing the nav.
 
 The excerpt is deliberately a closed set of pages. It says what it is an excerpt
 of, but it does not link to the hub it came from and does not send readers there,
@@ -28,9 +36,17 @@ import sys
 # The repository root, relative to this file, so the script runs from anywhere.
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# Every destination in the excerpt: the skills themselves, how to install one,
-# and the three pages that build on them.
+# The demo home. Everything else sits behind the one card it links to, so its
+# nav says exactly that and nothing more.
+DEMO_PAGES = {"index.html", "agent-instructions.html"}
+HOME_NAV = [
+    ("excerpt.html", "Excerpt from the SLS AI Learning Hub"),
+]
+
+# Inside the excerpt: its own landing page, the skills, how to install one, and
+# the three pages that build on them.
 NAV = [
+    ("excerpt.html", "Excerpt home"),
     ("skills.html", "Skills"),
     ("install.html", "Install a skill"),
     ("writing-partner-agent.html", "Writing Partner agent"),
@@ -41,12 +57,12 @@ NAV = [
 
 def header_html(current):
     links = []
-    for href, label in NAV:
+    for href, label in (HOME_NAV if current in DEMO_PAGES else NAV):
         cur = ' aria-current="page"' if href == current else ""
         links.append(f'    <a href="{href}"{cur}>{label}</a>')
     joined = "\n".join(links)
     return f"""<header class="siteHeader">
-  <a class="headerLogo" href="index.html" aria-label="AI Skills and agents home">
+  <a class="headerLogo" href="index.html" aria-label="Home">
     <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
   </a>
   <div class="headerNavigation">
@@ -83,7 +99,7 @@ def credit_html():
 
 
 HEADER_RE = re.compile(r'<header class="siteHeader">.*?</header>', re.S)
-BANNER_RE = re.compile(r'<aside class="excerptBanner".*?</aside>', re.S)
+BANNER_RE = re.compile(r'\n*<aside class="excerptBanner".*?</aside>\n*', re.S)
 CREDIT_RE = re.compile(r'\n*<footer class="pageCredit">.*?</footer>', re.S)
 MAIN_END_RE = re.compile(r'\n</main>')
 # Matched only so it can be removed, along with the blank lines around it.
@@ -102,11 +118,14 @@ def main():
             sys.exit(f"{page.name}: no .siteHeader block to replace")
         text = HEADER_RE.sub(lambda _: header_html(page.name), text, count=1)
 
-        # First run inserts the banner after the bar; later runs replace it.
-        if BANNER_RE.search(text):
-            text = BANNER_RE.sub(lambda _: banner_html(), text, count=1)
+        # The banner describes the excerpt, so the demo home in front of it does
+        # not get one. Elsewhere: replace it if present, insert it if not.
+        if page.name in DEMO_PAGES:
+            text = BANNER_RE.sub("\n", text, count=1)
+        elif BANNER_RE.search(text):
+            text = BANNER_RE.sub(lambda _: "\n\n" + banner_html() + "\n\n", text, count=1)
         else:
-            text = HEADER_RE.sub(lambda m: m.group(0) + "\n\n" + banner_html(), text, count=1)
+            text = HEADER_RE.sub(lambda m: m.group(0) + "\n\n" + banner_html() + "\n", text, count=1)
 
         text = FOOTER_RE.sub("\n\n", text, count=1)
 
