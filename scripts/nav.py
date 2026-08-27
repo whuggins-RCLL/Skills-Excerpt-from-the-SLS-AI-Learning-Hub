@@ -1,10 +1,22 @@
 """Write the canonical header, excerpt banner, and credit line into every page.
 
+It also owns the <html> tag and the inline theme script, because both differ by
+zone and both have to agree with DEMO_PAGES: the demo carries data-zone="demo",
+which is what swaps the palette to WolfCon blue, and both zones open in light
+mode unless a reader has chosen otherwise.
+
 The site has two zones and the furniture differs between them.
 
 `index.html` is the demo home for a conference talk, and `agent-instructions.html`
-sits with it. Their nav is one link, to the card that holds everything else, so the
-demo stays what it is: a video, a set of downloads, and a way in.
+sits with it. The demo stays what it is -- a video, a set of downloads, and a way
+in -- so its nav is only the zone toggle.
+
+Both zones open with that toggle: a two-button group, Demo and Excerpt, marking
+which side you are on. It is one control rather than two more nav links, because
+the choice between the zones is not the same kind of choice as the one between
+pages within a zone. Being *on* excerpt.html makes the Excerpt button the current
+page; being on a page behind it makes the button the current section, which is the
+difference between aria-current="page" and aria-current="true".
 
 `excerpt.html` and the five pages behind it are the *excerpt* of the AI Learning
 Hub — the AI Skills section and the agent material with it. They carry the full
@@ -36,35 +48,69 @@ import sys
 # The repository root, relative to this file, so the script runs from anywhere.
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# The demo home. Everything else sits behind the one card it links to, so its
-# nav says exactly that and nothing more.
+# The demo home and the instructions that go with it.
 DEMO_PAGES = {"index.html", "agent-instructions.html"}
-HOME_NAV = [
-    ("excerpt.html", "Excerpt from the SLS AI Learning Hub"),
+
+# The zone toggle, on every page. Each entry is the landing page of a zone and
+# the label on its button.
+ZONES = [
+    ("index.html", "Demo"),
+    ("excerpt.html", "Excerpt"),
 ]
 
-# Inside the excerpt: its own landing page, the skills, how to install one, and
-# the three pages that build on them.
+# Inside the excerpt, after the toggle: the skills, how to install one, and the
+# three pages that build on them. The toggle's Excerpt button is the way to the
+# excerpt's own landing page, so it is not repeated here.
+# Labels are short because the toggle now sits in front of them and the row has
+# to stay one line on a laptop. Each page's own <h1> carries the full name.
 NAV = [
-    ("excerpt.html", "Excerpt home"),
     ("skills.html", "Skills"),
-    ("install.html", "Install a skill"),
-    ("writing-partner-agent.html", "Writing Partner agent"),
-    ("teach-this-writing-partner.html", "Workshop packet"),
+    ("install.html", "Install"),
+    ("writing-partner-agent.html", "Agent"),
+    ("teach-this-writing-partner.html", "Workshop"),
     ("case-study-anthropic-legal-skills.html", "Case study"),
 ]
 
 
+def zone_toggle(current):
+    """The Demo / Excerpt switch that opens the nav on every page."""
+    here = "index.html" if current in DEMO_PAGES else "excerpt.html"
+    buttons = []
+    for href, label in ZONES:
+        if href == current:
+            cur = ' aria-current="page"'      # this very page
+        elif href == here:
+            cur = ' aria-current="true"'      # the zone this page belongs to
+        else:
+            cur = ""
+        buttons.append(f'        <a href="{href}"{cur}>{label}</a>')
+    joined = "\n".join(buttons)
+    return (f'      <span class="zoneToggle" role="group" aria-label="Switch between the demo and the excerpt">\n'
+            f'{joined}\n'
+            f'      </span>')
+
+
 def header_html(current):
-    links = []
-    for href, label in (HOME_NAV if current in DEMO_PAGES else NAV):
-        cur = ' aria-current="page"' if href == current else ""
-        links.append(f'    <a href="{href}"{cur}>{label}</a>')
+    links = [zone_toggle(current)]
+    if current not in DEMO_PAGES:
+        for href, label in NAV:
+            cur = ' aria-current="page"' if href == current else ""
+            links.append(f'    <a href="{href}"{cur}>{label}</a>')
     joined = "\n".join(links)
+    # The Stanford logo belongs to the excerpt. The demo is WolfCon's, so it gets
+    # a wordmark in the same slot rather than someone else's mark.
+    if current in DEMO_PAGES:
+        mark = ('  <a class="headerWordmark" href="index.html" aria-label="Demo home">\n'
+                '    WolfCon 2026\n'
+                '    <span class="headerWordmarkSub">Agentic AI demos</span>\n'
+                '  </a>')
+    else:
+        mark = ('  <a class="headerLogo" href="index.html" aria-label="Home">\n'
+                '    <img src="assets/images/robert-crown-law-library-logo.svg" '
+                'alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />\n'
+                '  </a>')
     return f"""<header class="siteHeader">
-  <a class="headerLogo" href="index.html" aria-label="Home">
-    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
-  </a>
+{mark}
   <div class="headerNavigation">
     <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
       <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -99,6 +145,14 @@ def credit_html():
 
 
 HEADER_RE = re.compile(r'<header class="siteHeader">.*?</header>', re.S)
+HTML_RE = re.compile(r'<html\b[^>]*>')
+SCHEME_RE = re.compile(r'<meta name="color-scheme" content="[^"]*" />')
+# The inline script runs before first paint so a reader who chose a theme never
+# sees the other one flash. Light is the default on both sides now.
+THEME_RE = re.compile(r'<script>try\{document\.documentElement\.setAttribute\(.data-theme.,.*?</script>', re.S)
+THEME_SCRIPT = ("<script>try{document.documentElement.setAttribute('data-theme',"
+                "localStorage.getItem('theme')==='dark'?'dark':'light')}"
+                "catch(e){document.documentElement.setAttribute('data-theme','light')}</script>")
 BANNER_RE = re.compile(r'\n*<aside class="excerptBanner".*?</aside>\n*', re.S)
 CREDIT_RE = re.compile(r'\n*<footer class="pageCredit">.*?</footer>', re.S)
 MAIN_END_RE = re.compile(r'\n</main>')
@@ -113,6 +167,15 @@ def main():
     for page in pages:
         text = page.read_text()
         original = text
+
+        zone = ' data-zone="demo"' if page.name in DEMO_PAGES else ""
+        if not HTML_RE.search(text):
+            sys.exit(f"{page.name}: no <html> tag")
+        text = HTML_RE.sub(f'<html lang="en" data-theme="light"{zone}>', text, count=1)
+        text = SCHEME_RE.sub('<meta name="color-scheme" content="light dark" />', text, count=1)
+        if not THEME_RE.search(text):
+            sys.exit(f"{page.name}: no inline theme script")
+        text = THEME_RE.sub(lambda _: THEME_SCRIPT, text, count=1)
 
         if not HEADER_RE.search(text):
             sys.exit(f"{page.name}: no .siteHeader block to replace")

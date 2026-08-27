@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="color-scheme" content="dark light" />
+<meta name="color-scheme" content="light dark" />
 <title>AI Skills and agents | An excerpt of the SLS AI Learning Hub</title>
 <meta name="description" content="An excerpt of the Robert Crown Law Library&#39;s AI Learning Hub: twenty-five downloadable AI skills for law school work, how to install them, and the ChatGPT agent, workshop packet, and case study that go with them." />
 <link rel="stylesheet" href="assets/styles.css" />
 <!-- Applies the saved theme before first paint, so a reader who chose light
      mode does not see a dark flash. Mirrors the faculty site's layout.tsx. -->
-<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='dark'?'dark':'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -23,11 +23,14 @@
       <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
     <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
-    <a href="excerpt.html" aria-current="page">Excerpt home</a>
+      <span class="zoneToggle" role="group" aria-label="Switch between the demo and the excerpt">
+        <a href="index.html">Demo</a>
+        <a href="excerpt.html" aria-current="page">Excerpt</a>
+      </span>
     <a href="skills.html">Skills</a>
-    <a href="install.html">Install a skill</a>
-    <a href="writing-partner-agent.html">Writing Partner agent</a>
-    <a href="teach-this-writing-partner.html">Workshop packet</a>
+    <a href="install.html">Install</a>
+    <a href="writing-partner-agent.html">Agent</a>
+    <a href="teach-this-writing-partner.html">Workshop</a>
     <a href="case-study-anthropic-legal-skills.html">Case study</a>
     </nav>
   </div>

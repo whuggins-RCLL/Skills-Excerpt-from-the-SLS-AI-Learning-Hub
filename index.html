@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light" data-zone="demo">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="color-scheme" content="dark light" />
+<meta name="color-scheme" content="light dark" />
 <title>Demo 1: Research Workflow Agent | Beyond the Chatbot</title>
 <meta name="description" content="Demo 1 for &#34;Beyond the Chatbot: Agentic AI and the Future of Library Workflows&#34; at WolfCon 2026 — a research workflow agent, the ten skills behind it, and the instructions it runs on. Download the set and build your own." />
 <link rel="stylesheet" href="assets/styles.css" />
 <!-- Applies the saved theme before first paint, so a reader who chose light
      mode does not see a dark flash. Mirrors the faculty site's layout.tsx. -->
-<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')==='dark'?'dark':'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="siteHeader">
-  <a class="headerLogo" href="index.html" aria-label="Home">
-    <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
+  <a class="headerWordmark" href="index.html" aria-label="Demo home">
+    WolfCon 2026
+    <span class="headerWordmarkSub">Agentic AI demos</span>
   </a>
   <div class="headerNavigation">
     <button class="navToggleBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
       <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
     <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
-    <a href="excerpt.html">Excerpt from the SLS AI Learning Hub</a>
+      <span class="zoneToggle" role="group" aria-label="Switch between the demo and the excerpt">
+        <a href="index.html" aria-current="page">Demo</a>
+        <a href="excerpt.html">Excerpt</a>
+      </span>
     </nav>
   </div>
 </header>
