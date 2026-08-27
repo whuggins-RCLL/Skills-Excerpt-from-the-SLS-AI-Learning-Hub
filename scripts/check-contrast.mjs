@@ -8,7 +8,13 @@
 // wrong and eyeballing them does not scale. This renders each combination, reads
 // the *computed* colours off the page rather than the stylesheet, and applies the
 // WCAG AA floor for each element's own size and weight: 3.0 for large text, 4.5
-// for everything else. Non-zero exit on any failure.
+// for everything else.
+//
+// It also sweeps the demo pages for Stanford cardinal. A rule that writes a brand
+// colour literally instead of referencing a token keeps that colour when the
+// palette swaps, and the result is one stray red link in a field of blue -- easy
+// to miss by eye, trivial to catch by asking every element what colour it ended
+// up. Non-zero exit on any failure.
 //
 // Needs Playwright, like the search index builder used to, so it is a maintainer
 // step rather than a build step.
@@ -78,6 +84,40 @@ for (const page of ["index.html","agent-instructions.html","excerpt.html","skill
     await pg.close();
   }
 }
+// ---- No cardinal on the demo ----------------------------------------------
+// Every colour the excerpt's palette can produce. If one of these turns up on a
+// demo page, some rule wrote it literally instead of using a token.
+const CARDINAL = [
+  "rgb(140, 21, 21)", "rgb(178, 58, 58)",   // --cardinal, --cardinal-bright
+  "rgb(224, 106, 106)", "rgb(239, 143, 143)", "rgb(240, 154, 154)", // link reds
+  "rgb(169, 121, 31)", "rgb(138, 96, 21)", "rgb(217, 173, 85)",     // golds
+];
+for (const page of ["index.html","agent-instructions.html"]) {
+  for (const theme of ["light","dark"]) {
+    const pg=await (await br.newContext({viewport:{width:1280,height:2400}})).newPage();
+    await pg.goto(`http://localhost:8807/${page}`);
+    await pg.evaluate(t=>{try{localStorage.setItem("theme",t)}catch(e){}}, theme);
+    await pg.reload({waitUntil:"networkidle"});
+    const strays = await pg.evaluate(BAD => {
+      const hits = [];
+      for (const el of document.querySelectorAll("body *")) {
+        const cs = getComputedStyle(el);
+        for (const prop of ["color","backgroundColor","borderLeftColor","borderTopColor"]) {
+          if (BAD.includes(cs[prop])) {
+            hits.push(`${el.tagName.toLowerCase()}${el.className && typeof el.className === "string" ? "."+el.className.trim().split(/\s+/)[0] : ""} ${prop}=${cs[prop]} "${(el.textContent||"").trim().slice(0,24)}"`);
+            break;
+          }
+        }
+      }
+      return [...new Set(hits)];
+    }, CARDINAL);
+    for (const s of strays) errs.push(`${page} [${theme}] cardinal leaked: ${s}`);
+    console.log(`\n${page} [${theme}] palette sweep: ${strays.length ? strays.length + " STRAY" : "no cardinal, all blue"}`);
+    await pg.close();
+  }
+}
+
 await br.close(); s.close();
-if (errs.length) { console.error("\nCONTRAST FAILURES:\n"+errs.join("\n")); process.exit(1); }
+
+if (errs.length) { console.error("\nFAILURES:\n"+errs.join("\n")); process.exit(1); }
 console.log("\nevery measured pairing clears WCAG AA in both themes and both zones");
