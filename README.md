@@ -159,21 +159,39 @@ azure vanishes into a dark background — so each is the fill in the theme it su
 with one mid-tone (`#12678f`, derived between them) where dark mode needs a fill
 that still carries white.
 
-**Both zones default to light**, with dark still one click away and remembered.
-`nav.py` owns the `<html>` tag and the inline pre-paint theme script for that
-reason: the default has to agree across eight pages.
+**Both zones default to dark**, with light one click away and remembered. `nav.py`
+owns the `<html>` tag and the inline pre-paint theme script for that reason: the
+default has to agree across eight pages, and it has already been flipped once.
 
-Contrast is measured rather than assumed. `scripts/check-contrast.mjs` renders each
-zone in each theme, reads the computed colours, and fails on anything under WCAG AA
-for its size and weight. Two failures it caught are fixed in the same change:
+Colour is checked rather than eyeballed. `scripts/check-contrast.mjs` renders each
+zone in each theme and does two things:
 
-- **The light theme's gold** was 3.4:1 as eyebrow text — small bold caps need 4.5.
-  Darkened from `#a9791f` to `#8a6015`, 4.8:1. This is the one visible change to
-  the excerpt, and it only mattered once light became the default.
+1. Reads the **computed** colours and fails anything under WCAG AA for its own size
+   and weight.
+2. Sweeps the demo pages for Stanford cardinal. A rule that writes a brand colour
+   literally instead of referencing a token keeps that colour when the palette
+   swaps, and the result is one stray red link in a field of blue — easy to miss by
+   eye, trivial to catch by asking every element what colour it ended up.
+
+Three failures it caught, all fixed:
+
+- **`.note a` in dark mode** was `#e06a6a` written out rather than `var(--link)`,
+  so it stayed cardinal on the WolfCon pages. Tokenised. The excerpt is unaffected:
+  its `--link` holds exactly that value.
 - **The zone toggle's selected side** was 1.3:1 in light mode: the themed
   `a[aria-current="page"]` rule is more specific and later in the file, so it won
   the background and left white text on a near-white fill. The toggle now settles
   its colours last.
+- **The light theme's gold** was 3.4:1 as eyebrow text, where small bold caps need
+  4.5. Darkened from `#a9791f` to `#8a6015`, 4.8:1. This is the one deliberate
+  change to the excerpt's own look. It fails whichever theme is the default, so the
+  fix stands even though the default went back to dark.
+
+One more that the sweep does not cover, found by looking: the download icon was
+sized only inside `.bundleFoot` and `.skillCardFoot`, so the bulk download in an
+`.actions` row on the demo page got an unsized SVG that grew to fill the button and
+pushed its label onto three lines. `.downloadButton svg` now carries the size for
+all of them.
 
 Every page opens its nav with the **zone toggle** — a two-button group, Demo and
 Excerpt, with the current zone filled in. It is one segmented control rather than

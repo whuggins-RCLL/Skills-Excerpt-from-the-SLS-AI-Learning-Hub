@@ -532,6 +532,12 @@ a.card:hover, .card.interactive:hover {
   box-shadow: 0 14px 30px -12px rgba(140, 21, 21, 0.75);
 }
 .downloadButton:hover, .primary:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -12px rgba(140, 21, 21, 0.85); color: #fff; }
+/* The icon was sized only inside .bundleFoot and .skillCardFoot, so a download
+   button anywhere else -- the bulk download in an .actions row on the demo page --
+   got an unsized SVG that grew to fill the button and pushed its label onto three
+   lines. Sized here for all of them; the two container rules now repeat this
+   value rather than supplying it. */
+.downloadButton svg { width: 16px; height: 16px; flex: none; }
 .secondary {
   color: var(--ink);
   background: var(--glass-bg);
@@ -831,15 +837,19 @@ th { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; colo
 .resourceCallout > div { max-width: 68ch; }
 /* One restrained secondary read, never a second competing call to action. */
 .calloutSecondary { margin: 0.6rem 0 0; font-size: 0.93rem; display: flex; flex-wrap: wrap; gap: 0.9rem; }
+/* These were the dark theme's link red written out rather than referenced, which
+   meant they stayed cardinal on the WolfCon pages while every tokenised colour
+   around them turned blue. Same colour in the excerpt -- the token holds exactly
+   this value -- and correct in both zones. */
 :root[data-theme="dark"] .resourceNotice a,
 :root[data-theme="dark"] .note a,
 :root[data-theme="dark"] .resourceCard .explore {
-  color: #e06a6a;
+  color: var(--link);
 }
 :root[data-theme="dark"] .resourceNotice a:hover,
 :root[data-theme="dark"] .note a:hover,
 :root[data-theme="dark"] .resourceCard:hover .explore {
-  color: #f09a9a;
+  color: var(--link-hover);
 }
 
 /* The showcase is a large liquid-glass panel (inherits glass + specular from
