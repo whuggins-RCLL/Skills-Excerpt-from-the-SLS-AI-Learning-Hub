@@ -43,6 +43,8 @@ python3 -m http.server 8000
 | `excerpt.html` | The excerpt's landing page, behind the card on `index.html` |
 | `skills/academic-research/` | The ten Academic Research & Writing skills, and their docs |
 | `licenses/academic-research/` | The MIT licence and notice that set carries |
+| `assets/generative-ai-writing-feedback-research-brief.docx` | The brief the demo produced, offered as a download |
+| `assets/demo-research-prompt.txt` | The prompt that produced it, mirroring the page's copy box |
 | `skills.html` | The twenty-five downloadable AI skills, the three one-click sets, and the practice drafts |
 | `skills/` | The skill ZIPs themselves |
 | `skills/bundles.json` | Which skills each set holds, and in what order |
@@ -210,14 +212,26 @@ about 1100px, wraps to two below that, and becomes the collapsed menu at 860px w
 the toggle stretches to a full-width row. Each page's own `<h1>` carries the full
 name, so nothing is lost by the short label.
 
-### The demo recording
+### The demo recording, the prompt, and the brief
 
-`index.html` ships before its recording does, so the slot is a real element rather
-than a gap: `.videoPlaceholder` holds the same 16/9 box the video will occupy, so
-dropping the real thing in does not reflow the page around it. To add the video,
-replace the whole `.videoPlaceholder` div with a `<video>` or `<iframe>` inside the
-same `<figure class="videoFigure">` and leave the `figcaption` alone. The CSS
-already sizes both.
+The recording is framed from Google Drive rather than committed — it is far larger
+than anything that belongs in this repository. A third-party frame is the one
+element on a page that can fail silently, so the caption carries a direct Drive
+link beside it, the same way the install recordings do.
+
+`.videoFigure` sizes an `<iframe>` and a `<video>` identically at 16/9, and
+`.videoPlaceholder` (still in the stylesheet, no longer used here) holds the same
+box for a page whose recording has not arrived yet.
+
+Under it sits the run itself: the research prompt in full, in a copy box, and the
+brief the agent produced as a Word download. The prompt is on the page rather than
+summarised because it is the point of the demo — most of what makes the output
+trustworthy is asked for out loud in it, from the source-state distinctions to the
+closing traceability check.
+
+`assets/demo-research-prompt.txt` is the same text as a plain file. Nothing
+generates one from the other, so if you edit the prompt, edit both;
+`scripts/check-demo.mjs` fails when they drift.
 
 ### The Academic Research & Writing set
 
@@ -244,6 +258,7 @@ python3 scripts/license-skills.py --check       # every skill ZIP carries LICENS
 python3 scripts/build-skill-bundles.py --check  # the set ZIPs match the manifest
 python3 scripts/inject-agent-instructions.py --check
 node   scripts/check-contrast.mjs               # text clears WCAG AA in both zones, both themes
+node   scripts/check-demo.mjs                  # the demo's video, prompt, and brief download
 ```
 
 `check-contrast.mjs` needs Playwright; `PLAYWRIGHT_PATH=/path/to/playwright/index.js`

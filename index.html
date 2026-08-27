@@ -45,6 +45,7 @@
       </p>
       <div class="actions">
         <a class="primary" href="#download">Download the ten skills</a>
+        <a class="secondary" href="#demo">Watch the demo</a>
         <a class="secondary" href="agent-instructions.html">The agent instructions</a>
       </div>
     </div>
@@ -119,18 +120,97 @@
       and where it stops to ask.
     </p>
 
-    <!-- Placeholder until the recording is added. Replace the whole
-         .videoPlaceholder block with the <video> or <iframe> and keep the
-         figcaption; nothing else on the page depends on it. -->
+    <!-- Framed from Google Drive rather than committed: the file is far larger
+         than anything that belongs in this repository. A third-party frame is
+         the one element that can fail silently, so the caption carries a direct
+         link for a reader whose browser or network blocks it. -->
     <figure class="videoFigure">
-      <div class="videoPlaceholder" role="img" aria-label="Placeholder: the demo recording has not been added yet">
-        <span class="videoPlaceholderIcon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10 8 6 4-6 4V8Z"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>
-        </span>
-        <p class="videoPlaceholderText">Demo recording to come</p>
-      </div>
-      <figcaption>Demo 1 &mdash; the research workflow agent, start to finish.</figcaption>
+      <iframe src="https://drive.google.com/file/d/1AuabCbBc0b-4cgZ3f06X9-aYNFk9DL6l/preview"
+              title="Demo 1: the research workflow agent, start to finish"
+              allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <figcaption>
+        Demo 1 &mdash; the research workflow agent, start to finish.
+        <a href="https://drive.google.com/file/d/1AuabCbBc0b-4cgZ3f06X9-aYNFk9DL6l/view" target="_blank" rel="noopener noreferrer">Open in Google Drive<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
+      </figcaption>
     </figure>
+  </section>
+
+  <!-- ===================== The run ===================== -->
+  <!-- The prompt is on the page in full rather than summarised, because the
+       interesting part of the demo is how much of the rigour is asked for
+       explicitly: the source-state distinctions, the traceability check, the
+       instruction not to invent bibliographic detail. -->
+
+  <section id="run" aria-labelledby="run-h">
+    <p class="eyebrow">The same question, and the answer</p>
+    <h2 id="run-h">What we asked, and what came back</h2>
+    <p class="muted" style="max-width: 78ch;">
+      One prompt, run against the ten skills below. Read it before the brief: most of what makes the
+      output trustworthy is asked for out loud &mdash; distinguish sources you opened from sources you
+      only found, do not treat a snippet as support, do not invent a citation, and check every claim
+      against the source at the end.
+    </p>
+
+    <div class="codeBlock long">
+      <div class="codeHead">
+        <span class="codeName">The research prompt</span>
+        <button class="copyBtn" type="button" data-copy-target="demo-prompt" hidden><span class="copyBtnLabel">Copy the prompt</span></button>
+      </div>
+      <pre id="demo-prompt"><code>I’m considering a research article about whether generative AI feedback improves undergraduate student writing, and under what conditions. Please help me refine this into a focused, researchable question and prepare a preliminary research brief.
+
+Use peer-reviewed scholarship and authoritative research reports published from 2022 through August 2026. Compare the available studies in terms of their research designs, student populations, academic settings, AI tools, types of feedback, comparison groups, and measures of writing or learning outcomes. Pay particular attention to whether students revise thoughtfully in response to AI feedback, whether instructor involvement changes the results, and whether the studies measure genuine learning rather than short-term improvements to a particular paper.
+
+Assess the tentative argument that generative AI feedback can improve undergraduate writing when it supplements—rather than replaces—instructor guidance and requires students to evaluate and act on the feedback. Identify the strongest supporting evidence, important contrary findings, plausible alternative explanations, methodological weaknesses, and anything the current evidence does not justify concluding.
+
+Because you do not have access to my institutional databases or connected accounts, use web search and publicly accessible sources that you can actually open. Prioritize original studies over summaries. Clearly distinguish sources you merely discover from those you retrieve, review, and verify. Do not treat search-result snippets, AI summaries, or abstracts alone as sufficient support for substantive claims.
+
+Please provide:
+
+* a refined research question and appropriate scope;
+* a concise synthesis of the relevant literature, organized by themes rather than one source at a time;
+* an assessment of the proposed argument and reasonable counterarguments;
+* a table connecting the major claims to the evidence supporting or qualifying them;
+* important gaps in the existing research;
+* a possible contribution that a new article or study could make;
+* an APA 7 reference list with DOI or direct links where available; and
+* a final traceability check confirming that each major claim is supported by a source you reviewed and that the source says what the brief attributes to it.
+
+Flag anything you could not verify, and do not invent missing bibliographic information. End by recommending the most valuable next research step. Ask one focused clarifying question before proceeding only if the missing information would materially change the project.</code></pre>
+    </div>
+
+    <div class="card crossPromo" style="margin-top: 1.6rem;" aria-labelledby="brief-h">
+      <div class="crossPromoText">
+        <p class="eyebrow">The output</p>
+        <h3 id="brief-h">Generative AI Feedback and Undergraduate Writing</h3>
+        <p class="muted">
+          The brief the agent produced, unedited: a refined research question and scope fence, a
+          synthesis organised by theme, an assessment of the proposed argument with its
+          counterarguments, a claims-to-evidence table, the gaps, an APA 7 reference list, and a
+          traceability check naming what it could not verify. Roughly 5,000 words.
+        </p>
+        <p class="muted">
+          Its own bottom line is the honest kind: the evidence moderately supports AI feedback as a
+          structured supplement for improving the paper in hand, and does <em>not</em> yet establish
+          durable improvement in students&rsquo; unaided writing.
+        </p>
+      </div>
+      <div class="crossPromoActions">
+        <div class="actions" style="margin-top: 0;">
+          <a class="downloadButton" href="assets/generative-ai-writing-feedback-research-brief.docx" download="generative-ai-writing-feedback-research-brief.docx" aria-label="Download the sample research brief, Word document">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download the brief
+          </a>
+        </div>
+        <p class="crossPromoAside">Word document &middot; 57 kB</p>
+      </div>
+    </div>
+
+    <p class="note">
+      <strong>It is a demo output, not a finished literature review.</strong> It was produced in one
+      run from publicly reachable sources, without institutional databases. Treat the citations as
+      something to check rather than something checked &mdash; which is what the brief&rsquo;s own
+      traceability section asks you to do.
+    </p>
   </section>
 
   <!-- ===================== The skills behind the demo ===================== -->
@@ -361,6 +441,7 @@
 </footer>
 
 <script src="assets/hub.js"></script>
+<script src="assets/copy-code.js"></script>
 <script src="assets/skill-bundles.js"></script>
 </body>
 </html>

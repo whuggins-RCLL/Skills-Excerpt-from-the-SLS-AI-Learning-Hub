@@ -1,0 +1,20 @@
+I’m considering a research article about whether generative AI feedback improves undergraduate student writing, and under what conditions. Please help me refine this into a focused, researchable question and prepare a preliminary research brief.
+
+Use peer-reviewed scholarship and authoritative research reports published from 2022 through August 2026. Compare the available studies in terms of their research designs, student populations, academic settings, AI tools, types of feedback, comparison groups, and measures of writing or learning outcomes. Pay particular attention to whether students revise thoughtfully in response to AI feedback, whether instructor involvement changes the results, and whether the studies measure genuine learning rather than short-term improvements to a particular paper.
+
+Assess the tentative argument that generative AI feedback can improve undergraduate writing when it supplements—rather than replaces—instructor guidance and requires students to evaluate and act on the feedback. Identify the strongest supporting evidence, important contrary findings, plausible alternative explanations, methodological weaknesses, and anything the current evidence does not justify concluding.
+
+Because you do not have access to my institutional databases or connected accounts, use web search and publicly accessible sources that you can actually open. Prioritize original studies over summaries. Clearly distinguish sources you merely discover from those you retrieve, review, and verify. Do not treat search-result snippets, AI summaries, or abstracts alone as sufficient support for substantive claims.
+
+Please provide:
+
+* a refined research question and appropriate scope;
+* a concise synthesis of the relevant literature, organized by themes rather than one source at a time;
+* an assessment of the proposed argument and reasonable counterarguments;
+* a table connecting the major claims to the evidence supporting or qualifying them;
+* important gaps in the existing research;
+* a possible contribution that a new article or study could make;
+* an APA 7 reference list with DOI or direct links where available; and
+* a final traceability check confirming that each major claim is supported by a source you reviewed and that the source says what the brief attributes to it.
+
+Flag anything you could not verify, and do not invent missing bibliographic information. End by recommending the most valuable next research step. Ask one focused clarifying question before proceeding only if the missing information would materially change the project.
