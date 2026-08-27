@@ -152,6 +152,65 @@
           "as": "public-writing-adapter.zip"
         }
       ]
+    },
+    {
+      "slug": "academic-research",
+      "title": "Academic Research & Writing Skills Set",
+      "summary": "Ten discipline-neutral skills for a general academic research agent: route a request, scope a project, run a literature review, search and verify sources, build and pressure-test an argument, diagnose a draft's structure, check APA 7 citations, edit the prose, plan publication, and adapt the work for a wider audience. Install all ten for a general research agent, or only the ones the work needs.",
+      "licence": "These skills are licensed under the MIT License, copyright (c) 2026 SLS Faculty AI Skills contributors, and adapted in 2026 for discipline-neutral academic research.",
+      "licenceDir": "licenses/academic-research",
+      "members": [
+        {
+          "title": "Research Support Guide",
+          "file": "skills/academic-research/01-research-support-guide.zip",
+          "as": "research-support-guide.zip"
+        },
+        {
+          "title": "Research Project Planner",
+          "file": "skills/academic-research/02-research-project-planner.zip",
+          "as": "research-project-planner.zip"
+        },
+        {
+          "title": "Literature Review Helper",
+          "file": "skills/academic-research/03-literature-review-helper.zip",
+          "as": "literature-review-helper.zip"
+        },
+        {
+          "title": "Academic Source Searcher",
+          "file": "skills/academic-research/04-academic-source-searcher.zip",
+          "as": "academic-source-searcher.zip"
+        },
+        {
+          "title": "Argument Builder",
+          "file": "skills/academic-research/05-argument-builder.zip",
+          "as": "argument-builder.zip"
+        },
+        {
+          "title": "Draft Revision Coach",
+          "file": "skills/academic-research/06-draft-revision-coach.zip",
+          "as": "draft-revision-coach.zip"
+        },
+        {
+          "title": "APA 7 Citation Checker",
+          "file": "skills/academic-research/07-apa7-citation-checker.zip",
+          "as": "apa7-citation-checker.zip"
+        },
+        {
+          "title": "Scholarly Writing Editor",
+          "file": "skills/academic-research/08-scholarly-writing-editor.zip",
+          "as": "scholarly-writing-editor.zip"
+        },
+        {
+          "title": "Publication Planner",
+          "file": "skills/academic-research/09-publication-planner.zip",
+          "as": "publication-planner.zip"
+        },
+        {
+          "title": "Public Writing Adapter",
+          "file": "skills/academic-research/10-public-writing-adapter.zip",
+          "as": "public-writing-adapter.zip"
+        }
+      ]
     }
   ]
 }

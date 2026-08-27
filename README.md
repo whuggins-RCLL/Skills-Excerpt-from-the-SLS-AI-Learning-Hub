@@ -1,24 +1,31 @@
-# AI Skills and agents — an excerpt of the SLS AI Learning Hub
+# Demo 1: Research Workflow Agent — and an excerpt of the SLS AI Learning Hub
 
-**This repository is an excerpt.** It holds the AI Skills section of the Robert
-Crown Law Library's AI Learning Hub and the agent material that accompanies it,
-pulled out so it can be presented and shared on its own. The rest of the hub —
-tutorials, AI tools, events, the reading lists, The AI Upload, and faculty
-support — is not here.
+Two things live here, and the front door decides which one a reader meets first.
 
-**It is a closed set of pages, deliberately.** Every page names what it is an
-excerpt of, in a banner under the navigation, but nothing here links to the hub
-or carries its address: this site exists so the skills can be shown without
-sending an audience to the main site. If you add a page, keep it that way.
+**`index.html` is a conference demo page.** It was built for *Beyond the Chatbot:
+Agentic AI and the Future of Library Workflows* (WolfCon 2026, 1 September,
+11:00–11:50, Posluchárna 213) — demo 1 of three. It carries a slot for the demo
+recording, the ten skills the agent in that recording is built from, and
+`agent-instructions.html`, the instructions it runs on plus connector
+recommendations.
 
-Content is maintained in the hub repository, not here. This copy is a snapshot
-for presentation, so a change made here does not reach the site readers use.
+**Everything else is the excerpt**, behind one card: `excerpt.html` and the five
+pages under it hold the AI Skills section of the Robert Crown Law Library's AI
+Learning Hub and the agent material that accompanies it. The rest of the hub —
+tutorials, AI tools, events, the reading lists — is not here.
 
-Everything the skills need is included — all twenty-five skill ZIPs, the three
-set downloads, and the five practice drafts — so the downloads on `skills.html`
-work as they do on the hub.
+**The excerpt is a closed set of pages, deliberately.** Every page in it names what
+it is an excerpt of, in a banner under the navigation, but nothing links to the hub
+or carries its address: it exists so the skills can be shown without sending an
+audience to the main site. If you add a page there, keep it that way.
 
-The skills are licensed under Apache 2.0; see [Licence](#licence).
+Content for the excerpt is maintained in the hub repository, not here. This copy is
+a snapshot for presentation, so a change made here does not reach the site readers
+use.
+
+All thirty-five skill ZIPs, the four set downloads, and the five practice drafts are
+included, so every download works from a plain checkout. Three sets are Apache 2.0
+and one is MIT; see [Licences](#licences).
 
 ## The site
 
@@ -31,7 +38,11 @@ python3 -m http.server 8000
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The excerpt's landing page |
+| `index.html` | Demo 1: the conference demo page, and the front door |
+| `agent-instructions.html` | The research agent's instructions, and connector recommendations |
+| `excerpt.html` | The excerpt's landing page, behind the card on `index.html` |
+| `skills/academic-research/` | The ten Academic Research & Writing skills, and their docs |
+| `licenses/academic-research/` | The MIT licence and notice that set carries |
 | `skills.html` | The twenty-five downloadable AI skills, the three one-click sets, and the practice drafts |
 | `skills/` | The skill ZIPs themselves |
 | `skills/bundles.json` | Which skills each set holds, and in what order |
@@ -115,6 +126,45 @@ edit; re-run the script after changing a nav entry, the banner, or the credit.
 ```
 python3 scripts/nav.py
 ```
+
+### Two zones, and the furniture that tells them apart
+
+`scripts/nav.py` writes the header, the excerpt banner, and the credit line into
+every page, and it now distinguishes two zones:
+
+| | Pages | Nav | Banner |
+| --- | --- | --- | --- |
+| Demo | `index.html`, `agent-instructions.html` | One link, to the excerpt card | No |
+| Excerpt | `excerpt.html` and the five pages under it | Six links across the section | Yes |
+
+`DEMO_PAGES` in that script is the whole switch. A page added to the demo zone goes
+in that set; anything else is treated as part of the excerpt and gets the banner.
+The logo links to `index.html` from everywhere, because that is the site root now;
+inside the excerpt, "up" is `excerpt.html`, which is what the breadcrumbs say.
+
+### The demo recording
+
+`index.html` ships before its recording does, so the slot is a real element rather
+than a gap: `.videoPlaceholder` holds the same 16/9 box the video will occupy, so
+dropping the real thing in does not reflow the page around it. To add the video,
+replace the whole `.videoPlaceholder` div with a `<video>` or `<iframe>` inside the
+same `<figure class="videoFigure">` and leave the `figcaption` alone. The CSS
+already sizes both.
+
+### The Academic Research & Writing set
+
+Ten discipline-neutral skills under `skills/academic-research/`, uploaded to this
+repository directly rather than copied from elsewhere, and the set the demo agent is
+built from. `AGENT-INSTRUCTIONS.md`, `README.md`, and `SOURCES.md` sit beside the
+ZIPs; `assets/academic-agent-instructions.md` is the copy the download button on
+`agent-instructions.html` serves, and that page's copy box is generated from the
+same file.
+
+They are **MIT**, not Apache 2.0 — copyright (c) 2026 SLS Faculty AI Skills
+contributors, adapted in 2026 for discipline-neutral academic research. The pair in
+`licenses/academic-research/` is what the packaging scripts insert; the uploaded
+ZIPs already carried an identical pair, so the first run only normalised their
+timestamps.
 
 ### Checks
 
@@ -401,9 +451,9 @@ School student AI guidance, Responsible AI at Stanford, productive struggle,
 legal-source verification, structured and manageable data, transparent AI-use logs,
 and accurate non-anthropomorphic explanations of AI systems.
 
-## Licence
+## Licences
 
-The skills are released under the **Apache License, Version 2.0** — `LICENSE`
+Most of the skills are released under the **Apache License, Version 2.0** — `LICENSE`
 holds the text verbatim and `NOTICE` holds the copyright line, both at the
 repository root.
 

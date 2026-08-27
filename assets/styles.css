@@ -438,6 +438,36 @@ a.card:hover, .card.interactive:hover {
 }
 .excerptBanner strong { color: var(--ink); }
 
+/* ---- Video figure and placeholder ------------------------------------------
+   The demo page ships before its recording does, so the slot is a real element
+   rather than an empty gap: it holds the 16/9 box the video will occupy, so
+   dropping the <video> in later does not reflow the page around it. */
+.videoFigure { margin: 1.4rem 0 0; }
+.videoFigure figcaption { margin-top: 0.7rem; font-size: 0.88rem; color: var(--muted); }
+.videoFigure video, .videoFigure iframe {
+  display: block; width: 100%; aspect-ratio: 16 / 9;
+  border: 0; border-radius: var(--radius); background: var(--paper-2);
+}
+.videoPlaceholder {
+  display: grid; place-content: center; gap: 0.7rem;
+  width: 100%; aspect-ratio: 16 / 9;
+  border: 1px dashed var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  color: var(--muted);
+}
+.videoPlaceholderIcon { display: block; justify-self: center; width: 3rem; height: 3rem; opacity: 0.5; }
+.videoPlaceholderIcon svg { width: 100%; height: 100%; }
+.videoPlaceholderText {
+  margin: 0; text-align: center;
+  font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* A wide table scrolls inside its own box rather than widening the page. */
+.tableWrap { overflow-x: auto; margin: 1.3rem 0; }
+.tableWrap table { min-width: 34rem; margin: 0; }
+
 /* ---- Page credit -----------------------------------------------------------
    One quiet line closing every page: copyright and licence, no links. It aligns
    with the content column and takes over the space `main` would otherwise leave

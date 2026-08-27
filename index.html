@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="dark light" />
-<title>AI Skills and agents | An excerpt of the SLS AI Learning Hub</title>
-<meta name="description" content="An excerpt of the Robert Crown Law Library&#39;s AI Learning Hub: twenty-five downloadable AI skills for law school work, how to install them, and the ChatGPT agent, workshop packet, and case study that go with them." />
+<title>Demo 1: Research Workflow Agent | Beyond the Chatbot</title>
+<meta name="description" content="Demo 1 for &#34;Beyond the Chatbot: Agentic AI and the Future of Library Workflows&#34; at WolfCon 2026 — a research workflow agent, the ten skills behind it, and the instructions it runs on. Download the set and build your own." />
 <link rel="stylesheet" href="assets/styles.css" />
 <!-- Applies the saved theme before first paint, so a reader who chose light
      mode does not see a dark flash. Mirrors the faculty site's layout.tsx. -->
@@ -15,7 +15,7 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="siteHeader">
-  <a class="headerLogo" href="index.html" aria-label="AI Skills and agents home">
+  <a class="headerLogo" href="index.html" aria-label="Home">
     <img src="assets/images/robert-crown-law-library-logo.svg" alt="Stanford Law School | Robert Crown Law Library" width="551" height="139" />
   </a>
   <div class="headerNavigation">
@@ -23,95 +23,328 @@
       <span class="hamburgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
     <nav id="primary-nav" class="primaryNav" aria-label="Main navigation">
-    <a href="skills.html">Skills</a>
-    <a href="install.html">Install a skill</a>
-    <a href="writing-partner-agent.html">Writing Partner agent</a>
-    <a href="teach-this-writing-partner.html">Workshop packet</a>
-    <a href="case-study-anthropic-legal-skills.html">Case study</a>
+    <a href="excerpt.html">Excerpt from the SLS AI Learning Hub</a>
     </nav>
   </div>
 </header>
-
-<aside class="excerptBanner" aria-label="About this site">
-  <p>
-    <strong>Excerpt.</strong> These pages are the AI Skills section of the Robert Crown Law
-    Library&rsquo;s AI Learning Hub, and the agent material that goes with it. The rest of
-    the hub is not included here.
-  </p>
-</aside>
 
 <main id="main">
 
   <section class="hero solo">
     <div>
-      <p class="eyebrow">An excerpt of the SLS AI Learning Hub</p>
-      <h1>AI Skills and agents</h1>
+      <p class="eyebrow">Demo 1 &middot; WolfCon 2026</p>
+      <h1>Research Workflow Agent</h1>
       <p class="lede">
-        Twenty-five AI skills for law school work &mdash; problem-first, policy-aware, and organised
-        around verification. Download a whole set or a single skill, install it in ChatGPT or Claude,
-        and see what happens when ten of them are loaded into one agent.
+        An agent that takes a broad research question, plans the search, evaluates what it finds,
+        synthesises the findings, and produces a structured summary with citations &mdash; leaving a
+        trail a librarian can inspect rather than an answer they have to trust.
       </p>
       <div class="actions">
-        <a class="primary" href="skills.html#sets">Download a set</a>
-        <a class="secondary" href="install.html">How to install a skill</a>
-        <a class="secondary" href="writing-partner-agent.html">Build the agent</a>
+        <a class="primary" href="#download">Download the ten skills</a>
+        <a class="secondary" href="agent-instructions.html">The agent instructions</a>
       </div>
     </div>
   </section>
 
-  <!-- The five pages of the excerpt, in the order a reader meets them: the
-       skills themselves, how to install one, what an agent adds on top, how to
-       teach it, and how a skill is built in the first place. -->
+  <!-- The session this page was built for. Kept as a dl rather than prose so a
+       reader scanning for the room and the time finds them without reading. -->
 
-  <section aria-labelledby="pages-h">
-    <h2 id="pages-h">What is here</h2>
-    <div class="grid two" style="margin-top: 1.2rem;">
-      <a class="card interactive" href="skills.html">
-        <div class="homeCardHead">
-          <h3>AI Skills</h3>
-          <span class="pill"><span class="dot" aria-hidden="true"></span>25 skills &middot; 3 sets</span>
-        </div>
-        <p class="muted">
-          Every skill as its own download, three one-click sets, and five fictional practice
-          drafts to run the writing skills on.
-        </p>
-        <span class="explore">Browse and download &rarr;</span>
-      </a>
-      <a class="card interactive" href="install.html">
-        <div class="homeCardHead">
-          <h3>Install a skill</h3>
-          <span class="pill"><span class="dot" aria-hidden="true"></span>ChatGPT &middot; Claude</span>
-        </div>
-        <p class="muted">
-          What a skill file actually is, and the steps to add one in either tool so it stays
-          available across chats. Includes a printable guide.
-        </p>
-        <span class="explore">Read the steps &rarr;</span>
-      </a>
-    </div>
-    <div class="grid" style="margin-top: 1.2rem;">
-      <a class="card interactive compact" href="writing-partner-agent.html">
-        <h3>The Writing Partner agent</h3>
-        <p class="muted">Load the ten writing skills into one ChatGPT agent, so a draft is reviewed by all of them at once.</p>
-        <span class="explore">Build the agent &rarr;</span>
-      </a>
-      <a class="card interactive compact" href="teach-this-writing-partner.html">
-        <h3>Teach this: the Writing Partner</h3>
-        <p class="muted">The workshop packet: set-up, activities, discussion prompts, facilitator notes, and a glossary.</p>
-        <span class="explore">Open the packet &rarr;</span>
-      </a>
-      <a class="card interactive compact" href="case-study-anthropic-legal-skills.html">
-        <h3>How a skill is built</h3>
-        <p class="muted">Taking apart Anthropic&rsquo;s open-source <em>Claude for Legal</em> project: what a <code>SKILL.md</code> is, and why the work is split into small skills.</p>
-        <span class="explore">Read the case study &rarr;</span>
-      </a>
+  <section class="card" aria-labelledby="session-h">
+    <p class="eyebrow">The session</p>
+    <h2 id="session-h">Beyond the Chatbot: Agentic AI and the Future of Library Workflows</h2>
+    <dl class="docMeta">
+      <div>
+        <dt>When</dt>
+        <dd>1 September, 11:00 &ndash; 11:50</dd>
+      </div>
+      <div>
+        <dt>Where</dt>
+        <dd>Posluch&aacute;rna 213</dd>
+      </div>
+      <div>
+        <dt>Track</dt>
+        <dd>FOLIO &middot; balanced &mdash; a basic understanding of the topic helps</dd>
+      </div>
+      <div>
+        <dt>This page</dt>
+        <dd>Demo 1 of three. Demo 2 is a technical services pipeline; demo 3 an institutional knowledge assistant.</dd>
+      </div>
+    </dl>
+    <p class="muted" style="max-width: 78ch;">
+      Most library professionals have used AI to answer a question or summarise a document. This session
+      is about what changes when AI can break a goal into steps, choose its tools, work across several
+      sources, and iterate &mdash; and where a human still has to stay in the loop.
+    </p>
+    <div class="actions">
+      <a class="secondary" href="https://site.pheedloop.com/event/wolfcon2026/sessions/SES1NEBWCX5IXXFLV" target="_blank" rel="noopener noreferrer">Session page<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>
     </div>
   </section>
 
-  <p class="note">
-    <strong>Check your policy first.</strong> Confirm your institution&rsquo;s AI policy before using these
-    skills on graded work. Whether AI is permitted for a particular assignment is set by your instructor.
-  </p>
+  <!-- Everything the site was before this page existed now sits behind one
+       card. It is its own thing with its own navigation, so it is a
+       destination rather than a section. -->
+
+  <section aria-labelledby="excerpt-card-h">
+    <h2 id="excerpt-card-h">Also on this site</h2>
+    <a class="card interactive" href="excerpt.html" style="margin-top: 1.2rem;">
+      <div class="homeCardHead">
+        <h3>Excerpt from the SLS AI Learning Hub</h3>
+        <span class="pill"><span class="dot" aria-hidden="true"></span>25 skills &middot; 3 sets</span>
+      </div>
+      <p class="muted">
+        The AI Skills section of the Robert Crown Law Library&rsquo;s AI Learning Hub, and the agent
+        material that goes with it: twenty-five downloadable skills, how to install one, a ChatGPT
+        agent built from ten of them, a workshop packet for teaching it, and a forensic case study of
+        how a skill is written.
+      </p>
+      <span class="explore">Open the excerpt &rarr;</span>
+    </a>
+  </section>
+
+  <!-- ===================== The demo recording ===================== -->
+
+  <section id="demo" aria-labelledby="demo-h">
+    <p class="eyebrow">Watch it run</p>
+    <h2 id="demo-h">The demo</h2>
+    <p class="muted" style="max-width: 78ch;">
+      The agent taking a question end to end: what it does at each step, which skill it reaches for,
+      and where it stops to ask.
+    </p>
+
+    <!-- Placeholder until the recording is added. Replace the whole
+         .videoPlaceholder block with the <video> or <iframe> and keep the
+         figcaption; nothing else on the page depends on it. -->
+    <figure class="videoFigure">
+      <div class="videoPlaceholder" role="img" aria-label="Placeholder: the demo recording has not been added yet">
+        <span class="videoPlaceholderIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10 8 6 4-6 4V8Z"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>
+        </span>
+        <p class="videoPlaceholderText">Demo recording to come</p>
+      </div>
+      <figcaption>Demo 1 &mdash; the research workflow agent, start to finish.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===================== The skills behind the demo ===================== -->
+
+  <section id="download" aria-labelledby="download-h">
+    <p class="eyebrow">Build it yourself</p>
+    <h2 id="download-h">The ten skills in the demo</h2>
+    <p class="muted" style="max-width: 78ch;">
+      The agent in the recording is these ten skills plus one page of instructions. They are
+      discipline-neutral &mdash; nothing in them is specific to law &mdash; and they are built so a
+      researcher can see and check the work: sources are verified rather than asserted, AI output is
+      never treated as evidence, and the human keeps authorship.
+    </p>
+
+    <div class="actions" style="margin-bottom: 1.6rem;">
+      <a class="downloadButton" href="assets/bundles/academic-research.zip" download="academic-research.zip" aria-label="Download the Academic Research and Writing Skills Set, one ZIP file containing all 10 skills">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download all ten skills
+      </a>
+      <button type="button" class="secondary bundleSeparate" hidden data-bundle-source="#skill-list">Download the {n} skills separately</button>
+      <a class="secondary" href="agent-instructions.html">The agent instructions</a>
+    </div>
+
+    <p class="note">
+      <strong>One ZIP, ten skills inside.</strong> Unzip the set once, then upload each of the ten
+      skill ZIPs <em>without</em> unzipping it &mdash; the platform wants the packaged file. Install all
+      ten for a general research agent, or only the ones the work needs. Then paste in the
+      <a href="agent-instructions.html">agent instructions</a>.
+    </p>
+
+    <div class="skillGrid" id="skill-list" style="margin-top: 1.5rem;">
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">01</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Start here</span>
+        </div>
+        <h3>Research Support Guide</h3>
+        <p class="desc">
+          Use when you are not sure where to begin, or have several different research needs at once.
+          Not meant to be run mechanically when the right destination is already obvious.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/01-research-support-guide.zip" download="research-support-guide.zip" aria-label="Download the Research Support Guide skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">02</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Scope</span>
+        </div>
+        <h3>Research Project Planner</h3>
+        <p class="desc">
+          Turns a broad topic, an emerging idea, a dataset, a call for papers, or a stalled project into
+          a bounded and feasible research plan.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/02-research-project-planner.zip" download="research-project-planner.zip" aria-label="Download the Research Project Planner skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">03</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Review</span>
+        </div>
+        <h3>Literature Review Helper</h3>
+        <p class="desc">
+          Plan, document, conduct, or synthesise a narrative, scoping, systematic, rapid, or other
+          evidence review &mdash; with the design named rather than assumed.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/03-literature-review-helper.zip" download="literature-review-helper.zip" aria-label="Download the Literature Review Helper skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">04</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Sources</span>
+        </div>
+        <h3>Academic Source Searcher</h3>
+        <p class="desc">
+          Identify source types, develop searches, locate and evaluate sources, chase citations forward
+          and back, document what was searched, and produce a traceable source brief.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/04-academic-source-searcher.zip" download="academic-source-searcher.zip" aria-label="Download the Academic Source Searcher skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">05</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Argument</span>
+        </div>
+        <h3>Argument Builder</h3>
+        <p class="desc">
+          Develop or pressure-test claims, evidence, warrants, assumptions, alternative explanations,
+          counterarguments, and implications.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/05-argument-builder.zip" download="argument-builder.zip" aria-label="Download the Argument Builder skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">06</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Structure</span>
+        </div>
+        <h3>Draft Revision Coach</h3>
+        <p class="desc">
+          Diagnose organisation, section purpose, claim sequence, evidence placement, repetition,
+          transitions, and which structural revisions matter most.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/06-draft-revision-coach.zip" download="draft-revision-coach.zip" aria-label="Download the Draft Revision Coach skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">07</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Citations</span>
+        </div>
+        <h3>APA 7 Citation Checker</h3>
+        <p class="desc">
+          Verify source identity, claim support, quotations, locators, correction or retraction status,
+          and APA 7 citation form &mdash; a resolving DOI is not proof the source says it.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/07-apa7-citation-checker.zip" download="apa7-citation-checker.zip" aria-label="Download the APA 7 Citation Checker skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">08</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Prose</span>
+        </div>
+        <h3>Scholarly Writing Editor</h3>
+        <p class="desc">
+          Sentence- and paragraph-level editing that preserves substantive meaning, disciplinary
+          conventions, and the author&rsquo;s voice.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/08-scholarly-writing-editor.zip" download="scholarly-writing-editor.zip" aria-label="Download the Scholarly Writing Editor skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">09</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Publish</span>
+        </div>
+        <h3>Publication Planner</h3>
+        <p class="desc">
+          Compare credible journals, conferences, publishers, repositories, or other venues and prepare
+          a submission plan against the requirements that apply today.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/09-publication-planner.zip" download="publication-planner.zip" aria-label="Download the Publication Planner skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <article class="card skillCard">
+        <div class="skillCardHead">
+          <span class="skillNum">10</span>
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Translate</span>
+        </div>
+        <h3>Public Writing Adapter</h3>
+        <p class="desc">
+          Translate completed or well-supported research for public, policy, practitioner, student,
+          media, presentation, or newsletter audiences without flattening the evidence.
+        </p>
+        <div class="skillCardFoot">
+          <a class="downloadButton" href="skills/academic-research/10-public-writing-adapter.zip" download="public-writing-adapter.zip" aria-label="Download the Public Writing Adapter skill, ZIP file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="muted" style="max-width: 78ch; margin-top: 1.5rem;">
+      Licensed under the
+      <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT License<span class="externalLinkIcon" aria-hidden="true">&#8599;</span><span class="srOnly"> (opens in a new tab)</span></a>,
+      copyright 2026 SLS Faculty AI Skills contributors, adapted in 2026 for discipline-neutral
+      academic research. The licence and notice are inside every ZIP; keep them with the files if you
+      pass them on.
+    </p>
+  </section>
 
 </main>
 
@@ -120,5 +353,6 @@
 </footer>
 
 <script src="assets/hub.js"></script>
+<script src="assets/skill-bundles.js"></script>
 </body>
 </html>
