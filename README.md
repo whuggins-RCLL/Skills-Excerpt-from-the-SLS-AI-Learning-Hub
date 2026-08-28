@@ -39,7 +39,7 @@ python3 -m http.server 8000
 | File | What it is |
 | --- | --- |
 | `index.html` | Demo 1: the conference demo page, and the front door |
-| `agent-instructions.html` | The research agent's instructions, and how connectors differ from skills |
+| `agent-instructions.html` | The research agent's instructions, with a pointer to the connectors section |
 | `excerpt.html` | The excerpt's landing page, behind the card on `index.html` |
 | `skills/academic-research/` | The ten Academic Research & Writing skills, and their docs |
 | `licenses/academic-research/` | The MIT licence and notice that set carries |
@@ -146,13 +146,18 @@ inside the excerpt, "up" is `excerpt.html`, which is what the breadcrumbs say.
 
 ### Connectors, named as a category rather than a list
 
-`agent-instructions.html` closes on connectors and deliberately **names no
-products**. The integrations on offer change faster than a page can track, and a
+The demo page closes on connectors, under `#connectors`, and deliberately **names
+no products**. The integrations on offer change faster than a page can track, and a
 stale recommendation reads as an endorsement of something you have not looked at
 lately. What does not go stale is the distinction — a skill is method, a connector
 is reach — and the three questions worth asking before adding one: does this agent
 actually need it, who published it and what does it get, and does it already
 duplicate a skill.
+
+It sits on `index.html` rather than with the agent instructions because it is a
+decision a reader makes while building the agent, not while pasting its
+instructions; `agent-instructions.html` carries a pointer to it rather than a
+second copy.
 
 The MCP note is there because the second question has a technical reason behind it
 that is easy to miss: an MCP server describes its own tools to the model in its own
