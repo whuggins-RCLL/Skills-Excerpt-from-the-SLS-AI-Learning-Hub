@@ -39,7 +39,7 @@ python3 -m http.server 8000
 | File | What it is |
 | --- | --- |
 | `index.html` | Demo 1: the conference demo page, and the front door |
-| `agent-instructions.html` | The research agent's instructions, and connector recommendations |
+| `agent-instructions.html` | The research agent's instructions, and how connectors differ from skills |
 | `excerpt.html` | The excerpt's landing page, behind the card on `index.html` |
 | `skills/academic-research/` | The ten Academic Research & Writing skills, and their docs |
 | `licenses/academic-research/` | The MIT licence and notice that set carries |
@@ -143,6 +143,21 @@ every page, and it now distinguishes two zones:
 in that set; anything else is treated as part of the excerpt and gets the banner.
 The logo links to `index.html` from everywhere, because that is the site root now;
 inside the excerpt, "up" is `excerpt.html`, which is what the breadcrumbs say.
+
+### Connectors, named as a category rather than a list
+
+`agent-instructions.html` closes on connectors and deliberately **names no
+products**. The integrations on offer change faster than a page can track, and a
+stale recommendation reads as an endorsement of something you have not looked at
+lately. What does not go stale is the distinction — a skill is method, a connector
+is reach — and the three questions worth asking before adding one: does this agent
+actually need it, who published it and what does it get, and does it already
+duplicate a skill.
+
+The MCP note is there because the second question has a technical reason behind it
+that is easy to miss: an MCP server describes its own tools to the model in its own
+words, so those descriptions are text reaching the model from whoever wrote the
+server, not inert metadata. If you revise this section, keep that point.
 
 ### Two palettes
 
