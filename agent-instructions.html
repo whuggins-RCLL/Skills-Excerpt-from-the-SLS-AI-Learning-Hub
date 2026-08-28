@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="dark light" />
 <title>Agent instructions | Research Workflow Agent</title>
-<meta name="description" content="The instructions the research workflow agent runs on: how it picks a skill, the research and traceability standards it holds to, where it stops to ask, and which connectors are worth adding." />
+<meta name="description" content="The instructions the research workflow agent runs on: how it picks a skill, the research and traceability standards it holds to, where it stops to ask, and how connectors differ from skills." />
 <link rel="stylesheet" href="assets/styles.css" />
 <!-- Applies the saved theme before first paint, so a reader who chose light
      mode does not see a dark flash. Mirrors the faculty site's layout.tsx. -->
@@ -170,63 +170,86 @@ Be clear, direct, neutral, and appropriately concise. Explain specialist termino
   </section>
 
   <!-- ===================== Connectors ===================== -->
-  <!-- Connectors are where an agent stops being a closed box, so the question
-       is not "which are available" but "which add something the skills do not
-       already do". Overlap is the risk: a second AI summarising for you is
-       indistinguishable from the agent having read the source. -->
+  <!-- Deliberately names no products. The specific integrations on offer change
+       faster than a page can track, and a stale recommendation reads as an
+       endorsement. What does not change is the difference between a skill and a
+       connector, and the three questions worth asking before adding one. -->
 
   <section aria-labelledby="connectors-h">
-    <p class="eyebrow">What to plug in</p>
-    <h2 id="connectors-h">Connectors</h2>
+    <p class="eyebrow">What to plug in, and what not to</p>
+    <h2 id="connectors-h">Connectors, apps, and plugins</h2>
     <p class="muted" style="max-width: 78ch;">
-      A connector earns its place by giving the agent something the skills cannot get on their own.
-      Adding several that all summarise scholarship for you is worse than adding none: it stops being
-      clear whether the agent opened a source or just received another system&rsquo;s account of it.
+      Platforms use different names for these &mdash; connectors, apps, plugins, integrations,
+      extensions &mdash; and the names change faster than the idea does. What they all do is the same
+      thing, and it is not what a skill does.
     </p>
 
-    <div class="tableWrap">
-      <table>
-        <caption class="srOnly">Connector recommendations for the research workflow agent</caption>
-        <thead>
-          <tr><th scope="col">Connector</th><th scope="col">Recommendation</th><th scope="col">Best use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Google Drive</th>
-            <td>Keep enabled &mdash; already installed</td>
-            <td>Research files, Docs, source PDFs, Sheets-based literature matrices, Slides.</td>
-          </tr>
-          <tr>
-            <th scope="row">Scite</th>
-            <td>Add</td>
-            <td>Check how later scholarship supports, disputes, or contextualises a cited study. Complements the traceability work particularly well.</td>
-          </tr>
-          <tr>
-            <th scope="row">GitHub</th>
-            <td>Enable conditionally &mdash; already installed</td>
-            <td>Research code, datasets, notebooks, protocols, documentation, versioned projects. Skip it for purely textual research.</td>
-          </tr>
-          <tr>
-            <th scope="row">SharePoint or Box</th>
-            <td>Add only if needed</td>
-            <td>Pick one if important institutional research materials live there. Do not duplicate Google Drive without a real corpus to justify it.</td>
-          </tr>
-          <tr>
-            <th scope="row">BigQuery</th>
-            <td>Specialty option</td>
-            <td>Worth it for researchers who actually maintain or analyse datasets in BigQuery.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <dl class="distinctionList">
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">A skill is method</span></dt>
+        <dd>It tells the agent <em>how</em> a job should be done: the steps, the standards, what to
+        check, what to refuse, what to hand back. The ten skills on the demo page carry no data and
+        reach nothing. They change what the agent does with whatever it already has.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">A connector is reach</span></dt>
+        <dd>It gives the agent a way into a system that holds something &mdash; a drive, a repository,
+        a catalogue, a database, a ticketing system. It carries no opinion about how the work should be
+        done. It changes what the agent can get to.</dd>
+      </div>
+    </dl>
+
+    <p class="muted" style="max-width: 78ch;">
+      That is the whole distinction, and it is worth holding onto because the two get sold as the same
+      kind of add-on. Adding a connector will not make an agent more careful. Adding a skill will not
+      get it into your catalogue. An agent that reasons well over the wrong sources and an agent that
+      reaches the right sources and reasons badly are both broken, in different places.
+    </p>
+
+    <h3 id="connector-practice-h">Three rules worth keeping</h3>
+
+    <dl class="distinctionList">
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">1 &middot; Only what the work needs</span></dt>
+        <dd>Connect what this agent actually has to reach, and nothing else. Every extra connection is
+        another set of tools the agent has to choose among, another place its attention can go, and
+        another system holding a credential on its behalf. A research agent does not need access to
+        your ticketing system because your institution happens to have one.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">2 &middot; Vet before you install</span></dt>
+        <dd>Anyone can publish one. Directory listings are not review, a familiar product name in the
+        title is not proof the publisher is that company, and install counts measure popularity rather
+        than safety. Before adding one, find out who publishes it, what permissions it asks for and
+        why it needs each, where your data goes once it leaves, and whether it can write as well as
+        read. Some are built by people with reasons of their own for wanting a channel into your
+        session. Treat adding one the way you would treat installing software on a work machine,
+        because that is what it is.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">3 &middot; Never duplicate a skill</span></dt>
+        <dd>If a skill already covers the job, a connector that also covers it does not add a second
+        opinion &mdash; it adds ambiguity. The agent now has two routes to the same outcome and no
+        principled reason to prefer either, and its answers stop being reproducible. Worse, when the
+        connector is another AI system, you can no longer tell whether the agent read a source or was
+        handed someone else&rsquo;s account of one, which is the distinction this whole set of skills
+        exists to preserve.</dd>
+      </div>
+    </dl>
 
     <div class="caution" style="margin-top: 1.5rem;">
-      <p><strong>Not at the start: Consensus, Elicit, SciSpace, Sider Scholar, Scholar Gateway.</strong>
-      They overlap substantially with the literature-review and source-search skills. Adding several
-      would make it unclear whether the agent actually opened a source or merely received another AI
-      system&rsquo;s synthesis &mdash; which is the one distinction this whole set exists to keep.
-      Scite is the cleaner complement because it adds citation context rather than a summary, and even
-      then the agent still has to open and verify the underlying papers.</p>
+      <p><strong>A word on MCP.</strong> Most of what you will meet is built on the Model Context
+      Protocol, an open standard for how an assistant talks to an outside tool or data source. Open is
+      the point &mdash; it is why one integration can work across several assistants instead of being
+      rebuilt for each &mdash; and open is also why the second rule matters. There is no gatekeeper.
+      Publishing an MCP server takes no permission from anyone.</p>
+      <p>One property is worth understanding before you add one. An MCP server describes its own tools
+      to the model, in its own words, and the model reads those descriptions to decide what to call and
+      when. They are not inert metadata: they are text that reaches the model, from whoever wrote the
+      server. A description can be written to nudge the agent toward calling a tool it should not, or
+      toward doing something you did not ask for. Prefer servers you can read the source of, run
+      locally, or obtain from the vendor whose system they connect to &mdash; and give each one only the
+      scopes its job requires.</p>
     </div>
   </section>
 
