@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="dark light" />
 <title>Demo 1: Research Workflow Agent | Beyond the Chatbot</title>
-<meta name="description" content="Demo 1 for &#34;Beyond the Chatbot: Agentic AI and the Future of Library Workflows&#34; at WolfCon 2026 — a research workflow agent, the ten skills behind it, and the instructions it runs on. Download the set and build your own." />
+<meta name="description" content="Demo 1 for &#34;Beyond the Chatbot: Agentic AI and the Future of Library Workflows&#34; at WolfCon 2026 — a research workflow agent, the ten skills behind it, the instructions it runs on, and how connectors differ from skills. Download the set and build your own." />
 <link rel="stylesheet" href="assets/styles.css" />
 <!-- Applies the saved theme before first paint, so a reader who chose light
      mode does not see a dark flash. Mirrors the faculty site's layout.tsx. -->
@@ -432,6 +432,90 @@ Flag anything you could not verify, and do not invent missing bibliographic info
       academic research. The licence and notice are inside every ZIP; keep them with the files if you
       pass them on.
     </p>
+  </section>
+
+  <!-- ===================== Connectors ===================== -->
+  <!-- Deliberately names no products. The specific integrations on offer change
+       faster than a page can track, and a stale recommendation reads as an
+       endorsement. What does not change is the difference between a skill and a
+       connector, and the three questions worth asking before adding one. -->
+
+  <section id="connectors" aria-labelledby="connectors-h">
+    <p class="eyebrow">The other half of an agent</p>
+    <h2 id="connectors-h">Connectors, apps, and plugins</h2>
+    <p class="muted" style="max-width: 78ch;">
+      Platforms use different names for these &mdash; connectors, apps, plugins, integrations,
+      extensions &mdash; and the names change faster than the idea does. What they all do is the same
+      thing, and it is not what a skill does.
+    </p>
+
+    <dl class="distinctionList">
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">A skill is method</span></dt>
+        <dd>It tells the agent <em>how</em> a job should be done: the steps, the standards, what to
+        check, what to refuse, what to hand back. The ten skills on the demo page carry no data and
+        reach nothing. They change what the agent does with whatever it already has.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">A connector is reach</span></dt>
+        <dd>It gives the agent a way into a system that holds something &mdash; a drive, a repository,
+        a catalogue, a database, a ticketing system. It carries no opinion about how the work should be
+        done. It changes what the agent can get to.</dd>
+      </div>
+    </dl>
+
+    <p class="muted" style="max-width: 78ch;">
+      That is the whole distinction, and it is worth holding onto because the two get sold as the same
+      kind of add-on. Adding a connector will not make an agent more careful. Adding a skill will not
+      get it into your catalogue. An agent that reasons well over the wrong sources and an agent that
+      reaches the right sources and reasons badly are both broken, in different places.
+    </p>
+
+    <h3 id="connector-practice-h">Three rules worth keeping</h3>
+
+    <dl class="distinctionList">
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">1 &middot; Only what the work needs</span></dt>
+        <dd>Connect what this agent actually has to reach, and nothing else. Every extra connection is
+        another set of tools the agent has to choose among, another place its attention can go, and
+        another system holding a credential on its behalf. A research agent does not need access to
+        your ticketing system because your institution happens to have one.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">2 &middot; Vet before you install</span></dt>
+        <dd>Anyone can publish one. Directory listings are not review, a familiar product name in the
+        title is not proof the publisher is that company, and install counts measure popularity rather
+        than safety. Before adding one, find out who publishes it, what permissions it asks for and
+        why it needs each, where your data goes once it leaves, and whether it can write as well as
+        read. Some are built by people with reasons of their own for wanting a channel into your
+        session. Treat adding one the way you would treat installing software on a work machine,
+        because that is what it is.</dd>
+      </div>
+      <div class="distinctionItem">
+        <dt><span class="distinctionName">3 &middot; Never duplicate a skill</span></dt>
+        <dd>If a skill already covers the job, a connector that also covers it does not add a second
+        opinion &mdash; it adds ambiguity. The agent now has two routes to the same outcome and no
+        principled reason to prefer either, and its answers stop being reproducible. Worse, when the
+        connector is another AI system, you can no longer tell whether the agent read a source or was
+        handed someone else&rsquo;s account of one, which is the distinction this whole set of skills
+        exists to preserve.</dd>
+      </div>
+    </dl>
+
+    <div class="caution" style="margin-top: 1.5rem;">
+      <p><strong>A word on MCP.</strong> Most of what you will meet is built on the Model Context
+      Protocol, an open standard for how an assistant talks to an outside tool or data source. Open is
+      the point &mdash; it is why one integration can work across several assistants instead of being
+      rebuilt for each &mdash; and open is also why the second rule matters. There is no gatekeeper.
+      Publishing an MCP server takes no permission from anyone.</p>
+      <p>One property is worth understanding before you add one. An MCP server describes its own tools
+      to the model, in its own words, and the model reads those descriptions to decide what to call and
+      when. They are not inert metadata: they are text that reaches the model, from whoever wrote the
+      server. A description can be written to nudge the agent toward calling a tool it should not, or
+      toward doing something you did not ask for. Prefer servers you can read the source of, run
+      locally, or obtain from the vendor whose system they connect to &mdash; and give each one only the
+      scopes its job requires.</p>
+    </div>
   </section>
 
 </main>
